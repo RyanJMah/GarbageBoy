@@ -1,4 +1,3 @@
-#include <iostream>
 #include <stdint.h>
 #include <stddef.h>
 #include "cpu.hpp"
@@ -35,7 +34,6 @@ CPU::CPU() {
 	this->_OP_CODE_LUT[0x4F] = &CPU::_ld_r_R;
 }
 CPU::~CPU() {
-
 }
 void CPU::run() {
 	while (1) {
@@ -71,21 +69,21 @@ uint8_t* CPU::_get_8_bit_reg(uint8_t bitcode) {
 	uint8_t* ret = nullptr;
 	switch (bitcode) {
 		case (0b000):
-			ret = &(this->_BC.bytes[0]);
-		case (0b001):
 			ret = &(this->_BC.bytes[1]);
+		case (0b001):
+			ret = &(this->_BC.bytes[0]);
 		case (0b010):
-			ret = &(this->_DE.bytes[0]);
-		case (0b011):
 			ret = &(this->_DE.bytes[1]);
+		case (0b011):
+			ret = &(this->_DE.bytes[0]);
 		case (0b100):
-			ret = &(this->_HL.bytes[0]);
-		case (0b101):
 			ret = &(this->_HL.bytes[1]);
+		case (0b101):
+			ret = &(this->_HL.bytes[0]);
 		case (0b110):
-			ret = &(this->_AF.bytes[0]);
-		case (0b111):
 			ret = &(this->_AF.bytes[1]);
+		case (0b111):
+			ret = &(this->_AF.bytes[0]);
 	}
 	return ret;
 }
@@ -116,7 +114,6 @@ Reg* CPU::_get_16_bit_reg(uint8_t bitcode) {
 NOP
 	- OpCode = 0x00
 	- Do nothing for 4 clock cycles
-
 */
 void CPU::_nop() {
 	this->_read_and_increment_PC();
@@ -126,7 +123,7 @@ void CPU::_nop() {
 /*
 LD r, r'
 	- OpCode = 0b01xxxyyy
-	- load to the 8 bit register r, data from the 8-bit register r'
+	- load to the 8-bit register r, data from the 8-bit register r'
 */
 void CPU::_ld_r_R() {
 	uint8_t opcode = this->_read_and_increment_PC();
@@ -136,4 +133,142 @@ void CPU::_ld_r_R() {
 	(*r) = (*R);
 
 	this->_cycles += 4;
+}
+
+/*
+LD r, n
+	- OpCode = 0b00xxx110 + n
+	- load to the 8 bit register r, the immediate data n
+*/
+void CPU::_ld_r_n() {
+	uint8_t opcode = this->_read_and_increment_PC();
+	uint8_t n = this->_read_and_increment_PC();
+
+	uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
+	(*r) = n;
+
+	this->_cycles += 4*2;
+}
+
+/*
+LD r, (HL)
+	- OpCode = 0b01xxx110
+	- load to the 8-bit register r, data from the address specified by register HL
+*/
+void CPU::_ld_r_HL() {
+	uint8_t opcode = this->_read_and_increment_PC();
+
+	uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
+	(*r) = this->_mem_read_byte(this->_HL.raw);
+
+	this->_cycles += 4*2;
+}
+
+/*
+LD (HL), r
+	- OpCode = 0b01100xxx
+	- load to the address specificed by register HL, data from the 8-bit register r
+*/
+void CPU::_ld_HL_r() {
+	uint8_t opcode = this->_read_and_increment_PC();
+
+	uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
+	this->_HL.raw = *r;
+
+	this->_cycles += 4*2;
+}
+
+/*
+LD (HL), n
+	- OpCode = 0b00110110 + n
+	- load to the address specified by register HL, the immediate data n
+*/
+void CPU::_ld_HL_n() {
+	this->_read_and_increment_PC();
+	uint8_t n = this->_read_and_increment_PC();
+	this->_HL.raw = n;
+	this->_cycles += 4*3;
+}
+
+/*
+LD A, (BC)
+	- OpCode = 0b00001010
+	- load to the register A, data from the address specified by register BC
+
+*/
+void CPU::_ld_A_BC() {
+	this->_read_and_increment_PC();	
+	this->_AF.bytes[1] = this->_mem_read_byte(this->_BC.raw);
+	this->_cycles += 4*2;
+}
+
+/*
+LD A, (DE)
+	- OpCode = 0b00011010
+	- load to the 8-bit register A, data from the address specified by register DE
+*/
+void CPU::_ld_A_DE() {
+	this->_read_and_increment_PC();
+	this->_AF.bytes[1] = this->_mem_read_byte(this->_DE.raw);
+	this->_cycles += 4*2;
+}
+
+/*
+LD (BC), A
+	- OpCode = 0b00000010
+	- load to the address specified by register BC, data from the 8-bit register A
+*/
+void CPU::_ld_BC_A() {
+	this->_read_and_increment_PC();
+
+	uint8_t addr = this->_BC.raw;
+	this->_mem_write_byte(addr, this->_AF.bytes[1]);
+
+	this->_cycles += 4*2;
+}
+
+/*
+LD (DE), A
+	- OpCode = 0b00010010
+	- load to the address specified by register DE, data from the 8-bit register A
+*/
+void CPU::_ld_DE_A() {
+	this->_read_and_increment_PC();
+
+	uint8_t addr = this->_DE.raw;
+	this->_mem_write_byte(addr, this->_AF.bytes[1]);
+
+	this->_cycles += 4*2;
+}
+
+/*
+LD A, (nn)
+	- OpCode = 0b11111010 + n
+	- load to the 8-bit register A, data from the address specified by the 16-bit operand n
+*/
+void CPU::_ld_A_nn() {
+	this->_read_and_increment_PC();
+	uint8_t lsb_n = this->_read_and_increment_PC();
+	uint8_t msb_n = this->_read_and_increment_PC();
+
+	uint16_t addr = (msb_n << 8) | lsb_n;
+	this->_AF.bytes[1] = this->_mem_read_byte(addr);
+
+	this->_cycles += 4*4;
+}
+
+/*
+LD (nn), A
+	- OpCode = 0b11101010 + n
+	- load to the address specified by the 16-bit operand n, data from the 8-bit register A
+*/
+void CPU::_ld_nn_A() {
+	this->_read_and_increment_PC();
+	uint8_t lsb_n = this->_read_and_increment_PC();
+	uint8_t msb_n = this->_read_and_increment_PC();
+
+	uint8_t addr = (msb_n << 8) | lsb_n;
+	this->_mem_write_byte(addr, this->_AF.bytes[1]);
+
+	this->_cycles += 4*4;
 }

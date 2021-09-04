@@ -1,8 +1,7 @@
 #pragma once
 
 #include <map>
-#include <functional>
-// #include <stdint.h>
+#include <stdint.h>
 #include <stddef.h>
 
 /*
@@ -48,7 +47,6 @@ class CPU {
 	public:
 		CPU();
 		~CPU();
-
 		void run();
 
 	private:
@@ -69,6 +67,14 @@ class CPU {
 		void _ld_r_R();
 		void _ld_r_n();
 		void _ld_r_HL();
-
+		void _ld_HL_r();
+		void _ld_HL_n();
+		void _ld_A_BC();
+		void _ld_A_DE();
+		void _ld_A_nn();
+		void _ld_BC_A();
+		void _ld_DE_A();
+		void _ld_nn_A();
+		void _ld_A_FF00_n();
 };
 
