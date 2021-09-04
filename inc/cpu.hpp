@@ -24,6 +24,8 @@
 #define HALF_CARRY_FLAG		5
 #define CARRY_FLAG			4
 
+#define MACHINE_CYCLE		4
+
 union Reg {
 	uint8_t bytes[2];
 	uint16_t raw;
@@ -63,7 +65,14 @@ class CPU {
 			2 - increment the number of cycles appropriately
 			3 - place the program pointer and the stack pointer in the appropriate location
 		*/
+
+		////////////////////////////////////////////////////////////////
+		/* CPU CONTROL INSTRUCTIONS */
 		void _nop();
+		////////////////////////////////////////////////////////////////
+
+		////////////////////////////////////////////////////////////////
+		/* 8-BIT LOAD INSTRUCTIONS */
 		void _ld_r_R();
 		void _ld_r_n();
 		void _ld_r_HL();
@@ -76,5 +85,19 @@ class CPU {
 		void _ld_DE_A();
 		void _ld_nn_A();
 		void _ld_A_FF00_n();
+		void _ld_FF00_n_A();
+		void _ld_A_FF00_C();
+		void _ld_FF00_C_A();
+		void _ldi_HL_A();
+		void _ldi_A_HL();
+		void _ldd_HL_A();
+		void _ldd_A_HL();
+		////////////////////////////////////////////////////////////////
+
+		////////////////////////////////////////////////////////////////
+		/* 16-BIT LOAD INSTRUCTIONS */
+		void _ld_rr_nn();
+		////////////////////////////////////////////////////////////////
+
 };
 
