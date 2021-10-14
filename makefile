@@ -1,7 +1,12 @@
 TARGET = main
 BUILD_DIR = build
+DEBUG = true
 
-OPT = -Og
+ifeq ($(DEBUG), true)
+	OPT = -Og
+else
+	OPT = -O2
+endif
 
 CC = g++
 CP = objcopy
@@ -11,15 +16,19 @@ CPP_SOURCES = $(wildcard src/*.cpp)
 CPP_INCLUDES = -I ./inc
 CPP_FLAGS = $(CPP_INCLUDES) $(OPT) -Wall -MMD -MP -MF"$(@:%.o=%.d)"
 
+ifeq ($(DEBUG), true)
+	CPP_FLAGS += -ggdb
+endif
+
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
 vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 
 all: $(BUILD_DIR)/$(TARGET).elf
 
-$(BUILD_DIR)/%.o: %.cpp makefile | $(BUILD_DIR) 
+$(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR) 
 	$(CC) -c $(CPP_FLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.cpp=.lst)) $< -o $@
 
-$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) makefile
+$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS)
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
 	$(SZ) $@
 	
