@@ -834,7 +834,7 @@ HALT
 */
 void CPU::_halt() {
 	this->_read_and_increment_PC();
-	this->_halted = true;
+	this->_is_halted = true;
 
 	while (this->_is_halted) { this->_cycles += MACHINE_CYCLE; }
 }

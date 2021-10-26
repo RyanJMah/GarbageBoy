@@ -8,7 +8,7 @@ else
 	OPT = -O2
 endif
 
-CC = g++
+CC = g++ -std=c++11
 CP = objcopy
 SZ = size
 
@@ -26,7 +26,7 @@ vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 all: $(BUILD_DIR)/$(TARGET).elf
 
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR) 
-	$(CC) -c $(CPP_FLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.cpp=.lst)) $< -o $@
+	$(CC) -c $(CPP_FLAGS) $< -o $@
 
 $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS)
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
