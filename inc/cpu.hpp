@@ -1,8 +1,10 @@
 #pragma once
 
-#include <unordered_map>
 #include <stdint.h>
 #include <stddef.h>
+#include <vector>
+#include <unordered_map>
+#include "abstract_peripheral.hpp"
 
 /*
     0000-3FFF   16KB ROM Bank 00     (in cartridge, fixed at bank 00)
@@ -19,12 +21,7 @@
     FFFF        Interrupt Enable Register
 */
 
-#define ZERO_FLAG			7
-#define SUB_FLAG			6
-#define HALF_CARRY_FLAG		5
-#define CARRY_FLAG			4
-
-#define MACHINE_CYCLE		4
+#define MACHINE_CYCLE        4
 
 #define CHECK_8_BIT_HALF_CARRY(a, b) ( ((a & 0xf) + (b & 0xf)) > 0xf )
 #define CHECK_16_BIT_HALF_CARRY(a, b) ( ((a & 0xfff) + (b & 0xfff)) > 0xfff )
@@ -35,12 +32,34 @@
 #define CHECK_16_BIT_CARRY(a, b) ( ((a & 0xffff) + (b & 0xffff)) > 0xffff )
 #define CHECK_SUB_CARRY(a, b) ( (a & 0xff) < (b & 0xff) )
 
+enum Flags {
+    CARRY_FLAG = 4,
+    HALF_CARRY_FLAG = 5,
+    SUB_FLAG = 6,
+    ZERO_FLAG = 7
+};
+
 union Reg {
     uint8_t bytes[2];
     uint16_t raw;
 };
 
+class AbstractPeripheral;
+
 class CPU {
+    public:
+        CPU();
+        ~CPU();
+
+        uint8_t mem_read_byte(size_t addr);
+        void mem_write_byte(size_t addr, uint8_t val);
+        uint8_t* mem_get(size_t addr);
+
+        void jump(size_t addr);
+
+        void load_rom();
+        void run();
+
     private:
         // registers
         Reg _AF;    // Accumulator and Flags
@@ -50,29 +69,28 @@ class CPU {
         Reg _SP;    // Stack Pointer
         Reg _PC;    // Program Counter
 
+        bool _IME;  // Interrupt Master Enable Flag
+
         uint8_t _memory[0xffff];
         uint32_t _cycles;
-		bool _is_halted;
+        bool _is_halted;
 
         std::unordered_map<size_t, void (CPU::*)()> _OP_CODE_LUT;
-
-    public:
-        CPU();
-        ~CPU();
-
-        void load_rom();
-        void run();
+        std::vector<AbstractPeripheral*> _peripherals;
 
     private:
         void _OP_CODE_LUT_init();
-		void _OP_CODE_LUT_init_CB();
+        void _OP_CODE_LUT_init_CB();
 
-        uint8_t _mem_read_byte(size_t addr);
-        void _mem_write_byte(size_t addr, uint8_t val);
         uint8_t _read_and_increment_PC();
 
         uint8_t* _get_8_bit_reg(uint8_t bitcode);
         Reg* _get_16_bit_reg(uint8_t bitcode);
+
+        bool _eval_cond_code(uint8_t bitcode);
+
+        void _push_stack(uint8_t byte);
+        uint8_t _pop_stack();
 
         void _set_flag(uint8_t flag);
         void _clear_flag(uint8_t flag);
@@ -93,10 +111,27 @@ class CPU {
 
         ///////////////////////////////////////////////////////////////////////////////////////
         /* CPU CONTROL INSTRUCTIONS */
-		void _ccf();
-		void _scf();
+        void _ccf();
+        void _scf();
         void _nop();
-		void _halt();
+        void _halt();
+        void _di();
+        void _ei();
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /* JUMP INSTRUCTIONS */
+        void _jp_nn();
+        void _jp_HL();
+        void _jp_cc_nn();
+        void _jr_dd();
+        void _jr_cc_dd();
+        void _call_nn();
+        void _call_cc_nn();
+        void _ret();
+        void _ret_cc();
+        void _reti();
+        void _rst_n();
         ///////////////////////////////////////////////////////////////////////////////////////
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -170,13 +205,21 @@ class CPU {
         /* 16-BIT ARITHMETIC/LOGIC INSTRUCTIONS */
         void _add_HL_rr();
         void _inc_rr();
-		void _dec_rr();
-		void _add_SP_dd();
+        void _dec_rr();
+        void _add_SP_dd();
         ///////////////////////////////////////////////////////////////////////////////////////
 
-		///////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////
         /* SINGLE BIT INSTRUCTIONS */
-		void _bit_n_r();
-		///////////////////////////////////////////////////////////////////////////////////////
-};
+        void _bit_n_r();
+        ///////////////////////////////////////////////////////////////////////////////////////
 
+        ///////////////////////////////////////////////////////////////////////////////////////
+        /* ROTATE AND SHIFT INSTRUCTIONS */
+        void _rlca();
+        void _rla();
+        void _rrca();
+        void _rra();
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+};

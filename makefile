@@ -1,12 +1,8 @@
 TARGET = main
 BUILD_DIR = build
-DEBUG = true
+DEBUG = 1
 
-ifeq ($(DEBUG), true)
-	OPT = -Og
-else
-	OPT = -O2
-endif
+OPT = -O2
 
 CC = g++ -std=c++11
 CP = objcopy
@@ -16,7 +12,7 @@ CPP_SOURCES = $(wildcard src/*.cpp)
 CPP_INCLUDES = -I ./inc
 CPP_FLAGS = $(CPP_INCLUDES) $(OPT) -Wall -MMD -MP -MF"$(@:%.o=%.d)"
 
-ifeq ($(DEBUG), true)
+ifeq ($(DEBUG), 1)
 	CPP_FLAGS += -ggdb
 endif
 
@@ -29,11 +25,15 @@ $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR)
 	$(CC) -c $(CPP_FLAGS) $< -o $@
 
 $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS)
+	@echo ""
 	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
-	$(SZ) $@
-	
+	@echo ""
+	@$(SZ) $@
+	@echo ""
+
 $(BUILD_DIR):
 	mkdir $@
+	@echo ""
 
 clean:
 	rm -rf $(BUILD_DIR)
