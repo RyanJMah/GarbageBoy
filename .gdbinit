@@ -1,3 +1,5 @@
+source ~/.gdbinit
+
 file build/main.elf
 b main
 
