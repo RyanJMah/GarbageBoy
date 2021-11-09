@@ -1,23 +1,29 @@
+/*
+Emulation for the serial port, prints bytes to console
+
+reference:
+    - https://gbdev.io/pandocs/Serial_Data_Transfer_(Link_Cable).html
+*/
+
 #include <iostream>
+#include "helpers.hpp"
 #include "abstract_peripheral.hpp"
 #include "serial.hpp"
 
 Serial::Serial(CPU* cpu_ptr) {
     AbstractPeripheral::init(cpu_ptr);
-    this->_SB = this->_cpu->mem_get(SB_ADDR);
-    this->_SC = this->_cpu->mem_get(SC_ADDR);
 }
 
-void Serial::update() {
+void Serial::respond() {
     // if transfer requested
-    if ( ((*this->_SC) >> TRANSFER_START) & 1 ) {
+    if (BIT_IS_SET(*SC(), SC_TRANSFER_START)) {
         // send the character in SB to the terminal
-        std::cout << (*this->_SB);
+        std::cout << *SB();
 
         // clear the TRANSFER_START bit
-        *this->_SC &= ~(1 << TRANSFER_START);
+        *SC() &= ~(1 << SC_TRANSFER_START);
 
-        // call the serial interrupt handler
-        this->_cpu->jump(SERIAL_ISR_ADDR);
+        // make a request for a serial interrupt to the interrupt controller
+        *IF() |= (1 << IF_SERIAL);
     }
 }

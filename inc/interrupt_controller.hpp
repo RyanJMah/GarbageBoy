@@ -1,13 +1,14 @@
 #pragma once
 
+#include <stddef.h>
 #include "cpu.hpp"
 #include "abstract_peripheral.hpp"
-
-#define IE      0xffff
-#define IF      0xff0f
 
 class InterruptController: public AbstractPeripheral {
     public:
         InterruptController(CPU* cpu_ptr);
-        virtual void update();
+        virtual void respond();
+    
+    private:
+        void _call_isr(size_t addr);
 };

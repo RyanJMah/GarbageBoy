@@ -1,3 +1,13 @@
+/*
+Emulation for every CPU instruction...
+
+references:
+    - https://gbdev.io/pandocs/CPU_Instruction_Set.html
+    - https://gbdev.io/gb-opcodes/optables/
+    - http://www.zilog.com/docs/z80/um0080.pdf
+    - https://gekkio.fi/files/gb-docs/gbctr.pdf
+*/
+
 #include <stdint.h>
 #include <stddef.h>
 #include "cpu.hpp"
@@ -324,327 +334,327 @@ void CPU::_OP_CODE_LUT_init() {
     ////////////////////////////////////////////////////////////////
 }
 
-void CPU::_OP_CODE_LUT_init_CB() {
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x00 */
-    // this->_OP_CODE_LUT[0xCB00] =
-    // this->_OP_CODE_LUT[0xCB01] =
-    // this->_OP_CODE_LUT[0xCB02] =
-    // this->_OP_CODE_LUT[0xCB03] =
-    // this->_OP_CODE_LUT[0xCB04] =
-    // this->_OP_CODE_LUT[0xCB05] =
-    // this->_OP_CODE_LUT[0xCB06] =
-    // this->_OP_CODE_LUT[0xCB07] =
-    // this->_OP_CODE_LUT[0xCB08] =
-    // this->_OP_CODE_LUT[0xCB09] =
-    // this->_OP_CODE_LUT[0xCB0A] =
-    // this->_OP_CODE_LUT[0xCB0B] =
-    // this->_OP_CODE_LUT[0xCB0C] =
-    // this->_OP_CODE_LUT[0xCB0D] =
-    // this->_OP_CODE_LUT[0xCB0E] =
-    // this->_OP_CODE_LUT[0xCB0F] =
-    ////////////////////////////////////////////////////////////////
+// void CPU::_OP_CODE_LUT_init_CB() {
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x00 */
+//     // this->_OP_CODE_LUT[0xCB00] =
+//     // this->_OP_CODE_LUT[0xCB01] =
+//     // this->_OP_CODE_LUT[0xCB02] =
+//     // this->_OP_CODE_LUT[0xCB03] =
+//     // this->_OP_CODE_LUT[0xCB04] =
+//     // this->_OP_CODE_LUT[0xCB05] =
+//     // this->_OP_CODE_LUT[0xCB06] =
+//     // this->_OP_CODE_LUT[0xCB07] =
+//     // this->_OP_CODE_LUT[0xCB08] =
+//     // this->_OP_CODE_LUT[0xCB09] =
+//     // this->_OP_CODE_LUT[0xCB0A] =
+//     // this->_OP_CODE_LUT[0xCB0B] =
+//     // this->_OP_CODE_LUT[0xCB0C] =
+//     // this->_OP_CODE_LUT[0xCB0D] =
+//     // this->_OP_CODE_LUT[0xCB0E] =
+//     // this->_OP_CODE_LUT[0xCB0F] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x10 */
-    // this->_OP_CODE_LUT[0xCB10] =
-    // this->_OP_CODE_LUT[0xCB11] =
-    // this->_OP_CODE_LUT[0xCB12] =
-    // this->_OP_CODE_LUT[0xCB13] =
-    // this->_OP_CODE_LUT[0xCB14] =
-    // this->_OP_CODE_LUT[0xCB15] =
-    // this->_OP_CODE_LUT[0xCB16] =
-    // this->_OP_CODE_LUT[0xCB17] =
-    // this->_OP_CODE_LUT[0xCB18] =
-    // this->_OP_CODE_LUT[0xCB19] =
-    // this->_OP_CODE_LUT[0xCB1A] =
-    // this->_OP_CODE_LUT[0xCB1B] =
-    // this->_OP_CODE_LUT[0xCB1C] =
-    // this->_OP_CODE_LUT[0xCB1D] =
-    // this->_OP_CODE_LUT[0xCB1E] =
-    // this->_OP_CODE_LUT[0xCB1F] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x10 */
+//     // this->_OP_CODE_LUT[0xCB10] =
+//     // this->_OP_CODE_LUT[0xCB11] =
+//     // this->_OP_CODE_LUT[0xCB12] =
+//     // this->_OP_CODE_LUT[0xCB13] =
+//     // this->_OP_CODE_LUT[0xCB14] =
+//     // this->_OP_CODE_LUT[0xCB15] =
+//     // this->_OP_CODE_LUT[0xCB16] =
+//     // this->_OP_CODE_LUT[0xCB17] =
+//     // this->_OP_CODE_LUT[0xCB18] =
+//     // this->_OP_CODE_LUT[0xCB19] =
+//     // this->_OP_CODE_LUT[0xCB1A] =
+//     // this->_OP_CODE_LUT[0xCB1B] =
+//     // this->_OP_CODE_LUT[0xCB1C] =
+//     // this->_OP_CODE_LUT[0xCB1D] =
+//     // this->_OP_CODE_LUT[0xCB1E] =
+//     // this->_OP_CODE_LUT[0xCB1F] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x20 */
-    // this->_OP_CODE_LUT[0xCB20] =
-    // this->_OP_CODE_LUT[0xCB21] =
-    // this->_OP_CODE_LUT[0xCB22] =
-    // this->_OP_CODE_LUT[0xCB23] =
-    // this->_OP_CODE_LUT[0xCB24] =
-    // this->_OP_CODE_LUT[0xCB25] =
-    // this->_OP_CODE_LUT[0xCB26] =
-    // this->_OP_CODE_LUT[0xCB27] =
-    // this->_OP_CODE_LUT[0xCB28] =
-    // this->_OP_CODE_LUT[0xCB29] =
-    // this->_OP_CODE_LUT[0xCB2A] =
-    // this->_OP_CODE_LUT[0xCB2B] =
-    // this->_OP_CODE_LUT[0xCB2C] =
-    // this->_OP_CODE_LUT[0xCB2D] =
-    // this->_OP_CODE_LUT[0xCB2E] =
-    // this->_OP_CODE_LUT[0xCB2F] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x20 */
+//     // this->_OP_CODE_LUT[0xCB20] =
+//     // this->_OP_CODE_LUT[0xCB21] =
+//     // this->_OP_CODE_LUT[0xCB22] =
+//     // this->_OP_CODE_LUT[0xCB23] =
+//     // this->_OP_CODE_LUT[0xCB24] =
+//     // this->_OP_CODE_LUT[0xCB25] =
+//     // this->_OP_CODE_LUT[0xCB26] =
+//     // this->_OP_CODE_LUT[0xCB27] =
+//     // this->_OP_CODE_LUT[0xCB28] =
+//     // this->_OP_CODE_LUT[0xCB29] =
+//     // this->_OP_CODE_LUT[0xCB2A] =
+//     // this->_OP_CODE_LUT[0xCB2B] =
+//     // this->_OP_CODE_LUT[0xCB2C] =
+//     // this->_OP_CODE_LUT[0xCB2D] =
+//     // this->_OP_CODE_LUT[0xCB2E] =
+//     // this->_OP_CODE_LUT[0xCB2F] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x30 */
-    // this->_OP_CODE_LUT[0xCB30] =
-    // this->_OP_CODE_LUT[0xCB31] =
-    // this->_OP_CODE_LUT[0xCB32] =
-    // this->_OP_CODE_LUT[0xCB33] =
-    // this->_OP_CODE_LUT[0xCB34] =
-    // this->_OP_CODE_LUT[0xCB35] =
-    // this->_OP_CODE_LUT[0xCB36] =
-    // this->_OP_CODE_LUT[0xCB37] =
-    // this->_OP_CODE_LUT[0xCB38] =
-    // this->_OP_CODE_LUT[0xCB39] =
-    // this->_OP_CODE_LUT[0xCB3A] =
-    // this->_OP_CODE_LUT[0xCB3B] =
-    // this->_OP_CODE_LUT[0xCB3C] =
-    // this->_OP_CODE_LUT[0xCB3D] =
-    // this->_OP_CODE_LUT[0xCB3E] =
-    // this->_OP_CODE_LUT[0xCB3F] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x30 */
+//     // this->_OP_CODE_LUT[0xCB30] =
+//     // this->_OP_CODE_LUT[0xCB31] =
+//     // this->_OP_CODE_LUT[0xCB32] =
+//     // this->_OP_CODE_LUT[0xCB33] =
+//     // this->_OP_CODE_LUT[0xCB34] =
+//     // this->_OP_CODE_LUT[0xCB35] =
+//     // this->_OP_CODE_LUT[0xCB36] =
+//     // this->_OP_CODE_LUT[0xCB37] =
+//     // this->_OP_CODE_LUT[0xCB38] =
+//     // this->_OP_CODE_LUT[0xCB39] =
+//     // this->_OP_CODE_LUT[0xCB3A] =
+//     // this->_OP_CODE_LUT[0xCB3B] =
+//     // this->_OP_CODE_LUT[0xCB3C] =
+//     // this->_OP_CODE_LUT[0xCB3D] =
+//     // this->_OP_CODE_LUT[0xCB3E] =
+//     // this->_OP_CODE_LUT[0xCB3F] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x40 */
-    this->_OP_CODE_LUT[0xCB40] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB41] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB42] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB43] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB44] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB45] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB46] =
-    this->_OP_CODE_LUT[0xCB47] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB48] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB49] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB4A] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB4B] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB4C] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB4D] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB4E] =
-    this->_OP_CODE_LUT[0xCB4F] = &CPU::_bit_n_r;
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x40 */
+//     this->_OP_CODE_LUT[0xCB40] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB41] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB42] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB43] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB44] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB45] = &CPU::_bit_n_r;
+//     // this->_OP_CODE_LUT[0xCB46] =
+//     this->_OP_CODE_LUT[0xCB47] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB48] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB49] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB4A] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB4B] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB4C] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB4D] = &CPU::_bit_n_r;
+//     // this->_OP_CODE_LUT[0xCB4E] =
+//     this->_OP_CODE_LUT[0xCB4F] = &CPU::_bit_n_r;
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x50 */
-    this->_OP_CODE_LUT[0xCB50] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB51] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB52] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB53] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB54] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB55] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB56] =
-    this->_OP_CODE_LUT[0xCB57] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB58] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB59] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB5A] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB5B] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB5C] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB5D] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB5E] =
-    this->_OP_CODE_LUT[0xCB5F] = &CPU::_bit_n_r;
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x50 */
+//     this->_OP_CODE_LUT[0xCB50] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB51] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB52] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB53] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB54] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB55] = &CPU::_bit_n_r;
+//     // this->_OP_CODE_LUT[0xCB56] =
+//     this->_OP_CODE_LUT[0xCB57] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB58] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB59] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB5A] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB5B] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB5C] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB5D] = &CPU::_bit_n_r;
+//     // this->_OP_CODE_LUT[0xCB5E] =
+//     this->_OP_CODE_LUT[0xCB5F] = &CPU::_bit_n_r;
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x60 */
-    this->_OP_CODE_LUT[0xCB60] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB61] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB62] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB63] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB64] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB65] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB66] =
-    this->_OP_CODE_LUT[0xCB67] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB68] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB69] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB6A] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB6B] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB6C] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB6D] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB6E] =
-    this->_OP_CODE_LUT[0xCB6F] = &CPU::_bit_n_r;
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x60 */
+//     this->_OP_CODE_LUT[0xCB60] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB61] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB62] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB63] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB64] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB65] = &CPU::_bit_n_r;
+//     // this->_OP_CODE_LUT[0xCB66] =
+//     this->_OP_CODE_LUT[0xCB67] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB68] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB69] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB6A] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB6B] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB6C] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB6D] = &CPU::_bit_n_r;
+//     // this->_OP_CODE_LUT[0xCB6E] =
+//     this->_OP_CODE_LUT[0xCB6F] = &CPU::_bit_n_r;
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x70 */
-    this->_OP_CODE_LUT[0xCB70] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB71] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB72] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB73] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB74] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB75] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB76] =
-    this->_OP_CODE_LUT[0xCB77] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB78] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB79] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB7A] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB7B] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB7C] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB7D] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB7E] =
-    this->_OP_CODE_LUT[0xCB7F] = &CPU::_bit_n_r;
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x70 */
+//     this->_OP_CODE_LUT[0xCB70] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB71] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB72] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB73] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB74] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB75] = &CPU::_bit_n_r;
+//     // this->_OP_CODE_LUT[0xCB76] =
+//     this->_OP_CODE_LUT[0xCB77] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB78] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB79] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB7A] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB7B] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB7C] = &CPU::_bit_n_r;
+//     this->_OP_CODE_LUT[0xCB7D] = &CPU::_bit_n_r;
+//     // this->_OP_CODE_LUT[0xCB7E] =
+//     this->_OP_CODE_LUT[0xCB7F] = &CPU::_bit_n_r;
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x80 */
-    // this->_OP_CODE_LUT[0xCB80] =
-    // this->_OP_CODE_LUT[0xCB81] =
-    // this->_OP_CODE_LUT[0xCB82] =
-    // this->_OP_CODE_LUT[0xCB83] =
-    // this->_OP_CODE_LUT[0xCB84] =
-    // this->_OP_CODE_LUT[0xCB85] =
-    // this->_OP_CODE_LUT[0xCB86] =
-    // this->_OP_CODE_LUT[0xCB87] =
-    // this->_OP_CODE_LUT[0xCB88] =
-    // this->_OP_CODE_LUT[0xCB89] =
-    // this->_OP_CODE_LUT[0xCB8A] =
-    // this->_OP_CODE_LUT[0xCB8B] =
-    // this->_OP_CODE_LUT[0xCB8C] =
-    // this->_OP_CODE_LUT[0xCB8D] =
-    // this->_OP_CODE_LUT[0xCB8E] =
-    // this->_OP_CODE_LUT[0xCB8F] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x80 */
+//     // this->_OP_CODE_LUT[0xCB80] =
+//     // this->_OP_CODE_LUT[0xCB81] =
+//     // this->_OP_CODE_LUT[0xCB82] =
+//     // this->_OP_CODE_LUT[0xCB83] =
+//     // this->_OP_CODE_LUT[0xCB84] =
+//     // this->_OP_CODE_LUT[0xCB85] =
+//     // this->_OP_CODE_LUT[0xCB86] =
+//     // this->_OP_CODE_LUT[0xCB87] =
+//     // this->_OP_CODE_LUT[0xCB88] =
+//     // this->_OP_CODE_LUT[0xCB89] =
+//     // this->_OP_CODE_LUT[0xCB8A] =
+//     // this->_OP_CODE_LUT[0xCB8B] =
+//     // this->_OP_CODE_LUT[0xCB8C] =
+//     // this->_OP_CODE_LUT[0xCB8D] =
+//     // this->_OP_CODE_LUT[0xCB8E] =
+//     // this->_OP_CODE_LUT[0xCB8F] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0x90 */
-    // this->_OP_CODE_LUT[0xCB90] =
-    // this->_OP_CODE_LUT[0xCB91] =
-    // this->_OP_CODE_LUT[0xCB92] =
-    // this->_OP_CODE_LUT[0xCB93] =
-    // this->_OP_CODE_LUT[0xCB94] =
-    // this->_OP_CODE_LUT[0xCB95] =
-    // this->_OP_CODE_LUT[0xCB96] =
-    // this->_OP_CODE_LUT[0xCB97] =
-    // this->_OP_CODE_LUT[0xCB98] =
-    // this->_OP_CODE_LUT[0xCB99] =
-    // this->_OP_CODE_LUT[0xCB9A] =
-    // this->_OP_CODE_LUT[0xCB9B] =
-    // this->_OP_CODE_LUT[0xCB9C] =
-    // this->_OP_CODE_LUT[0xCB9D] =
-    // this->_OP_CODE_LUT[0xCB9E] =
-    // this->_OP_CODE_LUT[0xCB9F] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0x90 */
+//     // this->_OP_CODE_LUT[0xCB90] =
+//     // this->_OP_CODE_LUT[0xCB91] =
+//     // this->_OP_CODE_LUT[0xCB92] =
+//     // this->_OP_CODE_LUT[0xCB93] =
+//     // this->_OP_CODE_LUT[0xCB94] =
+//     // this->_OP_CODE_LUT[0xCB95] =
+//     // this->_OP_CODE_LUT[0xCB96] =
+//     // this->_OP_CODE_LUT[0xCB97] =
+//     // this->_OP_CODE_LUT[0xCB98] =
+//     // this->_OP_CODE_LUT[0xCB99] =
+//     // this->_OP_CODE_LUT[0xCB9A] =
+//     // this->_OP_CODE_LUT[0xCB9B] =
+//     // this->_OP_CODE_LUT[0xCB9C] =
+//     // this->_OP_CODE_LUT[0xCB9D] =
+//     // this->_OP_CODE_LUT[0xCB9E] =
+//     // this->_OP_CODE_LUT[0xCB9F] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0xA0 */
-    // this->_OP_CODE_LUT[0xCBA0] =
-    // this->_OP_CODE_LUT[0xCBA1] =
-    // this->_OP_CODE_LUT[0xCBA2] =
-    // this->_OP_CODE_LUT[0xCBA3] =
-    // this->_OP_CODE_LUT[0xCBA4] =
-    // this->_OP_CODE_LUT[0xCBA5] =
-    // this->_OP_CODE_LUT[0xCBA6] =
-    // this->_OP_CODE_LUT[0xCBA7] =
-    // this->_OP_CODE_LUT[0xCBA8] =
-    // this->_OP_CODE_LUT[0xCBA9] =
-    // this->_OP_CODE_LUT[0xCBAA] =
-    // this->_OP_CODE_LUT[0xCBAB] =
-    // this->_OP_CODE_LUT[0xCBAC] =
-    // this->_OP_CODE_LUT[0xCBAD] =
-    // this->_OP_CODE_LUT[0xCBAE] =
-    // this->_OP_CODE_LUT[0xCBAF] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0xA0 */
+//     // this->_OP_CODE_LUT[0xCBA0] =
+//     // this->_OP_CODE_LUT[0xCBA1] =
+//     // this->_OP_CODE_LUT[0xCBA2] =
+//     // this->_OP_CODE_LUT[0xCBA3] =
+//     // this->_OP_CODE_LUT[0xCBA4] =
+//     // this->_OP_CODE_LUT[0xCBA5] =
+//     // this->_OP_CODE_LUT[0xCBA6] =
+//     // this->_OP_CODE_LUT[0xCBA7] =
+//     // this->_OP_CODE_LUT[0xCBA8] =
+//     // this->_OP_CODE_LUT[0xCBA9] =
+//     // this->_OP_CODE_LUT[0xCBAA] =
+//     // this->_OP_CODE_LUT[0xCBAB] =
+//     // this->_OP_CODE_LUT[0xCBAC] =
+//     // this->_OP_CODE_LUT[0xCBAD] =
+//     // this->_OP_CODE_LUT[0xCBAE] =
+//     // this->_OP_CODE_LUT[0xCBAF] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0xB0 */
-    // this->_OP_CODE_LUT[0xCBB0] =
-    // this->_OP_CODE_LUT[0xCBB1] =
-    // this->_OP_CODE_LUT[0xCBB2] =
-    // this->_OP_CODE_LUT[0xCBB3] =
-    // this->_OP_CODE_LUT[0xCBB4] =
-    // this->_OP_CODE_LUT[0xCBB5] =
-    // this->_OP_CODE_LUT[0xCBB6] =
-    // this->_OP_CODE_LUT[0xCBB7] =
-    // this->_OP_CODE_LUT[0xCBB8] =
-    // this->_OP_CODE_LUT[0xCBB9] =
-    // this->_OP_CODE_LUT[0xCBBA] =
-    // this->_OP_CODE_LUT[0xCBBB] =
-    // this->_OP_CODE_LUT[0xCBBC] =
-    // this->_OP_CODE_LUT[0xCBBD] =
-    // this->_OP_CODE_LUT[0xCBBE] =
-    // this->_OP_CODE_LUT[0xCBBF] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0xB0 */
+//     // this->_OP_CODE_LUT[0xCBB0] =
+//     // this->_OP_CODE_LUT[0xCBB1] =
+//     // this->_OP_CODE_LUT[0xCBB2] =
+//     // this->_OP_CODE_LUT[0xCBB3] =
+//     // this->_OP_CODE_LUT[0xCBB4] =
+//     // this->_OP_CODE_LUT[0xCBB5] =
+//     // this->_OP_CODE_LUT[0xCBB6] =
+//     // this->_OP_CODE_LUT[0xCBB7] =
+//     // this->_OP_CODE_LUT[0xCBB8] =
+//     // this->_OP_CODE_LUT[0xCBB9] =
+//     // this->_OP_CODE_LUT[0xCBBA] =
+//     // this->_OP_CODE_LUT[0xCBBB] =
+//     // this->_OP_CODE_LUT[0xCBBC] =
+//     // this->_OP_CODE_LUT[0xCBBD] =
+//     // this->_OP_CODE_LUT[0xCBBE] =
+//     // this->_OP_CODE_LUT[0xCBBF] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0xC0 */
-    // this->_OP_CODE_LUT[0xCBC0] =
-    // this->_OP_CODE_LUT[0xCBC1] =
-    // this->_OP_CODE_LUT[0xCBC2] =
-    // this->_OP_CODE_LUT[0xCBC3] =
-    // this->_OP_CODE_LUT[0xCBC4] =
-    // this->_OP_CODE_LUT[0xCBC5] =
-    // this->_OP_CODE_LUT[0xCBC6] =
-    // this->_OP_CODE_LUT[0xCBC7] =
-    // this->_OP_CODE_LUT[0xCBC8] =
-    // this->_OP_CODE_LUT[0xCBC9] =
-    // this->_OP_CODE_LUT[0xCBCA] =
-    // this->_OP_CODE_LUT[0xCBCB] =
-    // this->_OP_CODE_LUT[0xCBCC] =
-    // this->_OP_CODE_LUT[0xCBCD] =
-    // this->_OP_CODE_LUT[0xCBCE] =
-    // this->_OP_CODE_LUT[0xCBCF] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0xC0 */
+//     // this->_OP_CODE_LUT[0xCBC0] =
+//     // this->_OP_CODE_LUT[0xCBC1] =
+//     // this->_OP_CODE_LUT[0xCBC2] =
+//     // this->_OP_CODE_LUT[0xCBC3] =
+//     // this->_OP_CODE_LUT[0xCBC4] =
+//     // this->_OP_CODE_LUT[0xCBC5] =
+//     // this->_OP_CODE_LUT[0xCBC6] =
+//     // this->_OP_CODE_LUT[0xCBC7] =
+//     // this->_OP_CODE_LUT[0xCBC8] =
+//     // this->_OP_CODE_LUT[0xCBC9] =
+//     // this->_OP_CODE_LUT[0xCBCA] =
+//     // this->_OP_CODE_LUT[0xCBCB] =
+//     // this->_OP_CODE_LUT[0xCBCC] =
+//     // this->_OP_CODE_LUT[0xCBCD] =
+//     // this->_OP_CODE_LUT[0xCBCE] =
+//     // this->_OP_CODE_LUT[0xCBCF] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0xD0 */
-    // this->_OP_CODE_LUT[0xCBD0] =
-    // this->_OP_CODE_LUT[0xCBD1] =
-    // this->_OP_CODE_LUT[0xCBD2] =
-    // this->_OP_CODE_LUT[0xCBD3] =
-    // this->_OP_CODE_LUT[0xCBD4] =
-    // this->_OP_CODE_LUT[0xCBD5] =
-    // this->_OP_CODE_LUT[0xCBD6] =
-    // this->_OP_CODE_LUT[0xCBD7] =
-    // this->_OP_CODE_LUT[0xCBD8] =
-    // this->_OP_CODE_LUT[0xCBD9] =
-    // this->_OP_CODE_LUT[0xCBDA] =
-    // this->_OP_CODE_LUT[0xCBDB] =
-    // this->_OP_CODE_LUT[0xCBDC] =
-    // this->_OP_CODE_LUT[0xCBDD] =
-    // this->_OP_CODE_LUT[0xCBDE] =
-    // this->_OP_CODE_LUT[0xCBDF] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0xD0 */
+//     // this->_OP_CODE_LUT[0xCBD0] =
+//     // this->_OP_CODE_LUT[0xCBD1] =
+//     // this->_OP_CODE_LUT[0xCBD2] =
+//     // this->_OP_CODE_LUT[0xCBD3] =
+//     // this->_OP_CODE_LUT[0xCBD4] =
+//     // this->_OP_CODE_LUT[0xCBD5] =
+//     // this->_OP_CODE_LUT[0xCBD6] =
+//     // this->_OP_CODE_LUT[0xCBD7] =
+//     // this->_OP_CODE_LUT[0xCBD8] =
+//     // this->_OP_CODE_LUT[0xCBD9] =
+//     // this->_OP_CODE_LUT[0xCBDA] =
+//     // this->_OP_CODE_LUT[0xCBDB] =
+//     // this->_OP_CODE_LUT[0xCBDC] =
+//     // this->_OP_CODE_LUT[0xCBDD] =
+//     // this->_OP_CODE_LUT[0xCBDE] =
+//     // this->_OP_CODE_LUT[0xCBDF] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0xE0 */
-    // this->_OP_CODE_LUT[0xCBE0] =
-    // this->_OP_CODE_LUT[0xCBE1] =
-    // this->_OP_CODE_LUT[0xCBE2] =
-    // this->_OP_CODE_LUT[0xCBE3] =
-    // this->_OP_CODE_LUT[0xCBE4] =
-    // this->_OP_CODE_LUT[0xCBE5] =
-    // this->_OP_CODE_LUT[0xCBE6] =
-    // this->_OP_CODE_LUT[0xCBE7] =
-    // this->_OP_CODE_LUT[0xCBE8] =
-    // this->_OP_CODE_LUT[0xCBE9] =
-    // this->_OP_CODE_LUT[0xCBEA] =
-    // this->_OP_CODE_LUT[0xCBEB] =
-    // this->_OP_CODE_LUT[0xCBEC] =
-    // this->_OP_CODE_LUT[0xCBED] =
-    // this->_OP_CODE_LUT[0xCBEE] =
-    // this->_OP_CODE_LUT[0xCBEF] =
-    ////////////////////////////////////////////////////////////////
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0xE0 */
+//     // this->_OP_CODE_LUT[0xCBE0] =
+//     // this->_OP_CODE_LUT[0xCBE1] =
+//     // this->_OP_CODE_LUT[0xCBE2] =
+//     // this->_OP_CODE_LUT[0xCBE3] =
+//     // this->_OP_CODE_LUT[0xCBE4] =
+//     // this->_OP_CODE_LUT[0xCBE5] =
+//     // this->_OP_CODE_LUT[0xCBE6] =
+//     // this->_OP_CODE_LUT[0xCBE7] =
+//     // this->_OP_CODE_LUT[0xCBE8] =
+//     // this->_OP_CODE_LUT[0xCBE9] =
+//     // this->_OP_CODE_LUT[0xCBEA] =
+//     // this->_OP_CODE_LUT[0xCBEB] =
+//     // this->_OP_CODE_LUT[0xCBEC] =
+//     // this->_OP_CODE_LUT[0xCBED] =
+//     // this->_OP_CODE_LUT[0xCBEE] =
+//     // this->_OP_CODE_LUT[0xCBEF] =
+//     ////////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////
-    /* CB 0xF0 */
-    // this->_OP_CODE_LUT[0xCBF0] =
-    // this->_OP_CODE_LUT[0xCBF1] =
-    // this->_OP_CODE_LUT[0xCBF2] =
-    // this->_OP_CODE_LUT[0xCBF3] =
-    // this->_OP_CODE_LUT[0xCBF4] =
-    // this->_OP_CODE_LUT[0xCBF5] =
-    // this->_OP_CODE_LUT[0xCBF6] =
-    // this->_OP_CODE_LUT[0xCBF7] =
-    // this->_OP_CODE_LUT[0xCBF8] =
-    // this->_OP_CODE_LUT[0xCBF9] =
-    // this->_OP_CODE_LUT[0xCBFA] =
-    // this->_OP_CODE_LUT[0xCBFB] =
-    // this->_OP_CODE_LUT[0xCBFC] =
-    // this->_OP_CODE_LUT[0xCBFD] =
-    // this->_OP_CODE_LUT[0xCBFE] =
-    // this->_OP_CODE_LUT[0xCBFF] =
-    ////////////////////////////////////////////////////////////////
-}
+//     ////////////////////////////////////////////////////////////////
+//     /* CB 0xF0 */
+//     // this->_OP_CODE_LUT[0xCBF0] =
+//     // this->_OP_CODE_LUT[0xCBF1] =
+//     // this->_OP_CODE_LUT[0xCBF2] =
+//     // this->_OP_CODE_LUT[0xCBF3] =
+//     // this->_OP_CODE_LUT[0xCBF4] =
+//     // this->_OP_CODE_LUT[0xCBF5] =
+//     // this->_OP_CODE_LUT[0xCBF6] =
+//     // this->_OP_CODE_LUT[0xCBF7] =
+//     // this->_OP_CODE_LUT[0xCBF8] =
+//     // this->_OP_CODE_LUT[0xCBF9] =
+//     // this->_OP_CODE_LUT[0xCBFA] =
+//     // this->_OP_CODE_LUT[0xCBFB] =
+//     // this->_OP_CODE_LUT[0xCBFC] =
+//     // this->_OP_CODE_LUT[0xCBFD] =
+//     // this->_OP_CODE_LUT[0xCBFE] =
+//     // this->_OP_CODE_LUT[0xCBFF] =
+//     ////////////////////////////////////////////////////////////////
+// }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 /* CPU CONTROL INSTRUCTIONS */
@@ -663,7 +673,7 @@ void CPU::_ccf() {
     if (this->_get_flag(CARRY_FLAG) == 1) { this->_clear_flag(CARRY_FLAG); }
     else { this->_set_flag(CARRY_FLAG); }
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -677,7 +687,7 @@ void CPU::_scf() {
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_set_flag(CARRY_FLAG);
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -687,7 +697,7 @@ NOP
 */
 void CPU::_nop() {
     this->_read_and_increment_PC();
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -699,7 +709,7 @@ void CPU::_halt() {
     this->_read_and_increment_PC();
     this->_is_halted = true;
 
-    while (this->_is_halted) { this->_cycles += MACHINE_CYCLE; }
+    while (this->_is_halted) { this->cycles += MACHINE_CYCLE; }
 }
 
 /*
@@ -709,8 +719,8 @@ DI
 */
 void CPU::_di() {
     this->_read_and_increment_PC();
-    this->_IME = 0;
-    this->_cycles += MACHINE_CYCLE;
+    this->IME = 0;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -720,8 +730,8 @@ EI
 */
 void CPU::_ei() {
     this->_read_and_increment_PC();
-    this->_IME = 1;
-    this->_cycles += MACHINE_CYCLE;
+    this->IME = 1;
+    this->cycles += MACHINE_CYCLE;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -739,6 +749,7 @@ void CPU::_jp_nn() {
     uint8_t n_msb = this->_read_and_increment_PC();
 
     this->jump( (n_msb << 8) | n_lsb );
+    this->cycles += MACHINE_CYCLE*4;
 }
 
 /*
@@ -749,6 +760,7 @@ JP HL
 void CPU::_jp_HL() {
     this->_read_and_increment_PC();
     this->jump(this->_HL.raw);
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -763,9 +775,10 @@ void CPU::_jp_cc_nn() {
 
     if (this->_eval_cond_code(c)) {
         this->jump( (n_msb << 8) | n_lsb );
+        this->cycles += MACHINE_CYCLE*4;
     }
     else {
-        this->_cycles += MACHINE_CYCLE*3;
+        this->cycles += MACHINE_CYCLE*3;
     }
 }
 
@@ -778,7 +791,7 @@ void CPU::_jr_dd() {
     this->_read_and_increment_PC();
     uint8_t d = static_cast<int8_t>(this->_read_and_increment_PC());
     this->_PC.raw += d;
-    this->_cycles += MACHINE_CYCLE*3;
+    this->cycles += MACHINE_CYCLE*3;
 }
 
 /*
@@ -789,14 +802,14 @@ JR cc dd
 */
 void CPU::_jr_cc_dd() {
     uint8_t c = (this->_read_and_increment_PC() >> 3) & 0b11;
-    uint8_t d = static_cast<int8_t>(this->_read_and_increment_PC());
+    int8_t d = static_cast<int8_t>(this->_read_and_increment_PC());
 
     if (this->_eval_cond_code(c)) {
         this->_PC.raw += d;
-        this->_cycles += MACHINE_CYCLE*3;
+        this->cycles += MACHINE_CYCLE*3;
     }
     else {
-        this->_cycles += MACHINE_CYCLE*2;
+        this->cycles += MACHINE_CYCLE*2;
     }
 }
 
@@ -814,11 +827,9 @@ void CPU::_call_nn() {
     uint8_t n_lsb = this->_read_and_increment_PC();
     uint8_t n_msb = this->_read_and_increment_PC();
 
-    this->_push_stack(this->_PC.bytes[1]);
-    this->_push_stack(this->_PC.bytes[0]);
-    this->_PC.raw = (n_msb << 8) | n_lsb;
+    this->call( (n_msb << 8) | n_lsb );
 
-    this->_cycles += MACHINE_CYCLE*6;
+    this->cycles += MACHINE_CYCLE*6;
 }
 
 /*
@@ -832,13 +843,11 @@ void CPU::_call_cc_nn() {
     uint8_t n_msb = this->_read_and_increment_PC();
 
     if (this->_eval_cond_code(c)) {
-        this->_push_stack( (this->_PC.raw >> 8) & 0xff );
-        this->_push_stack( this->_PC.raw & 0xff );
-        this->_PC.raw = (n_msb << 8) | n_lsb;
-        this->_cycles += MACHINE_CYCLE*6;
+        this->call( (n_msb << 8) | n_lsb );
+        this->cycles += MACHINE_CYCLE*6;
     }
     else {
-        this->_cycles += MACHINE_CYCLE*3;
+        this->cycles += MACHINE_CYCLE*3;
     }
 }
 
@@ -854,7 +863,7 @@ void CPU::_ret() {
     uint8_t pc_lsb = this->_pop_stack();
     uint8_t pc_msb = this->_pop_stack();
     this->_PC.raw = (pc_msb << 8) | pc_lsb;
-    this->_cycles += MACHINE_CYCLE*4;
+    this->cycles += MACHINE_CYCLE*4;
 }
 
 /*
@@ -869,10 +878,10 @@ void CPU::_ret_cc() {
         uint8_t pc_lsb = this->_pop_stack();
         uint8_t pc_msb = this->_pop_stack();
         this->_PC.raw = (pc_msb << 8) | pc_lsb;
-        this->_cycles += MACHINE_CYCLE*5;
+        this->cycles += MACHINE_CYCLE*5;
     }
     else {
-        this->_cycles += MACHINE_CYCLE*2;
+        this->cycles += MACHINE_CYCLE*2;
     }
 }
 
@@ -888,9 +897,9 @@ void CPU::_reti() {
     uint8_t pc_msb = this->_pop_stack();
     this->_PC.raw = (pc_msb << 8) | pc_lsb;
 
-    this->_IME = 1;
+    this->IME = 1;
 
-    this->_cycles += MACHINE_CYCLE*4;
+    this->cycles += MACHINE_CYCLE*4;
 }
 
 /*
@@ -931,9 +940,9 @@ void CPU::_rst_n() {
 
     this->_push_stack(this->_PC.bytes[1]);
     this->_push_stack(this->_PC.bytes[0]);
-    this->_PC.raw = n;
+    this->_PC.raw = addr;
 
-    this->_cycles += MACHINE_CYCLE*4;
+    this->cycles += MACHINE_CYCLE*4;
 
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -941,9 +950,9 @@ void CPU::_rst_n() {
 ///////////////////////////////////////////////////////////////////////////////////////////
 /* 8-BIT LOAD INSTRUCTIONS */
 /*
-LD r, r'
+LD r, R
     - OpCode = 0b01xxxyyy
-    - load to the 8-bit register r, data from the 8-bit register r'
+    - load to the 8-bit register r, data from the 8-bit register R
 */
 void CPU::_ld_r_R() {
     uint8_t opcode = this->_read_and_increment_PC();
@@ -952,7 +961,7 @@ void CPU::_ld_r_R() {
     uint8_t* R = this->_get_8_bit_reg(opcode & 0b111);
     (*r) = (*R);
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -967,7 +976,7 @@ void CPU::_ld_r_n() {
     uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
     (*r) = n;
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -981,7 +990,7 @@ void CPU::_ld_r_HL() {
     uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
     (*r) = this->mem_read_byte(this->_HL.raw);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -993,9 +1002,9 @@ void CPU::_ld_HL_r() {
     uint8_t opcode = this->_read_and_increment_PC();
 
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
-    this->_HL.raw = *r;
+    this->mem_write_byte(this->_HL.raw, *r);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1005,9 +1014,11 @@ LD (HL), n
 */
 void CPU::_ld_HL_n() {
     this->_read_and_increment_PC();
+
     uint8_t n = this->_read_and_increment_PC();
-    this->_HL.raw = n;
-    this->_cycles += MACHINE_CYCLE*3;
+    this->mem_write_byte(this->_HL.raw, n);
+
+    this->cycles += MACHINE_CYCLE*3;
 }
 
 /*
@@ -1018,7 +1029,7 @@ LD A, (BC)
 void CPU::_ld_A_BC() {
     this->_read_and_increment_PC();    
     this->_AF.bytes[1] = this->mem_read_byte(this->_BC.raw);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1029,7 +1040,7 @@ LD A, (DE)
 void CPU::_ld_A_DE() {
     this->_read_and_increment_PC();
     this->_AF.bytes[1] = this->mem_read_byte(this->_DE.raw);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1040,10 +1051,10 @@ LD (BC), A
 void CPU::_ld_BC_A() {
     this->_read_and_increment_PC();
 
-    uint8_t addr = this->_BC.raw;
+    uint16_t addr = this->_BC.raw;
     this->mem_write_byte(addr, this->_AF.bytes[1]);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1054,10 +1065,10 @@ LD (DE), A
 void CPU::_ld_DE_A() {
     this->_read_and_increment_PC();
 
-    uint8_t addr = this->_DE.raw;
+    uint16_t addr = this->_DE.raw;
     this->mem_write_byte(addr, this->_AF.bytes[1]);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1073,7 +1084,7 @@ void CPU::_ld_A_nn() {
     uint16_t addr = (msb_n << 8) | lsb_n;
     this->_AF.bytes[1] = this->mem_read_byte(addr);
 
-    this->_cycles += MACHINE_CYCLE*4;
+    this->cycles += MACHINE_CYCLE*4;
 }
 
 /*
@@ -1086,10 +1097,10 @@ void CPU::_ld_nn_A() {
     uint8_t lsb_n = this->_read_and_increment_PC();
     uint8_t msb_n = this->_read_and_increment_PC();
 
-    uint8_t addr = (msb_n << 8) | lsb_n;
+    uint16_t addr = (msb_n << 8) | lsb_n;
     this->mem_write_byte(addr, this->_AF.bytes[1]);
 
-    this->_cycles += MACHINE_CYCLE*4;
+    this->cycles += MACHINE_CYCLE*4;
 }
 
 /*
@@ -1101,7 +1112,7 @@ void CPU::_ld_A_FF00_n() {
     this->_read_and_increment_PC();
     uint8_t n = this->_read_and_increment_PC() & 0xff;
     this->_AF.bytes[1] = this->mem_read_byte(0xff00 + n);
-    this->_cycles += MACHINE_CYCLE*3;
+    this->cycles += MACHINE_CYCLE*3;
 }
 
 /*
@@ -1113,7 +1124,7 @@ void CPU::_ld_FF00_n_A() {
     this->_read_and_increment_PC();
     uint8_t n = this->_read_and_increment_PC() & 0xff;
     this->mem_write_byte(0xff00 + n, this->_AF.bytes[1]);
-    this->_cycles += MACHINE_CYCLE*3;
+    this->cycles += MACHINE_CYCLE*3;
 }
 
 /*
@@ -1124,7 +1135,7 @@ LD A, (FF00 + C)
 void CPU::_ld_A_FF00_C() {
     this->_read_and_increment_PC();
     this->_AF.bytes[1] = this->mem_read_byte(0xff00 + this->_BC.bytes[0]);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1134,9 +1145,9 @@ LD (FF00 + C), A
 */
 void CPU::_ld_FF00_C_A() {
     this->_read_and_increment_PC();
-    uint8_t addr = 0xff00 + this->_BC.bytes[0];
+    uint16_t addr = 0xff00 + this->_BC.bytes[0];
     this->mem_write_byte(addr, this->_AF.bytes[1]);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1148,7 +1159,7 @@ void CPU::_ldi_HL_A() {
     this->_read_and_increment_PC();
     this->mem_write_byte(this->_HL.raw, this->_AF.bytes[1]);
     this->_HL.raw += 1;
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1160,7 +1171,7 @@ void CPU::_ldi_A_HL() {
     this->_read_and_increment_PC();
     this->_AF.bytes[1] = this->mem_read_byte(this->_HL.raw);
     this->_HL.raw += 1;
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1172,7 +1183,7 @@ void CPU::_ldd_HL_A() {
     this->_read_and_increment_PC();
     this->mem_write_byte(this->_HL.raw, this->_AF.bytes[1]);
     this->_HL.raw -= 1;
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1184,7 +1195,7 @@ void CPU::_ldd_A_HL() {
     this->_read_and_increment_PC();
     this->_AF.bytes[1] = this->mem_read_byte(this->_HL.raw);
     this->_HL.raw -= 1;
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1203,7 +1214,7 @@ void CPU::_ld_rr_nn() {
     Reg* reg = this->_get_16_bit_reg( (opcode >> 4) & 0b11 );
     reg->raw = (msb_n << 8) | lsb_n;
 
-    this->_cycles += MACHINE_CYCLE*3;
+    this->cycles += MACHINE_CYCLE*3;
 }
 
 /*
@@ -1219,7 +1230,7 @@ void CPU::_ld_nn_SP() {
     uint16_t addr = (msb_n << 8) | lsb_n;
     this->mem_write_byte(addr, this->_SP.raw);
 
-    this->_cycles += MACHINE_CYCLE*5;
+    this->cycles += MACHINE_CYCLE*5;
 }
 
 /*
@@ -1230,7 +1241,7 @@ LD SP, HL
 void CPU::_ld_SP_HL() {
     this->_read_and_increment_PC();
     this->_SP.raw = this->_HL.raw;
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1245,7 +1256,7 @@ void CPU::_push_rr() {
     this->_push_stack(reg->bytes[1]);
     this->_push_stack(reg->bytes[0]);
 
-    this->_cycles += MACHINE_CYCLE*4;
+    this->cycles += MACHINE_CYCLE*4;
 }
 
 /*
@@ -1262,7 +1273,7 @@ void CPU::_pop_rr() {
 
     reg->raw = (msb << 8) | lsb;
 
-    this->_cycles += MACHINE_CYCLE*3;    
+    this->cycles += MACHINE_CYCLE*3;    
 }
 
 /*
@@ -1285,7 +1296,7 @@ void CPU::_ld_HL_SP_dd() {
     if (CHECK_8_BIT_CARRY(this->_SP.raw, d)) { this->_set_flag(CARRY_FLAG); }
     else { this->_clear_flag(CARRY_FLAG); }
 
-    this->_cycles += MACHINE_CYCLE*3;
+    this->cycles += MACHINE_CYCLE*3;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1302,7 +1313,7 @@ void CPU::_add_A_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     this->_AF.bytes[1] = this->_add_bytes(this->_AF.bytes[1], *r);
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1315,7 +1326,7 @@ void CPU::_add_A_n() {
     this->_read_and_increment_PC();
     uint8_t n = this->_read_and_increment_PC();
     this->_AF.bytes[1] = this->_add_bytes(this->_AF.bytes[1], n);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1328,7 +1339,7 @@ void CPU::_add_A_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
     this->_AF.bytes[1] = this->_add_bytes(data, this->_AF.bytes[1]);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1342,7 +1353,7 @@ void CPU::_adc_A_r() {
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     uint8_t c = this->_get_flag(CARRY_FLAG);
     this->_AF.bytes[1] = this->_add_bytes(this->_AF.bytes[1], *r + c);
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1356,7 +1367,7 @@ void CPU::_adc_A_n() {
     uint8_t n = this->_read_and_increment_PC();
     uint8_t c = this->_get_flag(CARRY_FLAG);
     this->_AF.bytes[1] = this->_add_bytes(this->_AF.bytes[1], n + c);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1370,7 +1381,7 @@ void CPU::_adc_A_HL() {
     uint8_t data = this->mem_read_byte(this->_HL.raw);
     uint8_t c = this->_get_flag(CARRY_FLAG);
     this->_AF.bytes[1] = this->_add_bytes(this->_AF.bytes[1], data + c);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1383,7 +1394,7 @@ void CPU::_sub_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], *r);
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1396,7 +1407,7 @@ void CPU::_sub_n() {
     this->_read_and_increment_PC();
     uint8_t n = this->_read_and_increment_PC();
     this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], n);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1409,7 +1420,7 @@ void CPU::_sub_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
     this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], data);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1423,7 +1434,7 @@ void CPU::_sbc_A_r() {
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     uint8_t c = this->_get_flag(CARRY_FLAG);
     this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], *r + c);
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1437,7 +1448,7 @@ void CPU::_sbc_A_n() {
     uint8_t n = this->_read_and_increment_PC();
     uint8_t c = this->_get_flag(CARRY_FLAG);
     this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], n + c);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1451,7 +1462,7 @@ void CPU::_sbc_A_HL() {
     uint8_t data = this->mem_read_byte(this->_HL.raw);
     uint8_t c = this->_get_flag(CARRY_FLAG);
     this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], data + c);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1472,7 +1483,7 @@ void CPU::_and_r() {
     this->_set_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1493,7 +1504,7 @@ void CPU::_and_n() {
     this->_set_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1514,7 +1525,7 @@ void CPU::_and_HL() {
     this->_set_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1535,7 +1546,7 @@ void CPU::_xor_r() {
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1556,7 +1567,7 @@ void CPU::_xor_n() {
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1577,7 +1588,7 @@ void CPU::_xor_HL() {
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1598,7 +1609,7 @@ void CPU::_or_r() {
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1619,7 +1630,7 @@ void CPU::_or_n() {
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1640,7 +1651,7 @@ void CPU::_or_HL() {
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1653,7 +1664,7 @@ void CPU::_cp_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     this->_sub_bytes(this->_AF.bytes[1], *r);
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1666,7 +1677,7 @@ void CPU::_cp_n() {
     this->_read_and_increment_PC();
     uint8_t n = this->_read_and_increment_PC();
     this->_sub_bytes(this->_AF.bytes[1], n);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1679,7 +1690,7 @@ void CPU::_cp_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
     this->_sub_bytes(this->_AF.bytes[1], data);
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1701,7 +1712,7 @@ void CPU::_inc_r() {
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     (*r) += 1;
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1723,7 +1734,7 @@ void CPU::_inc_HL() {
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     this->mem_write_byte(this->_HL.raw, data + 1);
-    this->_cycles += MACHINE_CYCLE*3;
+    this->cycles += MACHINE_CYCLE*3;
 }
 
 /*
@@ -1745,7 +1756,7 @@ void CPU::_dec_r() {
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     (*r) -= 1;
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1767,7 +1778,7 @@ void CPU::_dec_HL() {
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     this->mem_write_byte(this->_HL.raw, data + 1);
-    this->_cycles += MACHINE_CYCLE*3;
+    this->cycles += MACHINE_CYCLE*3;
 }
 
 /*
@@ -1803,7 +1814,7 @@ void CPU::_daa() {
 
     this->_AF.bytes[1] = A & 0xff;
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1817,7 +1828,7 @@ void CPU::_cpl() {
     this->_AF.bytes[1] ^= 0xff;
     this->_set_flag(SUB_FLAG);
     this->_set_flag(HALF_CARRY_FLAG);
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1841,7 +1852,7 @@ void CPU::_add_HL_rr() {
     else { this->_clear_flag(CARRY_FLAG); }
 
     this->_HL.raw += r->raw;
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1854,7 +1865,7 @@ void CPU::_inc_rr() {
     Reg* r = this->_get_16_bit_reg( (opcode >> 4) & 0b11 );
     r->raw += 1;
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1867,7 +1878,7 @@ void CPU::_dec_rr() {
     Reg* r = this->_get_16_bit_reg( (opcode >> 4) & 0b11 );
     r->raw -= 1;
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1890,7 +1901,7 @@ void CPU::_add_SP_dd() {
     else { this->_clear_flag(CARRY_FLAG); }
 
     this->_SP.raw += dd;
-    this->_cycles += MACHINE_CYCLE*4;
+    this->cycles += MACHINE_CYCLE*4;
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1916,7 +1927,7 @@ void CPU::_bit_n_r() {
     this->_clear_flag(SUB_FLAG);
     this->_set_flag(HALF_CARRY_FLAG);
 
-    this->_cycles += MACHINE_CYCLE*2;
+    this->cycles += MACHINE_CYCLE*2;
 }
 
 /*
@@ -1951,7 +1962,7 @@ void CPU::_rlca() {
     if ((temp >> 7) & 1) { this->_set_flag(CARRY_FLAG); }
     else { this->_clear_flag(CARRY_FLAG); }
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1974,7 +1985,7 @@ void CPU::_rla() {
     if ((temp >> 7) & 1) { this->_set_flag(CARRY_FLAG); }
     else { this->_clear_flag(CARRY_FLAG); }
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -1997,7 +2008,7 @@ void CPU::_rrca() {
     if (temp & 1) { this->_set_flag(CARRY_FLAG); }
     else { this->_clear_flag(CARRY_FLAG); }
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -2020,7 +2031,7 @@ void CPU::_rra() {
     if (temp & 1) { this->_set_flag(CARRY_FLAG); }
     else { this->_clear_flag(CARRY_FLAG); }
 
-    this->_cycles += MACHINE_CYCLE;
+    this->cycles += MACHINE_CYCLE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

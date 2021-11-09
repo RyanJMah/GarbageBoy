@@ -1,5 +1,16 @@
+/*
+Emulates the CPU
+
+reference:
+    - https://gbdev.io/pandocs/CPU_Registers_and_Flags.html
+*/
+
+#include <iostream>
+
 #include <stdint.h>
 #include <stddef.h>
+#include <fstream>
+#include <vector>
 #include "serial.hpp"
 #include "interrupt_controller.hpp"
 #include "cpu.hpp"
@@ -13,12 +24,13 @@ CPU::CPU() {
     this->_PC.raw = 0x0000;
 
     for (size_t i = 0; i < 0xffff; i++) { this->_memory[i] = 0; }
-    this->_cycles = 0;
+    this->cycles = 0;
 
     this->_OP_CODE_LUT_init();
-	this->_OP_CODE_LUT_init_CB();
+	// this->_OP_CODE_LUT_init_CB();
 
     this->_peripherals.push_back( new Serial(this) );
+
     this->_peripherals.push_back( new InterruptController(this) );
 }
 CPU::~CPU() {
@@ -27,17 +39,28 @@ CPU::~CPU() {
     }
 }
 
+void CPU::load_rom(std::string rom_path) {
+    this->_init_state();
+
+    std::vector<uint8_t> rom_bytes = this->_read_rom_file(rom_path);
+    for (size_t i = 0; i < rom_bytes.size(); i++) {
+        this->mem_write_byte(i, rom_bytes[i]);
+    }
+}
+
 void CPU::run() {
     // idk how much this will really improve performance, but eh...
     size_t peripheral_vect_size = this->_peripherals.size();
+    uint8_t curr_opcode;
     void (CPU::*curr_instruction)();
 
     while (1) {
-        curr_instruction = this->_OP_CODE_LUT[ this->mem_read_byte(this->_PC.raw) ];
+        curr_opcode = this->mem_read_byte(this->_PC.raw);
+        curr_instruction = this->_OP_CODE_LUT[curr_opcode];
         (this->*curr_instruction)();
 
         for (size_t i = 0; i < peripheral_vect_size; i++) {
-            this->_peripherals[i]->update();
+            this->_peripherals[i]->respond();
         }
     }
 }
@@ -54,7 +77,103 @@ uint8_t* CPU::mem_get(size_t addr) {
 
 void CPU::jump(size_t addr) {
     this->_PC.raw = addr;
-    this->_cycles += MACHINE_CYCLE*4;
+}
+void CPU::call(size_t addr) {
+    this->_push_stack(this->_PC.bytes[1]);
+    this->_push_stack(this->_PC.bytes[0]);
+    this->_PC.raw = addr;
+}
+
+/*
+Bypasses the boot rom by setting the state to what
+it needs to be to handoff the rom to a cartridge.
+
+reference:
+    - https://gbdev.io/pandocs/Power_Up_Sequence.html
+    - using the DMG boot rom
+*/
+void CPU::_init_state() {
+    this->_AF.bytes[1] = 0x01;
+
+    this->_set_flag(ZERO_FLAG);
+    this->_clear_flag(SUB_FLAG);
+    this->_set_flag(HALF_CARRY_FLAG);
+    this->_set_flag(CARRY_FLAG);
+
+    this->_BC.raw = (0x00U << 8) | (0x13U);
+    this->_DE.raw = (0x00U << 8) | (0xd8U);
+    this->_HL.raw = (0x01U << 8) | (0x4dU);
+    this->_PC.raw = 0x0100U;
+    this->_SP.raw = 0xfffeU;
+
+    this->mem_write_byte(0xff00U, 0xcfU);
+    this->mem_write_byte(0xff01U, 0x00U);
+    this->mem_write_byte(0xff02U, 0x7eU);
+    this->mem_write_byte(0xff04U, 0xabU);
+    this->mem_write_byte(0xff05U, 0x00U);
+    this->mem_write_byte(0xff06U, 0x00U);
+    this->mem_write_byte(0xff07U, 0xf8U);
+    this->mem_write_byte(0xff0fU, 0xe1U);
+    this->mem_write_byte(0xff10U, 0x80U);
+    this->mem_write_byte(0xff11U, 0xbfU);
+    this->mem_write_byte(0xff12U, 0xf3U);
+    this->mem_write_byte(0xff13U, 0xffU);
+    this->mem_write_byte(0xff14U, 0xbfU);
+    this->mem_write_byte(0xff16U, 0x3fU);
+    this->mem_write_byte(0xff17U, 0x00U);
+    this->mem_write_byte(0xff18U, 0xffU);
+    this->mem_write_byte(0xff19U, 0xbfU);
+    this->mem_write_byte(0xff1aU, 0x7fU);
+    this->mem_write_byte(0xff1bU, 0xffU);
+    this->mem_write_byte(0xff1cU, 0x9fU);
+    this->mem_write_byte(0xff1dU, 0xffU);
+    this->mem_write_byte(0xff1eU, 0xbfU);
+    this->mem_write_byte(0xff20U, 0xffU);
+    this->mem_write_byte(0xff21U, 0x00U);
+    this->mem_write_byte(0xff22U, 0x00U);
+    this->mem_write_byte(0xff23U, 0xbfU);
+    this->mem_write_byte(0xff24U, 0x77U);
+    this->mem_write_byte(0xff25U, 0xf3U);
+    this->mem_write_byte(0xff26U, 0xf1U);
+    this->mem_write_byte(0xff40U, 0x91U);
+    this->mem_write_byte(0xff41U, 0x85U);
+    this->mem_write_byte(0xff42U, 0x00U);
+    this->mem_write_byte(0xff43U, 0x00U);
+    this->mem_write_byte(0xff44U, 0x00U);
+    this->mem_write_byte(0xff45U, 0x00U);
+    this->mem_write_byte(0xff46U, 0xffU);
+    this->mem_write_byte(0xff47U, 0xfcU);
+    this->mem_write_byte(0xff48U, 0x00U);
+    this->mem_write_byte(0xff49U, 0x00U);
+    this->mem_write_byte(0xff4aU, 0x00U);
+    this->mem_write_byte(0xff4bU, 0x00U);
+    this->mem_write_byte(0xff4dU, 0xffU);
+    this->mem_write_byte(0xff4fU, 0xffU);
+    this->mem_write_byte(0xff51U, 0xffU);
+    this->mem_write_byte(0xff52U, 0xffU);
+    this->mem_write_byte(0xff53U, 0xffU);
+    this->mem_write_byte(0xff54U, 0xffU);
+    this->mem_write_byte(0xff55U, 0xffU);
+    this->mem_write_byte(0xff56U, 0xffU);
+    this->mem_write_byte(0xff68U, 0xffU);
+    this->mem_write_byte(0xff69U, 0xffU);
+    this->mem_write_byte(0xff6aU, 0xffU);
+    this->mem_write_byte(0xff6bU, 0xffU);
+    this->mem_write_byte(0xff70U, 0xffU);
+    this->mem_write_byte(0xffffU, 0x00U);
+}
+
+std::vector<uint8_t> CPU::_read_rom_file(std::string rom_path) {
+    std::ifstream f(rom_path, std::ios::binary);
+
+    f.seekg(0, std::ios::end);
+    std::streampos f_size = f.tellg();
+    f.seekg(0, std::ios::beg);
+
+    std::vector<uint8_t> rom_data(f_size);
+    f.read((char*)(&rom_data[0]), f_size);
+
+    return rom_data;
 }
 
 uint8_t CPU::_read_and_increment_PC() {
@@ -96,10 +215,10 @@ uint8_t* CPU::_get_8_bit_reg(uint8_t bitcode) {
             ret = &(this->_HL.bytes[0]);
             break;
         case (0b110):
-            ret = &(this->_AF.bytes[1]);
+            ret = &(this->_AF.bytes[0]);
             break;
         case (0b111):
-            ret = &(this->_AF.bytes[0]);
+            ret = &(this->_AF.bytes[1]);
             break;
     }
     return ret;

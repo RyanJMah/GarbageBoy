@@ -2,8 +2,8 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <string>
 #include <vector>
-#include <unordered_map>
 #include "abstract_peripheral.hpp"
 
 /*
@@ -47,6 +47,8 @@ union Reg {
 class AbstractPeripheral;
 
 class CPU {
+    friend class AbstractPeripheral;
+
     public:
         CPU();
         ~CPU();
@@ -56,9 +58,14 @@ class CPU {
         uint8_t* mem_get(size_t addr);
 
         void jump(size_t addr);
+        void call(size_t addr);
 
-        void load_rom();
+        void load_rom(std::string rom_path);
         void run();
+
+    public:
+        bool IME;  // Interrupt Master Enable Flag
+        uint32_t cycles;
 
     private:
         // registers
@@ -69,18 +76,18 @@ class CPU {
         Reg _SP;    // Stack Pointer
         Reg _PC;    // Program Counter
 
-        bool _IME;  // Interrupt Master Enable Flag
-
         uint8_t _memory[0xffff];
-        uint32_t _cycles;
         bool _is_halted;
 
-        std::unordered_map<size_t, void (CPU::*)()> _OP_CODE_LUT;
+        void (CPU::*_OP_CODE_LUT[256])();
         std::vector<AbstractPeripheral*> _peripherals;
 
     private:
         void _OP_CODE_LUT_init();
         void _OP_CODE_LUT_init_CB();
+
+        void _init_state();
+        std::vector<uint8_t> _read_rom_file(std::string rom_path);
 
         uint8_t _read_and_increment_PC();
 

@@ -2,9 +2,15 @@ TARGET = main
 BUILD_DIR = build
 DEBUG = 1
 
-OPT = -O2
+OPT = -O0
+OS = linux
 
-CC = g++ -std=c++11
+ifeq ($(OS), macos)
+	CC = g++-11 -std=c++11
+else ifeq ($(OS), linux)
+	CC = g++ -std=c++11
+endif
+
 CP = objcopy
 SZ = size
 
