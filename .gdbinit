@@ -1,7 +1,7 @@
 file build/main.elf
 b main
 
-b cpu.cpp:57
+b cpu.cpp:60
 
 define hook-stop
     printf "\n"
