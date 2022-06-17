@@ -1,0 +1,128 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-g++-10",
+      "-std=c++11",
+      "-c",
+      "-I",
+      "./inc",
+      "-O0",
+      "-Wall",
+      "-ggdb",
+      "src/abstract_peripheral.cpp",
+      "-o",
+      "build/abstract_peripheral.o"
+    ],
+    "directory": "/home/vagrant/shared/Personal/Projects/GarbageBoy",
+    "file": "/home/vagrant/shared/Personal/Projects/GarbageBoy/src/abstract_peripheral.cpp",
+    "output": "/home/vagrant/shared/Personal/Projects/GarbageBoy/build/abstract_peripheral.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-g++-10",
+      "-std=c++11",
+      "-c",
+      "-I",
+      "./inc",
+      "-O0",
+      "-Wall",
+      "-ggdb",
+      "src/cpu.cpp",
+      "-o",
+      "build/cpu.o"
+    ],
+    "directory": "/home/vagrant/shared/Personal/Projects/GarbageBoy",
+    "file": "/home/vagrant/shared/Personal/Projects/GarbageBoy/src/cpu.cpp",
+    "output": "/home/vagrant/shared/Personal/Projects/GarbageBoy/build/cpu.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-g++-10",
+      "-std=c++11",
+      "-c",
+      "-I",
+      "./inc",
+      "-O0",
+      "-Wall",
+      "-ggdb",
+      "src/cpu_opcodes.cpp",
+      "-o",
+      "build/cpu_opcodes.o"
+    ],
+    "directory": "/home/vagrant/shared/Personal/Projects/GarbageBoy",
+    "file": "/home/vagrant/shared/Personal/Projects/GarbageBoy/src/cpu_opcodes.cpp",
+    "output": "/home/vagrant/shared/Personal/Projects/GarbageBoy/build/cpu_opcodes.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-g++-10",
+      "-std=c++11",
+      "-c",
+      "-I",
+      "./inc",
+      "-O0",
+      "-Wall",
+      "-ggdb",
+      "src/interrupt_controller.cpp",
+      "-o",
+      "build/interrupt_controller.o"
+    ],
+    "directory": "/home/vagrant/shared/Personal/Projects/GarbageBoy",
+    "file": "/home/vagrant/shared/Personal/Projects/GarbageBoy/src/interrupt_controller.cpp",
+    "output": "/home/vagrant/shared/Personal/Projects/GarbageBoy/build/interrupt_controller.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-g++-10",
+      "-std=c++11",
+      "-c",
+      "-I",
+      "./inc",
+      "-O0",
+      "-Wall",
+      "-ggdb",
+      "src/main.cpp",
+      "-o",
+      "build/main.o"
+    ],
+    "directory": "/home/vagrant/shared/Personal/Projects/GarbageBoy",
+    "file": "/home/vagrant/shared/Personal/Projects/GarbageBoy/src/main.cpp",
+    "output": "/home/vagrant/shared/Personal/Projects/GarbageBoy/build/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-g++-10",
+      "-std=c++11",
+      "-c",
+      "-I",
+      "./inc",
+      "-O0",
+      "-Wall",
+      "-ggdb",
+      "src/peripheral.cpp",
+      "-o",
+      "build/peripheral.o"
+    ],
+    "directory": "/home/vagrant/shared/Personal/Projects/GarbageBoy",
+    "file": "/home/vagrant/shared/Personal/Projects/GarbageBoy/src/peripheral.cpp",
+    "output": "/home/vagrant/shared/Personal/Projects/GarbageBoy/build/peripheral.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/x86_64-linux-gnu-g++-10",
+      "-std=c++11",
+      "-c",
+      "-I",
+      "./inc",
+      "-O0",
+      "-Wall",
+      "-ggdb",
+      "src/serial.cpp",
+      "-o",
+      "build/serial.o"
+    ],
+    "directory": "/home/vagrant/shared/Personal/Projects/GarbageBoy",
+    "file": "/home/vagrant/shared/Personal/Projects/GarbageBoy/src/serial.cpp",
+    "output": "/home/vagrant/shared/Personal/Projects/GarbageBoy/build/serial.o"
+  }
+]
