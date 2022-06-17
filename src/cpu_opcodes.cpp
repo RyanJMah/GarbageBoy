@@ -1703,6 +1703,8 @@ void CPU::_inc_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
 
+    (*r) += 1;
+
     if (*r == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
@@ -1711,7 +1713,6 @@ void CPU::_inc_r() {
     if (CHECK_8_BIT_HALF_CARRY(*r, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
-    (*r) += 1;
     this->cycles += MACHINE_CYCLE;
 }
 

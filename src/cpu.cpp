@@ -264,16 +264,16 @@ bool CPU::_eval_cond_code(uint8_t bitcode) {
     bool ret;
     switch (bitcode) {
         case (0b00):
-            ret = (this->_get_flag(ZERO_FLAG) != 0);
+            ret = (this->_get_flag(ZERO_FLAG) != 1);
             break;
         case (0b01):
-            ret = (this->_get_flag(ZERO_FLAG) == 0);
+            ret = (this->_get_flag(ZERO_FLAG) == 1);
             break;
         case (0b10):
-            ret = (this->_get_flag(CARRY_FLAG) != 0);
+            ret = (this->_get_flag(CARRY_FLAG) != 1);
             break;
         case (0b11):
-            ret = (this->_get_flag(CARRY_FLAG) == 0);
+            ret = (this->_get_flag(CARRY_FLAG) == 1);
             break;
         default:
             throw std::range_error("received invalid bitcode...");
