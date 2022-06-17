@@ -27,7 +27,8 @@ CPU::CPU() {
     this->cycles = 0;
 
     this->_OP_CODE_LUT_init();
-	// this->_OP_CODE_LUT_init_CB();
+    // this->_OP_CODE_LUT_init_CB();
+
 
     this->_peripherals.push_back( new Serial(this) );
 
