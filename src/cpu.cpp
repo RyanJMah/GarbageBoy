@@ -42,12 +42,12 @@ CPU::~CPU() {
     }
 }
 
-void CPU::load_rom(std::string rom_path) {
+void CPU::load_rom(std::string rom_path, size_t offset) {
     this->_init_state();
 
     std::vector<uint8_t> rom_bytes = this->_read_rom_file(rom_path);
     for (size_t i = 0; i < rom_bytes.size(); i++) {
-        this->mem_write_byte(i, rom_bytes[i]);
+        this->mem_write_byte(i + offset, rom_bytes[i]);
     }
 }
 

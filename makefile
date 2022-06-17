@@ -21,6 +21,12 @@ vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 
 all: $(BUILD_DIR)/$(TARGET).elf
 
+.PHONY: run
+run: all
+	@echo "running $(BUILD_DIR)/$(TARGET).elf..."
+	@echo ""
+	@./build/main.elf
+
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR) 
 	$(CC) -c $(CPP_FLAGS) $< -o $@
 

@@ -60,7 +60,7 @@ class CPU {
         void jump(size_t addr);
         void call(size_t addr);
 
-        void load_rom(std::string rom_path);
+        void load_rom(std::string rom_path, size_t offset);
         void run();
 
     public:
