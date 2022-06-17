@@ -41,5 +41,6 @@ $(BUILD_DIR):
 	mkdir $@
 	@echo ""
 
+.PHONY: clean
 clean:
 	rm -rf $(BUILD_DIR)
