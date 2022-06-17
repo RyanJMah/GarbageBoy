@@ -6,11 +6,13 @@ reference:
 */
 
 #include <iostream>
+#include <stdexcept>
+#include <vector>
+#include <fstream>
 
 #include <stdint.h>
 #include <stddef.h>
-#include <fstream>
-#include <vector>
+
 #include "serial.hpp"
 #include "interrupt_controller.hpp"
 #include "cpu.hpp"
@@ -273,6 +275,9 @@ bool CPU::_eval_cond_code(uint8_t bitcode) {
         case (0b11):
             ret = (this->_get_flag(CARRY_FLAG) == 0);
             break;
+        default:
+            throw std::range_error("received invalid bitcode...");
+
     }
     return ret;
 }

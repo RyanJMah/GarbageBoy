@@ -76,7 +76,7 @@ class CPU {
         Reg _SP;    // Stack Pointer
         Reg _PC;    // Program Counter
 
-        uint8_t _memory[0xffff];
+        uint8_t _memory[0xffff + 1];
         bool _is_halted;
 
         void (CPU::*_OP_CODE_LUT[256])();
