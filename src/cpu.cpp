@@ -19,7 +19,7 @@ reference:
 
 void CPU::_log_trace(std::ofstream &tf) {
     // accumulator
-    tf << "A:" << PRINT_UINT8(this->_AF.bytes[1]) << " ";
+    tf << "A:" << PRINT_UINT8_UC(this->_AF.bytes[1]) << " ";
 
     // flags
     bool zf = this->_get_flag(ZERO_FLAG);
@@ -35,11 +35,11 @@ void CPU::_log_trace(std::ofstream &tf) {
     tf << "F:" << z << n << h << c << ' ';
 
     // other registers...
-    tf << "BC:" << PRINT_UINT16(this->_BC.raw) << " ";
-    tf << "DE:" << PRINT_UINT16(this->_DE.raw) << " ";
-    tf << "HL:" << PRINT_UINT16(this->_HL.raw) << " ";
-    tf << "SP:" << PRINT_UINT16(this->_SP.raw) << " ";
-    tf << "PC:" << PRINT_UINT16(this->_PC.raw) << std::endl;
+    tf << "BC:" << PRINT_UINT16_UC(this->_BC.raw) << " ";
+    tf << "DE:" << PRINT_UINT16_LC(this->_DE.raw) << " ";
+    tf << "HL:" << PRINT_UINT16_LC(this->_HL.raw) << " ";
+    tf << "SP:" << PRINT_UINT16_LC(this->_SP.raw) << " ";
+    tf << "PC:" << PRINT_UINT16_LC(this->_PC.raw) << std::endl;
 }
 
 CPU::CPU() {

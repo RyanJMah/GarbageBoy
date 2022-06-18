@@ -27,8 +27,13 @@
 #define ENABLE_TRACE        true
 #define TRACE_FPATH         "./garbage-boy-trace.log"
 
-#define PRINT_UINT8(x)      (boost::format("%02x") % (int)(x))
-#define PRINT_UINT16(x)     (boost::format("%04x") % (int)(x))
+// lowercase
+#define PRINT_UINT8_LC(x)      (boost::format("%02x") % (int)(x))
+#define PRINT_UINT16_LC(x)     (boost::format("%04x") % (int)(x))
+
+// uppercase
+#define PRINT_UINT8_UC(x)      (boost::format("%02X") % (int)(x))
+#define PRINT_UINT16_UC(x)     (boost::format("%04X") % (int)(x))
 
 #define MACHINE_CYCLE       4
 
