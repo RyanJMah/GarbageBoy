@@ -1252,6 +1252,13 @@ PUSH rr
 void CPU::_push_rr() {
     uint8_t opcode = this->_read_and_increment_PC();
     Reg* reg = this->_get_16_bit_reg( (opcode >> 4) & 0b11 );
+    /*
+    The "push" and "pop" instructions refer to different
+    registers for bitcode 0b11. It's almost always SP, but
+    for these instructions, it's AF. Yes, this is hacky, but eh...
+    */
+
+    if (reg == (&this->_SP)) { reg = &this->_AF; }
 
     this->_push_stack(reg->bytes[1]);
     this->_push_stack(reg->bytes[0]);
@@ -1268,10 +1275,24 @@ void CPU::_pop_rr() {
     uint8_t opcode = this->_read_and_increment_PC();
     Reg* reg = this->_get_16_bit_reg( (opcode >> 4) & 0b11 );
 
+    /*
+    The "push" and "pop" instructions refer to different
+    registers for bitcode 0b11. It's almost always SP, but
+    for these instructions, it's AF. Yes, this is hacky, but eh...
+    */
+    if (reg == (&this->_SP)) { reg = &this->_AF; }
+
     uint8_t lsb = this->_pop_stack();
     uint8_t msb = this->_pop_stack();
 
-    reg->raw = (msb << 8) | lsb;
+    uint16_t write_val = (msb << 8) | lsb;
+    if (reg == (&this->_AF)) {
+        // prevent a write to the flag bits...
+        write_val &= ~(0b11110000);
+        write_val |= (this->_AF.bytes[0] & 0b11110000);
+    }
+
+    reg->raw = write_val;
 
     this->cycles += MACHINE_CYCLE*3;    
 }
@@ -1703,15 +1724,15 @@ void CPU::_inc_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
 
-    if ((*r + 1) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
     this->_clear_flag(SUB_FLAG);
 
     if (CHECK_8_BIT_HALF_CARRY(*r, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     (*r) += 1;
+    if (*r == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
     this->cycles += MACHINE_CYCLE;
 }
 
@@ -1725,15 +1746,15 @@ void CPU::_inc_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
 
-    if ((data + 1) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
     this->_clear_flag(SUB_FLAG);
 
     if (CHECK_8_BIT_HALF_CARRY(data, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     this->mem_write_byte(this->_HL.raw, data + 1);
+    if (data == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
     this->cycles += MACHINE_CYCLE*3;
 }
 
@@ -1747,15 +1768,16 @@ void CPU::_dec_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
 
-    if ((*r - 1) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
 
     this->_set_flag(SUB_FLAG);
 
-    if (CHECK_8_BIT_HALF_CARRY(*r, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
+    if (CHECK_8_BIT_HALF_CARRY_SUB(*r, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     (*r) -= 1;
+    if (*r == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
     this->cycles += MACHINE_CYCLE;
 }
 
@@ -1769,15 +1791,15 @@ void CPU::_dec_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
 
-    if ((data - 1) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
     this->_clear_flag(SUB_FLAG);
 
     if (CHECK_8_BIT_HALF_CARRY(data, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     this->mem_write_byte(this->_HL.raw, data + 1);
+    if (data == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
     this->cycles += MACHINE_CYCLE*3;
 }
 

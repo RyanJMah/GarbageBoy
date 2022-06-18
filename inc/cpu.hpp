@@ -37,9 +37,12 @@
 
 #define MACHINE_CYCLE       4
 
-#define CHECK_8_BIT_HALF_CARRY(a, b) ( (((a & 0xf) + (b & 0xf)) & 0x10) == 0x10 )
+// I saw this method of checking on stackoverflow, I think mine is a bit more intiuitive tho...
+// #define CHECK_8_BIT_HALF_CARRY(a, b) ( (((a & 0xf) + (b & 0xf)) & 0x10) == 0x10 )
+
+#define CHECK_8_BIT_HALF_CARRY(a, b) ( ((a & 0xf) + (b & 0xf)) > 0xf )
 #define CHECK_16_BIT_HALF_CARRY(a, b) ( ((a & 0xfff) + (b & 0xfff)) > 0xfff )
-#define CHECK_SUB_HALF_CARRY(a, b) ( (a & 0xf) < (b & 0xf) )
+#define CHECK_8_BIT_HALF_CARRY_SUB(a, b) ( (a & 0xf) < (b & 0xf) )
 // #define CHECK_16_BIT_HALF_CARRY_SUB(a, b) ( (a & 0xff) < (b & 0xff) )
 
 #define CHECK_8_BIT_CARRY(a, b) ( ((a & 0xff) + (b & 0xff)) > 0xff )

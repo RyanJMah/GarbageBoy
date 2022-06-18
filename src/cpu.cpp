@@ -86,6 +86,7 @@ void CPU::run() {
     trace_file.open(TRACE_FPATH);
     #endif
 
+    size_t delete_later = 1;
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
@@ -93,6 +94,11 @@ void CPU::run() {
         #if ENABLE_TRACE
         this->_log_trace(trace_file);
         #endif
+
+        if (delete_later == 16484) {
+            asm("NOP");
+        }
+        delete_later += 1;
 
         (this->*curr_instruction)();
 
@@ -360,7 +366,7 @@ uint8_t CPU::_sub_bytes(uint8_t a, uint8_t b) {
 
     this->_set_flag(SUB_FLAG);
 
-    if (CHECK_SUB_HALF_CARRY(a, b)) { this->_set_flag(HALF_CARRY_FLAG); }
+    if (CHECK_8_BIT_HALF_CARRY_SUB(a, b)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     if (CHECK_SUB_CARRY(a, b)) { this->_set_flag(CARRY_FLAG); }
