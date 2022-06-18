@@ -95,7 +95,7 @@ void CPU::run() {
         this->_log_trace(trace_file);
         #endif
 
-        if (delete_later == 16484) {
+        if (delete_later == 16508) {
             asm("NOP");
         }
         delete_later += 1;
