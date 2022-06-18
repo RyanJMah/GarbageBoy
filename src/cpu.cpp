@@ -87,6 +87,11 @@ void CPU::run() {
     #endif
 
     size_t delete_later = 1;
+
+    // test rom polls the status of 0xff44 (one of the status registers for the LCD)
+    // in a busy-while until it equals 144 (144 means that it's done...)
+    // bypass this for now by just writing 144 to the address LOL
+    this->mem_write_byte(0xff44, 144);
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
@@ -102,6 +107,11 @@ void CPU::run() {
 
         (this->*curr_instruction)();
 
+        // if ((this->cycles % 450) == 0) {
+        //     this->_memory[0xff44] += 1;
+        //     this->_memory[0xff44] = this->_memory[0xff44] % 
+        // }
+
         for (size_t i = 0; i < peripheral_vect_size; i++) {
             this->_peripherals[i]->respond();
         }
@@ -112,6 +122,12 @@ uint8_t CPU::mem_read_byte(size_t addr) {
     return this->_memory[addr];
 }
 void CPU::mem_write_byte(size_t addr, uint8_t val) {
+    if (addr == 0xff01) {
+        std::cout << "WRITE TO 0xff01!!! val = " << PRINT_UINT8_LC(val) << std::endl;
+    }
+    else if (addr == 0xff02) {
+        std::cout << "WRITE TO 0xff02!!! val = " << PRINT_UINT8_LC(val) << std::endl;
+    }
     this->_memory[addr] = val;
 }
 uint8_t* CPU::mem_get(size_t addr) {
