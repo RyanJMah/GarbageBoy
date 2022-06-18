@@ -1,9 +1,12 @@
 #pragma once
 
-#include <stdint.h>
-#include <stddef.h>
 #include <string>
 #include <vector>
+#include <boost/format.hpp>
+
+#include <stdint.h>
+#include <stddef.h>
+
 #include "abstract_peripheral.hpp"
 
 /*
@@ -21,7 +24,13 @@
     FFFF        Interrupt Enable Register
 */
 
-#define MACHINE_CYCLE        4
+#define ENABLE_TRACE        true
+#define TRACE_FPATH         "./garbage-boy-trace.log"
+
+#define PRINT_UINT8(x)      (boost::format("%02x") % (int)(x))
+#define PRINT_UINT16(x)     (boost::format("%04x") % (int)(x))
+
+#define MACHINE_CYCLE       4
 
 #define CHECK_8_BIT_HALF_CARRY(a, b) ( (((a & 0xf) + (b & 0xf)) & 0x10) == 0x10 )
 #define CHECK_16_BIT_HALF_CARRY(a, b) ( ((a & 0xfff) + (b & 0xfff)) > 0xfff )
@@ -45,9 +54,11 @@ union Reg {
 };
 
 class AbstractPeripheral;
-
 class CPU {
     friend class AbstractPeripheral;
+
+    private:
+        void _log_trace(std::ofstream &tf);
 
     public:
         CPU();

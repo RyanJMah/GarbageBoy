@@ -2,4 +2,6 @@ build/
 .cache/
 .vim/
 
+*.log
+
 .DS_Store

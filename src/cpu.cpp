@@ -17,6 +17,31 @@ reference:
 #include "interrupt_controller.hpp"
 #include "cpu.hpp"
 
+void CPU::_log_trace(std::ofstream &tf) {
+    // accumulator
+    tf << "A:" << PRINT_UINT8(this->_AF.bytes[1]) << " ";
+
+    // flags
+    bool zf = this->_get_flag(ZERO_FLAG);
+    bool nf = this->_get_flag(SUB_FLAG);
+    bool hf = this->_get_flag(HALF_CARRY_FLAG);
+    bool cf = this->_get_flag(CARRY_FLAG);
+
+    char z = 'Z'*zf + '-'*(!zf);
+    char n = 'N'*nf + '-'*(!nf);
+    char h = 'H'*hf + '-'*(!hf);
+    char c = 'C'*cf + '-'*(!cf);
+    
+    tf << "F:" << z << n << h << c << ' ';
+
+    // other registers...
+    tf << "BC:" << PRINT_UINT16(this->_BC.raw) << " ";
+    tf << "DE:" << PRINT_UINT16(this->_DE.raw) << " ";
+    tf << "HL:" << PRINT_UINT16(this->_HL.raw) << " ";
+    tf << "SP:" << PRINT_UINT16(this->_SP.raw) << " ";
+    tf << "PC:" << PRINT_UINT16(this->_PC.raw) << std::endl;
+}
+
 CPU::CPU() {
     this->_AF.raw = 0x0000;
     this->_BC.raw = 0x0000;
@@ -31,15 +56,14 @@ CPU::CPU() {
     this->_OP_CODE_LUT_init();
     // this->_OP_CODE_LUT_init_CB();
 
-
     this->_peripherals.push_back( new Serial(this) );
-
     this->_peripherals.push_back( new InterruptController(this) );
 }
 CPU::~CPU() {
     for (size_t i = 0; i < this->_peripherals.size(); i++) {
         delete this->_peripherals[i];
     }
+
 }
 
 void CPU::load_rom(std::string rom_path, size_t offset) {
@@ -57,9 +81,19 @@ void CPU::run() {
     uint8_t curr_opcode;
     void (CPU::*curr_instruction)();
 
+    #if ENABLE_TRACE
+    std::ofstream trace_file;
+    trace_file.open(TRACE_FPATH);
+    #endif
+
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
+
+        #if ENABLE_TRACE
+        this->_log_trace(trace_file);
+        #endif
+
         (this->*curr_instruction)();
 
         for (size_t i = 0; i < peripheral_vect_size; i++) {
