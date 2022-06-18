@@ -1703,9 +1703,7 @@ void CPU::_inc_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
 
-    (*r) += 1;
-
-    if (*r == 0) { this->_set_flag(ZERO_FLAG); }
+    if ((*r + 1) == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1713,6 +1711,7 @@ void CPU::_inc_r() {
     if (CHECK_8_BIT_HALF_CARRY(*r, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
+    (*r) += 1;
     this->cycles += MACHINE_CYCLE;
 }
 
@@ -1726,7 +1725,7 @@ void CPU::_inc_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
 
-    if (data == 0) { this->_set_flag(ZERO_FLAG); }
+    if ((data + 1) == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1748,9 +1747,7 @@ void CPU::_dec_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
 
-    (*r) -= 1;
-
-    if (*r == 0) { this->_set_flag(ZERO_FLAG); }
+    if ((*r - 1) == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_set_flag(SUB_FLAG);
@@ -1758,6 +1755,7 @@ void CPU::_dec_r() {
     if (CHECK_8_BIT_HALF_CARRY(*r, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
+    (*r) -= 1;
     this->cycles += MACHINE_CYCLE;
 }
 
@@ -1771,7 +1769,7 @@ void CPU::_dec_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
 
-    if (data == 0) { this->_set_flag(ZERO_FLAG); }
+    if ((data - 1) == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1806,6 +1804,7 @@ void CPU::_daa() {
         if (c) { A -= 0x60; }
     }
 
+    // I forget what this instruction does lol, but this zero flag check is probably wrong...
     if (A == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
