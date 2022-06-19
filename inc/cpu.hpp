@@ -98,7 +98,7 @@ class CPU {
         uint8_t _memory[0xffff + 1];
         bool _is_halted;
 
-        void (CPU::*_OP_CODE_LUT[256])();
+        void (CPU::*_OP_CODE_LUT[0xCBFF])();
         std::vector<AbstractPeripheral*> _peripherals;
 
     private:
@@ -238,6 +238,12 @@ class CPU {
         ///////////////////////////////////////////////////////////////////////////////////////
         /* SINGLE BIT INSTRUCTIONS */
         void _bit_n_r();
+        // void _bit_n_HL();
+        // void _set_n_r();
+        // void _set_n_HL();
+        // void _res_n_r();
+        // void _res_n_HL();
+
         ///////////////////////////////////////////////////////////////////////////////////////
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -246,6 +252,22 @@ class CPU {
         void _rla();
         void _rrca();
         void _rra();
+        // void _rlc_r();
+        // void _rlc_HL();
+        // void _rl_r();
+        // void _rl_HL();
+        // void _rrc_r();
+        // void _rrc_HL();
+        // void _rr_r();
+        // void _rr_HL();
+        // void _sla_r();
+        // void _sla_HL();
+        // void _swap_r();
+        // void _swap_HL();
+        // void _sra_r();
+        // void _sra_HL();
+        // void _srl_r();
+        // void srl_HL();
         ///////////////////////////////////////////////////////////////////////////////////////
 
 };
