@@ -393,3 +393,55 @@ uint8_t CPU::_sub_bytes(uint8_t a, uint8_t b) {
     return ret;
 }
 
+void CPU::_rlc(uint8_t* x) {
+    uint8_t tmp = *x;
+    uint8_t bit_7 = (tmp >> 7) & 1;
+    
+    // rotate left 1 bit and put 7th bit into bit 0
+    *x = (tmp << 1) & 0xff;
+    *x |= bit_7;
+
+    // copy bit 7 into the carry flag
+    this->_AF.bytes[0] &= ~(1 << CARRY_FLAG);
+    this->_AF.bytes[0] |= (bit_7 << CARRY_FLAG);
+}
+
+void CPU::_rl(uint8_t* x) {
+    uint8_t tmp = *x;
+    uint8_t bit_7 = (tmp >> 7) & 1;
+
+    // rotate left 1 bit and put carry flat into bit 0
+    *x = (tmp << 1) & 0xff;
+    *x |= this->_get_flag(CARRY_FLAG);
+
+    // copy bit 7 into the carry flag
+    this->_AF.bytes[0] &= ~(1 << CARRY_FLAG);
+    this->_AF.bytes[0] |= (bit_7 << CARRY_FLAG);
+
+}
+
+void CPU::_rrc(uint8_t* x) {
+    uint8_t tmp = *x;
+    uint8_t bit_0 = tmp & 1;
+
+    *x = (tmp >> 1) & 0xff;
+    *x |= (bit_0 << 7);
+
+    // copy bit 0 into the carry flag
+    this->_AF.bytes[0] &= ~(1 << CARRY_FLAG);
+    this->_AF.bytes[0] |= (bit_0 << CARRY_FLAG);
+}
+
+void CPU::_rr(uint8_t* x) {
+    uint8_t tmp = *x;
+    uint8_t bit_0 = tmp & 1;
+
+    *x = (tmp >> 1) & 0xff;
+    *x |= (this->_get_flag(CARRY_FLAG) << 7);
+
+    // copy bit 0 into the carry flag
+    this->_AF.bytes[0] &= ~(1 << CARRY_FLAG);
+    this->_AF.bytes[0] |= (bit_0 << CARRY_FLAG);
+}
+
+

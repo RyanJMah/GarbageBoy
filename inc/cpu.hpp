@@ -127,6 +127,11 @@ class CPU {
         uint8_t _add_bytes(uint8_t a, uint8_t b);
         uint8_t _sub_bytes(uint8_t a, uint8_t b);
 
+        void _rlc(uint8_t* x);
+        void _rl(uint8_t* x);
+        void _rrc(uint8_t* x);
+        void _rr(uint8_t* x);
+
     private:
         ///////////////////////////////////////////////////////////////////////////////////////
         /*
@@ -254,9 +259,9 @@ class CPU {
         void _rla();
         void _rrca();
         void _rra();
-        // void _rlc_r();
-        // void _rlc_HL();
-        // void _rl_r();
+        void _rlc_r();
+        void _rlc_HL();
+        void _rl_r();
         // void _rl_HL();
         // void _rrc_r();
         // void _rrc_HL();

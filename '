@@ -337,14 +337,14 @@ void CPU::_OP_CODE_LUT_init() {
 void CPU::_OP_CODE_LUT_init_CB() {
     ////////////////////////////////////////////////////////////////
     /* CB 0x00 */
-    this->_OP_CODE_LUT_CB[0x00] = &CPU::_rlc_r;
-    this->_OP_CODE_LUT_CB[0x01] = &CPU::_rlc_r;
-    this->_OP_CODE_LUT_CB[0x02] = &CPU::_rlc_r;
-    this->_OP_CODE_LUT_CB[0x03] = &CPU::_rlc_r;
-    this->_OP_CODE_LUT_CB[0x04] = &CPU::_rlc_r;
-    this->_OP_CODE_LUT_CB[0x05] = &CPU::_rlc_r;
-    this->_OP_CODE_LUT_CB[0x06] = &CPU::_rlc_HL;
-    this->_OP_CODE_LUT_CB[0x07] = &CPU::_rlc_r;
+    // this->_OP_CODE_LUT_CB[0x00] =
+    // this->_OP_CODE_LUT_CB[0x01] =
+    // this->_OP_CODE_LUT_CB[0x02] =
+    // this->_OP_CODE_LUT_CB[0x03] =
+    // this->_OP_CODE_LUT_CB[0x04] =
+    // this->_OP_CODE_LUT_CB[0x05] =
+    // this->_OP_CODE_LUT_CB[0x06] =
+    // this->_OP_CODE_LUT_CB[0x07] =
     // this->_OP_CODE_LUT_CB[0x08] =
     // this->_OP_CODE_LUT_CB[0x09] =
     // this->_OP_CODE_LUT_CB[0x0A] =
@@ -2059,7 +2059,7 @@ RLCA:
 void CPU::_rlca() {
     this->_read_and_increment_PC();
 
-    this->_rlc(&this->_AF.bytes[1]);
+    this->_rlc(this->_AF.bytes[1]);
 
     this->_clear_flag(ZERO_FLAG);
     this->_clear_flag(SUB_FLAG);
@@ -2077,7 +2077,7 @@ RLA:
 void CPU::_rla() {
     this->_read_and_increment_PC();
 
-    this->_rl(&this->_AF.bytes[1]);
+    this->_rl(this->_AF.bytes[1]);
 
     this->_clear_flag(ZERO_FLAG);
     this->_clear_flag(SUB_FLAG);
@@ -2095,11 +2095,16 @@ RRCA:
 void CPU::_rrca() {
     this->_read_and_increment_PC();
 
-    this->_rrc(&this->_AF.bytes[1]);
+    uint8_t temp = this->_AF.bytes[1];
+    this->_AF.bytes[1] = (temp >> 1) & 0xff;
+    this->_AF.bytes[1] |= (temp & 1) << 7;
 
     this->_clear_flag(ZERO_FLAG);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
+
+    if (temp & 1) { this->_set_flag(CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
 
     this->cycles += MACHINE_CYCLE;
 }
@@ -2113,55 +2118,18 @@ RRA:
 void CPU::_rra() {
     this->_read_and_increment_PC();
 
-    this->_rr(&this->_AF.bytes[1]);
+    uint8_t temp = this->_AF.bytes[1];
+    this->_AF.bytes[1] = (temp >> 1) & 0xff;
+    this->_AF.bytes[1] |= (this->_get_flag(CARRY_FLAG) & 1) << 7;
 
     this->_clear_flag(ZERO_FLAG);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
+    if (temp & 1) { this->_set_flag(CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
+
     this->cycles += MACHINE_CYCLE;
-}
-
-/*
-RLC r
-    - OpCode: 0xcb 0b00000rrr
-    - rotate left register r
-    - flags: z00c
-*/
-void CPU::_rlc_r() {
-    this->_read_and_increment_PC();
-
-    uint8_t arg = this->_read_and_increment_PC();
-    uint8_t* r = this->_get_8_bit_reg(arg & 0b111);
-
-    this->_rlc(r);
-
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
-    this->_clear_flag(SUB_FLAG);
-    this->_clear_flag(HALF_CARRY_FLAG);
-
-    this->cycles += MACHINE_CYCLE*2;
-}
-
-/*
-RLC (HL)
-    - OpCode: 0xcb 0b00000110
-    - rotate left the data at the address specified by HL
-    - flags: z00c
-*/
-void CPU::_rlc_HL() {
-    this->_read_and_increment_PC();
-
-    uint8_t* p_addr = this->mem_get(this->_HL.raw);
-    this->_rlc(p_addr);
-
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_set_flag(ZERO_FLAG); }
-
-    this->_clear_flag(SUB_FLAG);
-    this->_clear_flag(HALF_CARRY_FLAG);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
