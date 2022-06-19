@@ -94,7 +94,7 @@ void CPU::run() {
     this->mem_write_byte(0xff44, 144);
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
-        if (curr_opcode == 0xCB) { continue; }
+        if (curr_opcode == 0xCB) { curr_opcode = this->mem_read_byte(++this->_PC.raw); }
 
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
 
@@ -124,12 +124,6 @@ uint8_t CPU::mem_read_byte(size_t addr) {
     return this->_memory[addr];
 }
 void CPU::mem_write_byte(size_t addr, uint8_t val) {
-    if (addr == 0xff01) {
-        std::cout << "WRITE TO 0xff01!!! val = " << PRINT_UINT8_LC(val) << std::endl;
-    }
-    else if (addr == 0xff02) {
-        std::cout << "WRITE TO 0xff02!!! val = " << PRINT_UINT8_LC(val) << std::endl;
-    }
     this->_memory[addr] = val;
 }
 uint8_t* CPU::mem_get(size_t addr) {

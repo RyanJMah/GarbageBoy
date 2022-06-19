@@ -28,12 +28,12 @@
 #define TRACE_FPATH         "./garbage-boy-trace.log"
 
 // lowercase
-#define PRINT_UINT8_LC(x)      (boost::format("%02x") % (int)(x))
-#define PRINT_UINT16_LC(x)     (boost::format("%04x") % (int)(x))
+#define PRINT_UINT8_LC(x)   (boost::format("%02x") % (int)(x))
+#define PRINT_UINT16_LC(x)  (boost::format("%04x") % (int)(x))
 
 // uppercase
-#define PRINT_UINT8_UC(x)      (boost::format("%02X") % (int)(x))
-#define PRINT_UINT16_UC(x)     (boost::format("%04X") % (int)(x))
+#define PRINT_UINT8_UC(x)   (boost::format("%02X") % (int)(x))
+#define PRINT_UINT16_UC(x)  (boost::format("%04X") % (int)(x))
 
 #define MACHINE_CYCLE       4
 
@@ -269,14 +269,15 @@ class CPU {
         void _rr_r();
         void _rr_HL();
 
-        // void _sla_r();
-        // void _sla_HL();
-        // void _swap_r();
-        // void _swap_HL();
-        // void _sra_r();
-        // void _sra_HL();
-        // void _srl_r();
-        // void srl_HL();
+        void _swap_r();
+        void _swap_HL();
+
+        void _sla_r();
+        void _sla_HL();
+        void _sra_r();
+        void _sra_HL();
+        void _srl_r();
+        void _srl_HL();
         ///////////////////////////////////////////////////////////////////////////////////////
 
 };

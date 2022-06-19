@@ -17,7 +17,6 @@ Serial::Serial(CPU* cpu_ptr) {
 void Serial::respond() {
     // if transfer requested
     if (BIT_IS_SET(*SC(), SC_TRANSFER_START)) {
-        std::cout << "asdfasfd" << std::endl;
         // send the character in SB to the terminal
         std::cout << *SB();
 

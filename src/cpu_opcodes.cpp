@@ -377,42 +377,42 @@ void CPU::_OP_CODE_LUT_init_CB() {
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x20 */
-    // this->_OP_CODE_LUT_CB[0x20] =
-    // this->_OP_CODE_LUT_CB[0x21] =
-    // this->_OP_CODE_LUT_CB[0x22] =
-    // this->_OP_CODE_LUT_CB[0x23] =
-    // this->_OP_CODE_LUT_CB[0x24] =
-    // this->_OP_CODE_LUT_CB[0x25] =
-    // this->_OP_CODE_LUT_CB[0x26] =
-    // this->_OP_CODE_LUT_CB[0x27] =
-    // this->_OP_CODE_LUT_CB[0x28] =
-    // this->_OP_CODE_LUT_CB[0x29] =
-    // this->_OP_CODE_LUT_CB[0x2A] =
-    // this->_OP_CODE_LUT_CB[0x2B] =
-    // this->_OP_CODE_LUT_CB[0x2C] =
-    // this->_OP_CODE_LUT_CB[0x2D] =
-    // this->_OP_CODE_LUT_CB[0x2E] =
-    // this->_OP_CODE_LUT_CB[0x2F] =
+    this->_OP_CODE_LUT_CB[0x20] = &CPU::_sla_r;
+    this->_OP_CODE_LUT_CB[0x21] = &CPU::_sla_r;
+    this->_OP_CODE_LUT_CB[0x22] = &CPU::_sla_r;
+    this->_OP_CODE_LUT_CB[0x23] = &CPU::_sla_r;
+    this->_OP_CODE_LUT_CB[0x24] = &CPU::_sla_r;
+    this->_OP_CODE_LUT_CB[0x25] = &CPU::_sla_r;
+    this->_OP_CODE_LUT_CB[0x26] = &CPU::_sla_HL;
+    this->_OP_CODE_LUT_CB[0x27] = &CPU::_sla_r;
+    this->_OP_CODE_LUT_CB[0x28] = &CPU::_sra_r;
+    this->_OP_CODE_LUT_CB[0x29] = &CPU::_sra_r;
+    this->_OP_CODE_LUT_CB[0x2A] = &CPU::_sra_r;
+    this->_OP_CODE_LUT_CB[0x2B] = &CPU::_sra_r;
+    this->_OP_CODE_LUT_CB[0x2C] = &CPU::_sra_r;
+    this->_OP_CODE_LUT_CB[0x2D] = &CPU::_sra_r;
+    this->_OP_CODE_LUT_CB[0x2E] = &CPU::_sra_HL;
+    this->_OP_CODE_LUT_CB[0x2F] = &CPU::_sra_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x30 */
-    // this->_OP_CODE_LUT_CB[0x30] =
-    // this->_OP_CODE_LUT_CB[0x31] =
-    // this->_OP_CODE_LUT_CB[0x32] =
-    // this->_OP_CODE_LUT_CB[0x33] =
-    // this->_OP_CODE_LUT_CB[0x34] =
-    // this->_OP_CODE_LUT_CB[0x35] =
-    // this->_OP_CODE_LUT_CB[0x36] =
-    // this->_OP_CODE_LUT_CB[0x37] =
-    // this->_OP_CODE_LUT_CB[0x38] =
-    // this->_OP_CODE_LUT_CB[0x39] =
-    // this->_OP_CODE_LUT_CB[0x3A] =
-    // this->_OP_CODE_LUT_CB[0x3B] =
-    // this->_OP_CODE_LUT_CB[0x3C] =
-    // this->_OP_CODE_LUT_CB[0x3D] =
-    // this->_OP_CODE_LUT_CB[0x3E] =
-    // this->_OP_CODE_LUT_CB[0x3F] =
+    this->_OP_CODE_LUT_CB[0x30] = &CPU::_swap_r;
+    this->_OP_CODE_LUT_CB[0x31] = &CPU::_swap_r;
+    this->_OP_CODE_LUT_CB[0x32] = &CPU::_swap_r;
+    this->_OP_CODE_LUT_CB[0x33] = &CPU::_swap_r;
+    this->_OP_CODE_LUT_CB[0x34] = &CPU::_swap_r;
+    this->_OP_CODE_LUT_CB[0x35] = &CPU::_swap_r;
+    this->_OP_CODE_LUT_CB[0x36] = &CPU::_swap_HL;
+    this->_OP_CODE_LUT_CB[0x37] = &CPU::_swap_r;
+    this->_OP_CODE_LUT_CB[0x38] = &CPU::_srl_r;
+    this->_OP_CODE_LUT_CB[0x39] = &CPU::_srl_r;
+    this->_OP_CODE_LUT_CB[0x3A] = &CPU::_srl_r;
+    this->_OP_CODE_LUT_CB[0x3B] = &CPU::_srl_r;
+    this->_OP_CODE_LUT_CB[0x3C] = &CPU::_srl_r;
+    this->_OP_CODE_LUT_CB[0x3D] = &CPU::_srl_r;
+    this->_OP_CODE_LUT_CB[0x3E] = &CPU::_srl_HL;
+    this->_OP_CODE_LUT_CB[0x3F] = &CPU::_srl_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
@@ -2281,4 +2281,213 @@ void CPU::_rr_HL() {
     this->cycles += MACHINE_CYCLE*4;
 }
 
+/*
+SLA r
+    - OpCode: 0xcb 0b00100rrr
+    - shift register r to the left by 1, bit 7 is copied to carry flag
+    - flags: z00c
+*/
+void CPU::_sla_r() {
+    uint8_t opcode = this->_read_and_increment_PC();
+
+    uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
+    uint8_t tmp = (*r);
+    uint8_t bit7 = (tmp >> 7) & 1;
+
+    *r = (tmp << 1);
+
+    if (bit7) { this->_set_flag(CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
+
+    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*2;
+}
+
+/*
+SLA (HL)
+    - OpCode: 0xcb 0b00100110
+    - shift the data at the address specified by HL to the left by 1, bit 7 is copied to carry flag
+    - flags: z00c
+*/
+void CPU::_sla_HL() {
+    this->_read_and_increment_PC();
+
+    uint8_t* p_addr = this->mem_get(this->_HL.raw);
+    uint8_t tmp = *p_addr;
+    uint8_t bit7 = (tmp >> 7) & 1;
+
+    *p_addr = (tmp << 1);
+
+    if (bit7) { this->_set_flag(CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
+
+    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*4;
+}
+
+/*
+SRA r
+    - OpCode: 0xcb 0b00101rrr
+    - shift register r to the right by 1, bit 0 is copied to the carry flag
+    - flags: z00c
+*/
+void CPU::_sra_r() {
+    uint8_t opcode = this->_read_and_increment_PC();
+
+    uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
+    uint8_t bit0 = (*r) & 1;
+
+    *r = (*r) >> 1;
+
+    if (bit0) { this->_set_flag(CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
+
+    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_set_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*2;
+}
+
+/*
+SRA, (HL)
+    - OpCode: 0xcb 0b00101110
+    - shift data at address specifed by HL right by 1, bit 0 is copied to the carry flag
+    - flags: z00c
+*/
+void CPU::_sra_HL() {
+    this->_read_and_increment_PC();
+
+    uint8_t* p_addr = this->mem_get(this->_HL.raw);
+    uint8_t bit0 = (*p_addr) & 1;
+
+    *p_addr = (*p_addr >> 1);
+
+    if (bit0) { this->_set_flag(CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
+
+    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*4;
+}
+
+/*
+SRL r
+    - OpCode: 0xcb 0b00111rrr
+    - shift register r to the right by 1, bit 0 is copied to carry flag, bit 7 is cleared
+    - flags: z00c
+*/
+void CPU::_srl_r() {
+    uint8_t opcode = this->_read_and_increment_PC();
+
+    uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
+    uint8_t bit0 = (*r) & 1;
+
+    *r = (*r) >> 1;
+
+    if (bit0) { this->_set_flag(CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
+
+    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*2;
+}
+
+/*
+SRL (HL)
+    - OpCode: 0xcb 0b00111110
+    - shift data at address specifed by HL to the right by 1, bit 0 is copied to carry flag, bit 7 is cleared
+    - flags: z00c
+*/
+void CPU::_srl_HL() {
+    this->_read_and_increment_PC();
+
+    uint8_t* p_addr = this->mem_get(this->_HL.raw);
+    uint8_t bit0 = (*p_addr) & 1;
+
+    *p_addr = (*p_addr) >> 1;
+
+    if (bit0) { this->_set_flag(CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
+
+    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*4;
+}
+
+/*
+SWAP r
+    - OpCode: 0xcb 0b00110rrr
+    - swap the upper and lower nibbles of register r
+    - flags: z000
+*/
+void CPU::_swap_r() {
+    uint8_t opcode = this->_read_and_increment_PC();
+
+    uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
+    uint8_t upper = ((*r) >> 4) & 0b1111;
+    uint8_t lower = (*r) & 0b1111;
+
+    *r = (lower << 4) | upper;
+
+    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
+    this->_clear_flag(CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*2;
+}
+
+/*
+SWAP (HL)
+    - OpCode: 0xcb 0b00110110
+    - swap the upper and lower nibbles of the data at the addres specifed by HL
+    - flags: z000
+*/
+void CPU::_swap_HL() {
+    this->_read_and_increment_PC();
+
+    uint8_t* p_addr = this->mem_get(this->_HL.raw);
+    uint8_t upper = ((*p_addr) >> 4) & 0b1111;
+    uint8_t lower = (*p_addr) & 0b1111;
+
+    *p_addr = (lower << 4) | upper;
+
+    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
+    this->_clear_flag(CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*4;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
+
