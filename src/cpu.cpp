@@ -94,18 +94,21 @@ void CPU::run() {
     this->mem_write_byte(0xff44, 144);
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
-        if (curr_opcode == 0xCB) { curr_opcode = this->mem_read_byte(++this->_PC.raw); }
-
+        if (curr_opcode == 0xCB) {
+            this->_PC.raw += 1;
+            curr_opcode = this->mem_read_byte(this->_PC.raw);
+        }
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
+
+
+        if (delete_later == 34849) {
+            asm("NOP");
+        }
+        delete_later += 1;
 
         #if ENABLE_TRACE
         this->_log_trace(trace_file);
         #endif
-
-        if (delete_later == 16508) {
-            asm("NOP");
-        }
-        delete_later += 1;
 
         (this->*curr_instruction)();
 

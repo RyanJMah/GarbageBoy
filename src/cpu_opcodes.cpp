@@ -966,7 +966,7 @@ void CPU::_ld_r_R() {
 
 /*
 LD r, n
-    - OpCode = 0b00xxx110 + n
+    - OpCode = 0b00rrr110 + n
     - load to the 8 bit register r, the immediate data n
 */
 void CPU::_ld_r_n() {
@@ -1560,7 +1560,7 @@ void CPU::_xor_r() {
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     this->_AF.bytes[1] ^= (*r);
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1581,7 +1581,7 @@ void CPU::_xor_n() {
     uint8_t n = this->_read_and_increment_PC();
     this->_AF.bytes[1] ^= n;
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1602,7 +1602,7 @@ void CPU::_xor_HL() {
     uint8_t data = this->mem_read_byte(this->_HL.raw);
     this->_AF.bytes[1] ^= data;
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
