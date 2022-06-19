@@ -133,7 +133,7 @@ class CPU {
         CPU instructions, these functions will do the following:
             1 - execute whatever the instruction is supposed to do
             2 - increment the number of cycles appropriately
-            3 - place the program pointer and the stack pointer in the appropriate locations
+            3 - place the program counter and the stack pointer in the appropriate locations
         */
         ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -243,8 +243,8 @@ class CPU {
         void _bit_n_HL();
         void _set_n_r();
         void _set_n_HL();
-        // void _res_n_r();
-        // void _res_n_HL();
+        void _res_n_r();
+        void _res_n_HL();
 
         ///////////////////////////////////////////////////////////////////////////////////////
 
