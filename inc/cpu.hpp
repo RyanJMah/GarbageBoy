@@ -259,14 +259,16 @@ class CPU {
         void _rla();
         void _rrca();
         void _rra();
+
         void _rlc_r();
         void _rlc_HL();
         void _rl_r();
-        // void _rl_HL();
-        // void _rrc_r();
-        // void _rrc_HL();
-        // void _rr_r();
-        // void _rr_HL();
+        void _rl_HL();
+        void _rrc_r();
+        void _rrc_HL();
+        void _rr_r();
+        void _rr_HL();
+
         // void _sla_r();
         // void _sla_HL();
         // void _swap_r();
