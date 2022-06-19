@@ -95,10 +95,12 @@ class CPU {
         Reg _SP;    // Stack Pointer
         Reg _PC;    // Program Counter
 
-        uint8_t _memory[0xffff + 1];
+        uint8_t _memory[0xFFFF + 1];
         bool _is_halted;
 
-        void (CPU::*_OP_CODE_LUT[0xCBFF])();
+        void (CPU::*_OP_CODE_LUT[0xFF + 1])();
+        void (CPU::*_OP_CODE_LUT_CB[0xFF + 1])();
+
         std::vector<AbstractPeripheral*> _peripherals;
 
     private:
@@ -238,9 +240,9 @@ class CPU {
         ///////////////////////////////////////////////////////////////////////////////////////
         /* SINGLE BIT INSTRUCTIONS */
         void _bit_n_r();
-        // void _bit_n_HL();
-        // void _set_n_r();
-        // void _set_n_HL();
+        void _bit_n_HL();
+        void _set_n_r();
+        void _set_n_HL();
         // void _res_n_r();
         // void _res_n_HL();
 

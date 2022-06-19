@@ -337,322 +337,322 @@ void CPU::_OP_CODE_LUT_init() {
 void CPU::_OP_CODE_LUT_init_CB() {
     ////////////////////////////////////////////////////////////////
     /* CB 0x00 */
-    // this->_OP_CODE_LUT[0xCB00] =
-    // this->_OP_CODE_LUT[0xCB01] =
-    // this->_OP_CODE_LUT[0xCB02] =
-    // this->_OP_CODE_LUT[0xCB03] =
-    // this->_OP_CODE_LUT[0xCB04] =
-    // this->_OP_CODE_LUT[0xCB05] =
-    // this->_OP_CODE_LUT[0xCB06] =
-    // this->_OP_CODE_LUT[0xCB07] =
-    // this->_OP_CODE_LUT[0xCB08] =
-    // this->_OP_CODE_LUT[0xCB09] =
-    // this->_OP_CODE_LUT[0xCB0A] =
-    // this->_OP_CODE_LUT[0xCB0B] =
-    // this->_OP_CODE_LUT[0xCB0C] =
-    // this->_OP_CODE_LUT[0xCB0D] =
-    // this->_OP_CODE_LUT[0xCB0E] =
-    // this->_OP_CODE_LUT[0xCB0F] =
+    // this->_OP_CODE_LUT_CB[0x00] =
+    // this->_OP_CODE_LUT_CB[0x01] =
+    // this->_OP_CODE_LUT_CB[0x02] =
+    // this->_OP_CODE_LUT_CB[0x03] =
+    // this->_OP_CODE_LUT_CB[0x04] =
+    // this->_OP_CODE_LUT_CB[0x05] =
+    // this->_OP_CODE_LUT_CB[0x06] =
+    // this->_OP_CODE_LUT_CB[0x07] =
+    // this->_OP_CODE_LUT_CB[0x08] =
+    // this->_OP_CODE_LUT_CB[0x09] =
+    // this->_OP_CODE_LUT_CB[0x0A] =
+    // this->_OP_CODE_LUT_CB[0x0B] =
+    // this->_OP_CODE_LUT_CB[0x0C] =
+    // this->_OP_CODE_LUT_CB[0x0D] =
+    // this->_OP_CODE_LUT_CB[0x0E] =
+    // this->_OP_CODE_LUT_CB[0x0F] =
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x10 */
-    // this->_OP_CODE_LUT[0xCB10] =
-    // this->_OP_CODE_LUT[0xCB11] =
-    // this->_OP_CODE_LUT[0xCB12] =
-    // this->_OP_CODE_LUT[0xCB13] =
-    // this->_OP_CODE_LUT[0xCB14] =
-    // this->_OP_CODE_LUT[0xCB15] =
-    // this->_OP_CODE_LUT[0xCB16] =
-    // this->_OP_CODE_LUT[0xCB17] =
-    // this->_OP_CODE_LUT[0xCB18] =
-    // this->_OP_CODE_LUT[0xCB19] =
-    // this->_OP_CODE_LUT[0xCB1A] =
-    // this->_OP_CODE_LUT[0xCB1B] =
-    // this->_OP_CODE_LUT[0xCB1C] =
-    // this->_OP_CODE_LUT[0xCB1D] =
-    // this->_OP_CODE_LUT[0xCB1E] =
-    // this->_OP_CODE_LUT[0xCB1F] =
+    // this->_OP_CODE_LUT_CB[0x10] =
+    // this->_OP_CODE_LUT_CB[0x11] =
+    // this->_OP_CODE_LUT_CB[0x12] =
+    // this->_OP_CODE_LUT_CB[0x13] =
+    // this->_OP_CODE_LUT_CB[0x14] =
+    // this->_OP_CODE_LUT_CB[0x15] =
+    // this->_OP_CODE_LUT_CB[0x16] =
+    // this->_OP_CODE_LUT_CB[0x17] =
+    // this->_OP_CODE_LUT_CB[0x18] =
+    // this->_OP_CODE_LUT_CB[0x19] =
+    // this->_OP_CODE_LUT_CB[0x1A] =
+    // this->_OP_CODE_LUT_CB[0x1B] =
+    // this->_OP_CODE_LUT_CB[0x1C] =
+    // this->_OP_CODE_LUT_CB[0x1D] =
+    // this->_OP_CODE_LUT_CB[0x1E] =
+    // this->_OP_CODE_LUT_CB[0x1F] =
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x20 */
-    // this->_OP_CODE_LUT[0xCB20] =
-    // this->_OP_CODE_LUT[0xCB21] =
-    // this->_OP_CODE_LUT[0xCB22] =
-    // this->_OP_CODE_LUT[0xCB23] =
-    // this->_OP_CODE_LUT[0xCB24] =
-    // this->_OP_CODE_LUT[0xCB25] =
-    // this->_OP_CODE_LUT[0xCB26] =
-    // this->_OP_CODE_LUT[0xCB27] =
-    // this->_OP_CODE_LUT[0xCB28] =
-    // this->_OP_CODE_LUT[0xCB29] =
-    // this->_OP_CODE_LUT[0xCB2A] =
-    // this->_OP_CODE_LUT[0xCB2B] =
-    // this->_OP_CODE_LUT[0xCB2C] =
-    // this->_OP_CODE_LUT[0xCB2D] =
-    // this->_OP_CODE_LUT[0xCB2E] =
-    // this->_OP_CODE_LUT[0xCB2F] =
+    // this->_OP_CODE_LUT_CB[0x20] =
+    // this->_OP_CODE_LUT_CB[0x21] =
+    // this->_OP_CODE_LUT_CB[0x22] =
+    // this->_OP_CODE_LUT_CB[0x23] =
+    // this->_OP_CODE_LUT_CB[0x24] =
+    // this->_OP_CODE_LUT_CB[0x25] =
+    // this->_OP_CODE_LUT_CB[0x26] =
+    // this->_OP_CODE_LUT_CB[0x27] =
+    // this->_OP_CODE_LUT_CB[0x28] =
+    // this->_OP_CODE_LUT_CB[0x29] =
+    // this->_OP_CODE_LUT_CB[0x2A] =
+    // this->_OP_CODE_LUT_CB[0x2B] =
+    // this->_OP_CODE_LUT_CB[0x2C] =
+    // this->_OP_CODE_LUT_CB[0x2D] =
+    // this->_OP_CODE_LUT_CB[0x2E] =
+    // this->_OP_CODE_LUT_CB[0x2F] =
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x30 */
-    // this->_OP_CODE_LUT[0xCB30] =
-    // this->_OP_CODE_LUT[0xCB31] =
-    // this->_OP_CODE_LUT[0xCB32] =
-    // this->_OP_CODE_LUT[0xCB33] =
-    // this->_OP_CODE_LUT[0xCB34] =
-    // this->_OP_CODE_LUT[0xCB35] =
-    // this->_OP_CODE_LUT[0xCB36] =
-    // this->_OP_CODE_LUT[0xCB37] =
-    // this->_OP_CODE_LUT[0xCB38] =
-    // this->_OP_CODE_LUT[0xCB39] =
-    // this->_OP_CODE_LUT[0xCB3A] =
-    // this->_OP_CODE_LUT[0xCB3B] =
-    // this->_OP_CODE_LUT[0xCB3C] =
-    // this->_OP_CODE_LUT[0xCB3D] =
-    // this->_OP_CODE_LUT[0xCB3E] =
-    // this->_OP_CODE_LUT[0xCB3F] =
+    // this->_OP_CODE_LUT_CB[0x30] =
+    // this->_OP_CODE_LUT_CB[0x31] =
+    // this->_OP_CODE_LUT_CB[0x32] =
+    // this->_OP_CODE_LUT_CB[0x33] =
+    // this->_OP_CODE_LUT_CB[0x34] =
+    // this->_OP_CODE_LUT_CB[0x35] =
+    // this->_OP_CODE_LUT_CB[0x36] =
+    // this->_OP_CODE_LUT_CB[0x37] =
+    // this->_OP_CODE_LUT_CB[0x38] =
+    // this->_OP_CODE_LUT_CB[0x39] =
+    // this->_OP_CODE_LUT_CB[0x3A] =
+    // this->_OP_CODE_LUT_CB[0x3B] =
+    // this->_OP_CODE_LUT_CB[0x3C] =
+    // this->_OP_CODE_LUT_CB[0x3D] =
+    // this->_OP_CODE_LUT_CB[0x3E] =
+    // this->_OP_CODE_LUT_CB[0x3F] =
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x40 */
-    this->_OP_CODE_LUT[0xCB40] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB41] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB42] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB43] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB44] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB45] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB46] =
-    this->_OP_CODE_LUT[0xCB47] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB48] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB49] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB4A] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB4B] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB4C] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB4D] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB4E] =
-    this->_OP_CODE_LUT[0xCB4F] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x40] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x41] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x42] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x43] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x44] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x45] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x46] = &CPU::_bit_n_HL;
+    this->_OP_CODE_LUT_CB[0x47] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x48] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x49] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x4A] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x4B] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x4C] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x4D] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x4E] = &CPU::_bit_n_HL;
+    this->_OP_CODE_LUT_CB[0x4F] = &CPU::_bit_n_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x50 */
-    this->_OP_CODE_LUT[0xCB50] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB51] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB52] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB53] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB54] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB55] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB56] =
-    this->_OP_CODE_LUT[0xCB57] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB58] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB59] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB5A] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB5B] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB5C] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB5D] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB5E] =
-    this->_OP_CODE_LUT[0xCB5F] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x50] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x51] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x52] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x53] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x54] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x55] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x56] = &CPU::_bit_n_HL;
+    this->_OP_CODE_LUT_CB[0x57] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x58] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x59] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x5A] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x5B] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x5C] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x5D] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x5E] = &CPU::_bit_n_HL;
+    this->_OP_CODE_LUT_CB[0x5F] = &CPU::_bit_n_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x60 */
-    this->_OP_CODE_LUT[0xCB60] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB61] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB62] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB63] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB64] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB65] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB66] =
-    this->_OP_CODE_LUT[0xCB67] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB68] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB69] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB6A] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB6B] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB6C] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB6D] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB6E] =
-    this->_OP_CODE_LUT[0xCB6F] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x60] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x61] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x62] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x63] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x64] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x65] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x66] = &CPU::_bit_n_HL;
+    this->_OP_CODE_LUT_CB[0x67] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x68] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x69] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x6A] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x6B] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x6C] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x6D] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x6E] = &CPU::_bit_n_HL;
+    this->_OP_CODE_LUT_CB[0x6F] = &CPU::_bit_n_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x70 */
-    this->_OP_CODE_LUT[0xCB70] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB71] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB72] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB73] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB74] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB75] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB76] =
-    this->_OP_CODE_LUT[0xCB77] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB78] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB79] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB7A] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB7B] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB7C] = &CPU::_bit_n_r;
-    this->_OP_CODE_LUT[0xCB7D] = &CPU::_bit_n_r;
-    // this->_OP_CODE_LUT[0xCB7E] =
-    this->_OP_CODE_LUT[0xCB7F] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x70] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x71] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x72] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x73] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x74] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x75] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x76] = &CPU::_bit_n_HL;
+    this->_OP_CODE_LUT_CB[0x77] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x78] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x79] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x7A] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x7B] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x7C] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x7D] = &CPU::_bit_n_r;
+    this->_OP_CODE_LUT_CB[0x7E] = &CPU::_bit_n_HL;
+    this->_OP_CODE_LUT_CB[0x7F] = &CPU::_bit_n_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x80 */
-    // this->_OP_CODE_LUT[0xCB80] =
-    // this->_OP_CODE_LUT[0xCB81] =
-    // this->_OP_CODE_LUT[0xCB82] =
-    // this->_OP_CODE_LUT[0xCB83] =
-    // this->_OP_CODE_LUT[0xCB84] =
-    // this->_OP_CODE_LUT[0xCB85] =
-    // this->_OP_CODE_LUT[0xCB86] =
-    // this->_OP_CODE_LUT[0xCB87] =
-    // this->_OP_CODE_LUT[0xCB88] =
-    // this->_OP_CODE_LUT[0xCB89] =
-    // this->_OP_CODE_LUT[0xCB8A] =
-    // this->_OP_CODE_LUT[0xCB8B] =
-    // this->_OP_CODE_LUT[0xCB8C] =
-    // this->_OP_CODE_LUT[0xCB8D] =
-    // this->_OP_CODE_LUT[0xCB8E] =
-    // this->_OP_CODE_LUT[0xCB8F] =
+    // this->_OP_CODE_LUT_CB[0x80] =
+    // this->_OP_CODE_LUT_CB[0x81] =
+    // this->_OP_CODE_LUT_CB[0x82] =
+    // this->_OP_CODE_LUT_CB[0x83] =
+    // this->_OP_CODE_LUT_CB[0x84] =
+    // this->_OP_CODE_LUT_CB[0x85] =
+    // this->_OP_CODE_LUT_CB[0x86] =
+    // this->_OP_CODE_LUT_CB[0x87] =
+    // this->_OP_CODE_LUT_CB[0x88] =
+    // this->_OP_CODE_LUT_CB[0x89] =
+    // this->_OP_CODE_LUT_CB[0x8A] =
+    // this->_OP_CODE_LUT_CB[0x8B] =
+    // this->_OP_CODE_LUT_CB[0x8C] =
+    // this->_OP_CODE_LUT_CB[0x8D] =
+    // this->_OP_CODE_LUT_CB[0x8E] =
+    // this->_OP_CODE_LUT_CB[0x8F] =
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0x90 */
-    // this->_OP_CODE_LUT[0xCB90] =
-    // this->_OP_CODE_LUT[0xCB91] =
-    // this->_OP_CODE_LUT[0xCB92] =
-    // this->_OP_CODE_LUT[0xCB93] =
-    // this->_OP_CODE_LUT[0xCB94] =
-    // this->_OP_CODE_LUT[0xCB95] =
-    // this->_OP_CODE_LUT[0xCB96] =
-    // this->_OP_CODE_LUT[0xCB97] =
-    // this->_OP_CODE_LUT[0xCB98] =
-    // this->_OP_CODE_LUT[0xCB99] =
-    // this->_OP_CODE_LUT[0xCB9A] =
-    // this->_OP_CODE_LUT[0xCB9B] =
-    // this->_OP_CODE_LUT[0xCB9C] =
-    // this->_OP_CODE_LUT[0xCB9D] =
-    // this->_OP_CODE_LUT[0xCB9E] =
-    // this->_OP_CODE_LUT[0xCB9F] =
+    // this->_OP_CODE_LUT_CB[0x90] =
+    // this->_OP_CODE_LUT_CB[0x91] =
+    // this->_OP_CODE_LUT_CB[0x92] =
+    // this->_OP_CODE_LUT_CB[0x93] =
+    // this->_OP_CODE_LUT_CB[0x94] =
+    // this->_OP_CODE_LUT_CB[0x95] =
+    // this->_OP_CODE_LUT_CB[0x96] =
+    // this->_OP_CODE_LUT_CB[0x97] =
+    // this->_OP_CODE_LUT_CB[0x98] =
+    // this->_OP_CODE_LUT_CB[0x99] =
+    // this->_OP_CODE_LUT_CB[0x9A] =
+    // this->_OP_CODE_LUT_CB[0x9B] =
+    // this->_OP_CODE_LUT_CB[0x9C] =
+    // this->_OP_CODE_LUT_CB[0x9D] =
+    // this->_OP_CODE_LUT_CB[0x9E] =
+    // this->_OP_CODE_LUT_CB[0x9F] =
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0xA0 */
-    // this->_OP_CODE_LUT[0xCBA0] =
-    // this->_OP_CODE_LUT[0xCBA1] =
-    // this->_OP_CODE_LUT[0xCBA2] =
-    // this->_OP_CODE_LUT[0xCBA3] =
-    // this->_OP_CODE_LUT[0xCBA4] =
-    // this->_OP_CODE_LUT[0xCBA5] =
-    // this->_OP_CODE_LUT[0xCBA6] =
-    // this->_OP_CODE_LUT[0xCBA7] =
-    // this->_OP_CODE_LUT[0xCBA8] =
-    // this->_OP_CODE_LUT[0xCBA9] =
-    // this->_OP_CODE_LUT[0xCBAA] =
-    // this->_OP_CODE_LUT[0xCBAB] =
-    // this->_OP_CODE_LUT[0xCBAC] =
-    // this->_OP_CODE_LUT[0xCBAD] =
-    // this->_OP_CODE_LUT[0xCBAE] =
-    // this->_OP_CODE_LUT[0xCBAF] =
+    // this->_OP_CODE_LUT_CB[0xA0] =
+    // this->_OP_CODE_LUT_CB[0xA1] =
+    // this->_OP_CODE_LUT_CB[0xA2] =
+    // this->_OP_CODE_LUT_CB[0xA3] =
+    // this->_OP_CODE_LUT_CB[0xA4] =
+    // this->_OP_CODE_LUT_CB[0xA5] =
+    // this->_OP_CODE_LUT_CB[0xA6] =
+    // this->_OP_CODE_LUT_CB[0xA7] =
+    // this->_OP_CODE_LUT_CB[0xA8] =
+    // this->_OP_CODE_LUT_CB[0xA9] =
+    // this->_OP_CODE_LUT_CB[0xAA] =
+    // this->_OP_CODE_LUT_CB[0xAB] =
+    // this->_OP_CODE_LUT_CB[0xAC] =
+    // this->_OP_CODE_LUT_CB[0xAD] =
+    // this->_OP_CODE_LUT_CB[0xAE] =
+    // this->_OP_CODE_LUT_CB[0xAF] =
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0xB0 */
-    // this->_OP_CODE_LUT[0xCBB0] =
-    // this->_OP_CODE_LUT[0xCBB1] =
-    // this->_OP_CODE_LUT[0xCBB2] =
-    // this->_OP_CODE_LUT[0xCBB3] =
-    // this->_OP_CODE_LUT[0xCBB4] =
-    // this->_OP_CODE_LUT[0xCBB5] =
-    // this->_OP_CODE_LUT[0xCBB6] =
-    // this->_OP_CODE_LUT[0xCBB7] =
-    // this->_OP_CODE_LUT[0xCBB8] =
-    // this->_OP_CODE_LUT[0xCBB9] =
-    // this->_OP_CODE_LUT[0xCBBA] =
-    // this->_OP_CODE_LUT[0xCBBB] =
-    // this->_OP_CODE_LUT[0xCBBC] =
-    // this->_OP_CODE_LUT[0xCBBD] =
-    // this->_OP_CODE_LUT[0xCBBE] =
-    // this->_OP_CODE_LUT[0xCBBF] =
+    // this->_OP_CODE_LUT_CB[0xB0] =
+    // this->_OP_CODE_LUT_CB[0xB1] =
+    // this->_OP_CODE_LUT_CB[0xB2] =
+    // this->_OP_CODE_LUT_CB[0xB3] =
+    // this->_OP_CODE_LUT_CB[0xB4] =
+    // this->_OP_CODE_LUT_CB[0xB5] =
+    // this->_OP_CODE_LUT_CB[0xB6] =
+    // this->_OP_CODE_LUT_CB[0xB7] =
+    // this->_OP_CODE_LUT_CB[0xB8] =
+    // this->_OP_CODE_LUT_CB[0xB9] =
+    // this->_OP_CODE_LUT_CB[0xBA] =
+    // this->_OP_CODE_LUT_CB[0xBB] =
+    // this->_OP_CODE_LUT_CB[0xBC] =
+    // this->_OP_CODE_LUT_CB[0xBD] =
+    // this->_OP_CODE_LUT_CB[0xBE] =
+    // this->_OP_CODE_LUT_CB[0xBF] =
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0xC0 */
-    // this->_OP_CODE_LUT[0xCBC0] =
-    // this->_OP_CODE_LUT[0xCBC1] =
-    // this->_OP_CODE_LUT[0xCBC2] =
-    // this->_OP_CODE_LUT[0xCBC3] =
-    // this->_OP_CODE_LUT[0xCBC4] =
-    // this->_OP_CODE_LUT[0xCBC5] =
-    // this->_OP_CODE_LUT[0xCBC6] =
-    // this->_OP_CODE_LUT[0xCBC7] =
-    // this->_OP_CODE_LUT[0xCBC8] =
-    // this->_OP_CODE_LUT[0xCBC9] =
-    // this->_OP_CODE_LUT[0xCBCA] =
-    // this->_OP_CODE_LUT[0xCBCB] =
-    // this->_OP_CODE_LUT[0xCBCC] =
-    // this->_OP_CODE_LUT[0xCBCD] =
-    // this->_OP_CODE_LUT[0xCBCE] =
-    // this->_OP_CODE_LUT[0xCBCF] =
+    this->_OP_CODE_LUT_CB[0xC0] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xC1] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xC2] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xC3] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xC4] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xC5] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xC6] = &CPU::_set_n_HL;
+    this->_OP_CODE_LUT_CB[0xC7] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xC8] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xC9] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xCA] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xCB] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xCC] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xCD] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xCE] = &CPU::_set_n_HL;
+    this->_OP_CODE_LUT_CB[0xCF] = &CPU::_set_n_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0xD0 */
-    // this->_OP_CODE_LUT[0xCBD0] =
-    // this->_OP_CODE_LUT[0xCBD1] =
-    // this->_OP_CODE_LUT[0xCBD2] =
-    // this->_OP_CODE_LUT[0xCBD3] =
-    // this->_OP_CODE_LUT[0xCBD4] =
-    // this->_OP_CODE_LUT[0xCBD5] =
-    // this->_OP_CODE_LUT[0xCBD6] =
-    // this->_OP_CODE_LUT[0xCBD7] =
-    // this->_OP_CODE_LUT[0xCBD8] =
-    // this->_OP_CODE_LUT[0xCBD9] =
-    // this->_OP_CODE_LUT[0xCBDA] =
-    // this->_OP_CODE_LUT[0xCBDB] =
-    // this->_OP_CODE_LUT[0xCBDC] =
-    // this->_OP_CODE_LUT[0xCBDD] =
-    // this->_OP_CODE_LUT[0xCBDE] =
-    // this->_OP_CODE_LUT[0xCBDF] =
+    this->_OP_CODE_LUT_CB[0xD0] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xD1] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xD2] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xD3] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xD4] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xD5] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xD6] = &CPU::_set_n_HL;
+    this->_OP_CODE_LUT_CB[0xD7] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xD8] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xD9] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xDA] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xDB] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xDC] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xDD] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xDE] = &CPU::_set_n_HL;
+    this->_OP_CODE_LUT_CB[0xDF] = &CPU::_set_n_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0xE0 */
-    // this->_OP_CODE_LUT[0xCBE0] =
-    // this->_OP_CODE_LUT[0xCBE1] =
-    // this->_OP_CODE_LUT[0xCBE2] =
-    // this->_OP_CODE_LUT[0xCBE3] =
-    // this->_OP_CODE_LUT[0xCBE4] =
-    // this->_OP_CODE_LUT[0xCBE5] =
-    // this->_OP_CODE_LUT[0xCBE6] =
-    // this->_OP_CODE_LUT[0xCBE7] =
-    // this->_OP_CODE_LUT[0xCBE8] =
-    // this->_OP_CODE_LUT[0xCBE9] =
-    // this->_OP_CODE_LUT[0xCBEA] =
-    // this->_OP_CODE_LUT[0xCBEB] =
-    // this->_OP_CODE_LUT[0xCBEC] =
-    // this->_OP_CODE_LUT[0xCBED] =
-    // this->_OP_CODE_LUT[0xCBEE] =
-    // this->_OP_CODE_LUT[0xCBEF] =
+    this->_OP_CODE_LUT_CB[0xE0] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xE1] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xE2] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xE3] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xE4] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xE5] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xE6] = &CPU::_set_n_HL;
+    this->_OP_CODE_LUT_CB[0xE7] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xE8] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xE9] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xEA] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xEB] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xEC] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xED] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xEE] = &CPU::_set_n_HL;
+    this->_OP_CODE_LUT_CB[0xEF] = &CPU::_set_n_r;
     ////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////
     /* CB 0xF0 */
-    // this->_OP_CODE_LUT[0xCBF0] =
-    // this->_OP_CODE_LUT[0xCBF1] =
-    // this->_OP_CODE_LUT[0xCBF2] =
-    // this->_OP_CODE_LUT[0xCBF3] =
-    // this->_OP_CODE_LUT[0xCBF4] =
-    // this->_OP_CODE_LUT[0xCBF5] =
-    // this->_OP_CODE_LUT[0xCBF6] =
-    // this->_OP_CODE_LUT[0xCBF7] =
-    // this->_OP_CODE_LUT[0xCBF8] =
-    // this->_OP_CODE_LUT[0xCBF9] =
-    // this->_OP_CODE_LUT[0xCBFA] =
-    // this->_OP_CODE_LUT[0xCBFB] =
-    // this->_OP_CODE_LUT[0xCBFC] =
-    // this->_OP_CODE_LUT[0xCBFD] =
-    // this->_OP_CODE_LUT[0xCBFE] =
-    // this->_OP_CODE_LUT[0xCBFF] =
+    this->_OP_CODE_LUT_CB[0xF0] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xF1] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xF2] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xF3] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xF4] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xF5] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xF6] = &CPU::_set_n_HL;
+    this->_OP_CODE_LUT_CB[0xF7] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xF8] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xF9] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xFA] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xFB] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xFC] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xFD] = &CPU::_set_n_r;
+    this->_OP_CODE_LUT_CB[0xFE] = &CPU::_set_n_HL;
+    this->_OP_CODE_LUT_CB[0xFF] = &CPU::_set_n_r;
     ////////////////////////////////////////////////////////////////
 }
 
@@ -1933,7 +1933,7 @@ void CPU::_add_SP_dd() {
 
 /*
 BIT n, r
-    - OpCode = 0b11001011 0b01nnnrrr
+    - OpCode = 0xcb 0b01nnnrrr
     - tests bit n of register r and sets the Z flag accordingly
     - flags: z01-
 */
@@ -1954,11 +1954,62 @@ void CPU::_bit_n_r() {
 }
 
 /*
-BIT n, HL
-    - OpCode = 0b11001011 0b01nnnrrr
-    - tests bit n of register r and sets the Z flag accordingly
+BIT n, (HL)
+    - OpCode = 0xcb 0b01nnnrrr
+    - tests bit n of the address specified by HL and sets the Z flag accordingly
     - flags: z01-
 */
+void CPU::_bit_n_HL() {
+    this->_read_and_increment_PC();
+    uint8_t arg = this->_read_and_increment_PC();
+
+    uint8_t n = (arg >> 3) & 0b111;
+    uint8_t val = this->mem_read_byte(this->_HL.raw);
+
+    if ( ((val >> n) & 1) == 0 ) { this->_set_flag(ZERO_FLAG); }
+    else { this->_clear_flag(ZERO_FLAG); }
+
+    this->_clear_flag(SUB_FLAG);
+    this->_set_flag(HALF_CARRY_FLAG);
+
+    this->cycles += MACHINE_CYCLE*3;
+}
+
+/*
+SET n, r
+    - OpCode = 0xcb 0b11nnnrrr
+    - bit n in register r is set
+*/
+void CPU::_set_n_r() {
+    this->_read_and_increment_PC();
+    uint8_t arg = this->_read_and_increment_PC();
+
+    uint8_t n = (arg >> 3) & 0b111;
+    uint8_t* r = this->_get_8_bit_reg(arg & 0b111);
+
+    (*r) |= (1 << n);
+
+    this->cycles += MACHINE_CYCLE*2;
+}
+
+/*
+SET n, (HL)
+    - OpCode = 0xcb 0b11nnn110
+    - bit n at the address specified by HL is set
+*/
+void CPU::_set_n_HL() {
+    this->_read_and_increment_PC();
+    uint8_t arg = this->_read_and_increment_PC();
+
+    uint8_t n = (arg >> 3) & 0b111;
+    uint8_t addr = arg & 0b111;
+    uint8_t val = this->mem_read_byte(addr);
+
+    val |= (1 << n);
+    this->mem_write_byte(addr, val);
+
+    this->cycles += MACHINE_CYCLE*4;
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 

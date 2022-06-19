@@ -54,7 +54,7 @@ CPU::CPU() {
     this->cycles = 0;
 
     this->_OP_CODE_LUT_init();
-    // this->_OP_CODE_LUT_init_CB();
+    this->_OP_CODE_LUT_init_CB();
 
     this->_peripherals.push_back( new Serial(this) );
     this->_peripherals.push_back( new InterruptController(this) );
@@ -94,6 +94,8 @@ void CPU::run() {
     this->mem_write_byte(0xff44, 144);
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
+        if (curr_opcode == 0xCB) { continue; }
+
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
 
         #if ENABLE_TRACE
