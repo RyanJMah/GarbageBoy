@@ -101,7 +101,7 @@ void CPU::run() {
         }
 
 
-        if (delete_later == 44571) {
+        if (delete_later == 148318) {
             asm("NOP");
         }
         delete_later += 1;

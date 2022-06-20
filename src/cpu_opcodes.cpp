@@ -789,7 +789,7 @@ JR dd
 */
 void CPU::_jr_dd() {
     this->_read_and_increment_PC();
-    uint8_t d = static_cast<int8_t>(this->_read_and_increment_PC());
+    int8_t d = static_cast<int8_t>(this->_read_and_increment_PC());
     this->_PC.raw += d;
     this->cycles += MACHINE_CYCLE*3;
 }
@@ -1286,11 +1286,11 @@ void CPU::_pop_rr() {
     uint8_t msb = this->_pop_stack();
 
     uint16_t write_val = (msb << 8) | lsb;
-    // if (reg == (&this->_AF)) {
-    //     // prevent a write to the flag bits...
-    //     write_val &= ~(0b11110000);
-    //     write_val |= (this->_AF.bytes[0] & 0b11110000);
-    // }
+    if (reg == (&this->_AF)) {
+        // prevent a write to the flag bits...
+        write_val &= ~(0x0f);
+        // write_val |= (this->_AF.bytes[0] & 0b11110000);
+    }
 
     reg->raw = write_val;
 
