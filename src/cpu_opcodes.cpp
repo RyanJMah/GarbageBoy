@@ -1286,11 +1286,11 @@ void CPU::_pop_rr() {
     uint8_t msb = this->_pop_stack();
 
     uint16_t write_val = (msb << 8) | lsb;
-    if (reg == (&this->_AF)) {
-        // prevent a write to the flag bits...
-        write_val &= ~(0b11110000);
-        write_val |= (this->_AF.bytes[0] & 0b11110000);
-    }
+    // if (reg == (&this->_AF)) {
+    //     // prevent a write to the flag bits...
+    //     write_val &= ~(0b11110000);
+    //     write_val |= (this->_AF.bytes[0] & 0b11110000);
+    // }
 
     reg->raw = write_val;
 
@@ -1497,7 +1497,7 @@ void CPU::_and_r() {
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     this->_AF.bytes[1] &= (*r);
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1518,7 +1518,7 @@ void CPU::_and_n() {
     uint8_t n = this->_read_and_increment_PC();
     this->_AF.bytes[1] &= n;
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1539,7 +1539,7 @@ void CPU::_and_HL() {
     uint8_t data = this->mem_read_byte(this->_HL.raw);
     this->_AF.bytes[1] &= data;
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1623,7 +1623,7 @@ void CPU::_or_r() {
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     this->_AF.bytes[1] |= (*r);
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1644,7 +1644,7 @@ void CPU::_or_n() {
     uint8_t n = this->_read_and_increment_PC();
     this->_AF.bytes[1] |= n;
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1665,7 +1665,7 @@ void CPU::_or_HL() {
     uint8_t data = this->mem_read_byte(this->_HL.raw);
     this->_AF.bytes[1] |= data;
 
-    if (this->_AF.raw == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->_AF.bytes[1] == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(SUB_FLAG);
@@ -1791,12 +1791,12 @@ void CPU::_dec_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
 
-    this->_clear_flag(SUB_FLAG);
+    this->_set_flag(SUB_FLAG);
 
     if (CHECK_8_BIT_HALF_CARRY(data, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
-    this->mem_write_byte(this->_HL.raw, data + 1);
+    this->mem_write_byte(this->_HL.raw, data - 1);
     if (data == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
@@ -1938,6 +1938,7 @@ BIT n, r
     - flags: z01-
 */
 void CPU::_bit_n_r() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
 
     uint8_t* r = this->_get_8_bit_reg(arg & 0b111);
@@ -1959,6 +1960,7 @@ BIT n, (HL)
     - flags: z01-
 */
 void CPU::_bit_n_HL() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
 
     uint8_t n = (arg >> 3) & 0b111;
@@ -1979,6 +1981,7 @@ SET n, r
     - bit n in register r is set
 */
 void CPU::_set_n_r() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
 
     uint8_t n = (arg >> 3) & 0b111;
@@ -1995,6 +1998,7 @@ SET n, (HL)
     - bit n at the address specified by HL is set
 */
 void CPU::_set_n_HL() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
 
     uint8_t n = (arg >> 3) & 0b111;
@@ -2012,6 +2016,7 @@ RES n, r
     - bit n in register r is reset (cleared)
 */
 void CPU::_res_n_r() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
 
     uint8_t n = (arg >> 3) & 0b111;
@@ -2028,6 +2033,7 @@ RES n, (HL)
     - bit n at the address specified by HL is reset (cleared)
 */
 void CPU::_res_n_HL() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
 
     uint8_t n = (arg >> 3) & 0b111;
@@ -2123,6 +2129,7 @@ RLC r
     - flags: z00c
 */
 void CPU::_rlc_r() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg(arg & 0b111);
 
@@ -2145,6 +2152,7 @@ RLC (HL)
 */
 void CPU::_rlc_HL() {
     this->_read_and_increment_PC();
+    this->_read_and_increment_PC();
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     this->_rlc(p_addr);
@@ -2165,6 +2173,7 @@ RL r
     - flags: z00c
 */
 void CPU::_rl_r() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg(arg & 0b111);
 
@@ -2187,6 +2196,7 @@ RL (HL)
 */
 void CPU::_rl_HL() {
     this->_read_and_increment_PC();
+    this->_read_and_increment_PC();
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     this->_rl(p_addr);
@@ -2207,6 +2217,7 @@ RRC r
     - flags: z00c
 */
 void CPU::_rrc_r() {
+    this->_read_and_increment_PC();
     uint8_t arg = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg(arg & 0b111);
 
@@ -2229,6 +2240,7 @@ RRC (HL)
 */
 void CPU::_rrc_HL() {
     this->_read_and_increment_PC();
+    this->_read_and_increment_PC();
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     this->_rrc(p_addr);
@@ -2249,6 +2261,7 @@ RR r
     - flags: z00c
 */
 void CPU::_rr_r() {
+    this->_read_and_increment_PC();
     uint8_t opcode = this->_read_and_increment_PC();
 
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
@@ -2271,6 +2284,7 @@ RR (HL)
 */
 void CPU::_rr_HL() {
     this->_read_and_increment_PC();
+    this->_read_and_increment_PC();
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     this->_rr(p_addr);
@@ -2288,6 +2302,7 @@ SLA r
     - flags: z00c
 */
 void CPU::_sla_r() {
+    this->_read_and_increment_PC();
     uint8_t opcode = this->_read_and_increment_PC();
 
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
@@ -2316,6 +2331,7 @@ SLA (HL)
 */
 void CPU::_sla_HL() {
     this->_read_and_increment_PC();
+    this->_read_and_increment_PC();
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     uint8_t tmp = *p_addr;
@@ -2342,6 +2358,7 @@ SRA r
     - flags: z00c
 */
 void CPU::_sra_r() {
+    this->_read_and_increment_PC();
     uint8_t opcode = this->_read_and_increment_PC();
 
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
@@ -2369,6 +2386,7 @@ SRA, (HL)
 */
 void CPU::_sra_HL() {
     this->_read_and_increment_PC();
+    this->_read_and_increment_PC();
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     uint8_t bit0 = (*p_addr) & 1;
@@ -2394,6 +2412,7 @@ SRL r
     - flags: z00c
 */
 void CPU::_srl_r() {
+    this->_read_and_increment_PC();
     uint8_t opcode = this->_read_and_increment_PC();
 
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
@@ -2421,6 +2440,7 @@ SRL (HL)
 */
 void CPU::_srl_HL() {
     this->_read_and_increment_PC();
+    this->_read_and_increment_PC();
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     uint8_t bit0 = (*p_addr) & 1;
@@ -2446,6 +2466,7 @@ SWAP r
     - flags: z000
 */
 void CPU::_swap_r() {
+    this->_read_and_increment_PC();
     uint8_t opcode = this->_read_and_increment_PC();
 
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
@@ -2471,6 +2492,7 @@ SWAP (HL)
     - flags: z000
 */
 void CPU::_swap_HL() {
+    this->_read_and_increment_PC();
     this->_read_and_increment_PC();
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);

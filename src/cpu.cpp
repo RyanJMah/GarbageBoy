@@ -94,14 +94,14 @@ void CPU::run() {
     this->mem_write_byte(0xff44, 144);
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
-        if (curr_opcode == 0xCB) {
-            this->_PC.raw += 1;
-            curr_opcode = this->mem_read_byte(this->_PC.raw);
-        }
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
+        if (curr_opcode == 0xCB) {
+            curr_opcode = this->mem_read_byte(this->_PC.raw + 1);
+            curr_instruction = this->_OP_CODE_LUT_CB[curr_opcode];
+        }
 
 
-        if (delete_later == 34849) {
+        if (delete_later == 44571) {
             asm("NOP");
         }
         delete_later += 1;
@@ -369,7 +369,7 @@ uint8_t CPU::_add_bytes(uint8_t a, uint8_t b) {
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     if (CHECK_8_BIT_CARRY(a, b)) { this->_set_flag(CARRY_FLAG); }
-    else { this->_clear_flag(HALF_CARRY_FLAG); }
+    else { this->_clear_flag(CARRY_FLAG); }
 
     return ret;
 }
