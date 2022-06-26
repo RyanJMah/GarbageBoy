@@ -1812,85 +1812,35 @@ DAA
 void CPU::_daa() {
     this->_read_and_increment_PC();
 
-    bool n = this->_get_flag(SUB_FLAG);
-    bool h = this->_get_flag(HALF_CARRY_FLAG);
-    bool c = this->_get_flag(CARRY_FLAG);    
+    uint8_t n = this->_get_flag(SUB_FLAG);
+    uint8_t h = this->_get_flag(HALF_CARRY_FLAG);
+    uint8_t c = this->_get_flag(CARRY_FLAG);
     uint8_t A = this->_AF.bytes[1];
 
     if (!n) {
         if (c || (A > 0x99)) {
             A += 0x60;
-            c = 1;
+            this->_set_flag(CARRY_FLAG);
         }
-        if (h || ((A & 0x0F) < 0x09)) {
-            if (c) { A -= 0x60; }
-            if (h) { A -= 0x06; }
+        if (h || ((A & 0x0f) > 0x09)) {
+            A += 0x06;
         }
     }
-
-    if (A == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    else {
+        if (c) {
+            A -= 0x60;
+            this->_set_flag(CARRY_FLAG);
+        }
+        if (h) {
+            A -= 0x06;
+        }
+    }
+    this->_write_flag(ZERO_FLAG, A == 0);
     this->_clear_flag(HALF_CARRY_FLAG);
 
-    if (c) { this->_set_flag(CARRY_FLAG); }
-    else { this->_clear_flag(CARRY_FLAG); }
-
-    // if (n) {
-    //     if (h) {
-    //         A = (A - 6) & 0xff;
-    //     }
-    //     if (c) {
-    //         A -= 0x60;
-    //     }
-    // }
-    // else {
-    //     if (h || ((A & 0xF) > 9)) {
-    //         A += 0x06;
-    //     }
-    //     if (c || (A > 0x9F)) {
-    //         A += 0x60;
-    //     }
-    // }
-
-    // this->_clear_flag(HALF_CARRY_FLAG);
-    // this->_clear_flag(ZERO_FLAG);
-
-    // if ((A & 0x100) == 0x100) {
-    //     this->_set_flag(CARRY_FLAG);
-    // }
-
-    // A &= 0xFF;
-
-    // if (A == 0) { this->_set_flag(ZERO_FLAG); }
-
-    // this->_AF.bytes[1] = A;
+    this->_AF.bytes[1] = A;
 
     this->cycles += MACHINE_CYCLE;
-
-    // uint32_t A = this->_AF.bytes[1];
-
-    // if (s) {
-    //     if (h || (A & 0xf) > 0x09) { A += 0x06; }
-    //     if (c || (A > 0x9F)) { A += 0x60; }
-    // }
-    // else {
-    //     if (h) { A = (A - 0x06) & 0xff; }
-    //     if (c) { A -= 0x60; }
-    // }
-
-    // // I forget what this instruction does lol, but this zero flag check is probably wrong...
-    // if (A == 0) { this->_set_flag(ZERO_FLAG); }
-    // else { this->_clear_flag(ZERO_FLAG); }
-
-    // this->_clear_flag(HALF_CARRY_FLAG);
-
-    // if (A > 0xff) { this->_set_flag(CARRY_FLAG); }
-    // else { this->_clear_flag(CARRY_FLAG); }
-
-    // this->_AF.bytes[1] = A & 0xff;
-
-    // this->cycles += MACHINE_CYCLE;
 }
 
 /*
