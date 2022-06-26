@@ -82,7 +82,7 @@ void CPU::_OP_CODE_LUT_init() {
     this->_OP_CODE_LUT[0x33] = &CPU::_inc_rr;
     this->_OP_CODE_LUT[0x34] = &CPU::_inc_HL;
     this->_OP_CODE_LUT[0x35] = &CPU::_dec_HL;
-    this->_OP_CODE_LUT[0x36] = &CPU::_ld_r_n;
+    this->_OP_CODE_LUT[0x36] = &CPU::_ld_HL_n;
     this->_OP_CODE_LUT[0x37] = &CPU::_scf;
     this->_OP_CODE_LUT[0x38] = &CPU::_jr_cc_dd;
     this->_OP_CODE_LUT[0x39] = &CPU::_add_HL_rr;
