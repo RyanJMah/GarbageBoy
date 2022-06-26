@@ -24,7 +24,7 @@
     FFFF        Interrupt Enable Register
 */
 
-#define ENABLE_TRACE        true
+#define ENABLE_TRACE        false
 #define TRACE_FPATH         "./garbage-boy-trace.log"
 
 // lowercase
@@ -43,7 +43,7 @@
 #define CHECK_8_BIT_HALF_CARRY(a, b) ( ((a & 0xf) + (b & 0xf)) > 0xf )
 #define CHECK_16_BIT_HALF_CARRY(a, b) ( ((a & 0xfff) + (b & 0xfff)) > 0xfff )
 #define CHECK_8_BIT_HALF_CARRY_SUB(a, b) ( (a & 0xf) < (b & 0xf) )
-// #define CHECK_16_BIT_HALF_CARRY_SUB(a, b) ( (a & 0xff) < (b & 0xff) )
+#define CHECK_16_BIT_HALF_CARRY_SUB(a, b) ( (a & 0xff) < (b & 0xff) )
 
 #define CHECK_8_BIT_CARRY(a, b) ( ((a & 0xff) + (b & 0xff)) > 0xff )
 #define CHECK_16_BIT_CARRY(a, b) ( ((a & 0xffff) + (b & 0xffff)) > 0xffff )
@@ -81,6 +81,9 @@ class CPU {
 
         void load_rom(std::string rom_path, size_t offset);
         void run();
+
+    private:
+        uint8_t curr_opcode;
 
     public:
         bool IME;  // Interrupt Master Enable Flag
@@ -120,12 +123,16 @@ class CPU {
         void _push_stack(uint8_t byte);
         uint8_t _pop_stack();
 
+        void _write_flag(uint8_t flag, bool val);
         void _set_flag(uint8_t flag);
         void _clear_flag(uint8_t flag);
         bool _get_flag(uint8_t flag);
 
         uint8_t _add_bytes(uint8_t a, uint8_t b);
         uint8_t _sub_bytes(uint8_t a, uint8_t b);
+
+        uint8_t _adc_bytes(uint8_t a, uint8_t b);
+        uint8_t _sbc_bytes(uint8_t a, uint8_t b);
 
         void _rlc(uint8_t* x);
         void _rl(uint8_t* x);

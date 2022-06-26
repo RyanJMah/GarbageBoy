@@ -78,7 +78,7 @@ void CPU::load_rom(std::string rom_path, size_t offset) {
 void CPU::run() {
     // idk how much this will really improve performance, but eh...
     size_t peripheral_vect_size = this->_peripherals.size();
-    uint8_t curr_opcode;
+    // uint8_t curr_opcode;
     void (CPU::*curr_instruction)();
 
     #if ENABLE_TRACE
@@ -101,7 +101,7 @@ void CPU::run() {
         }
 
 
-        if (delete_later == 148318) {
+        if (delete_later == 2744958) {
             asm("NOP");
         }
         delete_later += 1;
@@ -347,6 +347,10 @@ uint8_t CPU::_pop_stack() {
     return ret;
 }
 
+void CPU::_write_flag(uint8_t flag, bool val) {
+    this->_AF.bytes[0] &= ~(1 << flag);
+    this->_AF.bytes[0] |= (val << flag);
+}
 void CPU::_set_flag(uint8_t flag) {
     this->_AF.bytes[0] |= (1 << flag);
 }
@@ -386,6 +390,51 @@ uint8_t CPU::_sub_bytes(uint8_t a, uint8_t b) {
 
     if (CHECK_SUB_CARRY(a, b)) { this->_set_flag(CARRY_FLAG); }
     else { this->_clear_flag(CARRY_FLAG); }
+
+    return ret;
+}
+
+uint8_t CPU::_adc_bytes(uint8_t a, uint8_t b) {
+    uint8_t ret;
+    uint8_t c = this->_get_flag(CARRY_FLAG);
+
+    bool tmp_c = 0;
+    bool tmp_h = 0;
+
+    ret = this->_add_bytes(a, b);
+    tmp_c |= this->_get_flag(CARRY_FLAG);
+    tmp_h |= this->_get_flag(HALF_CARRY_FLAG);
+
+    ret = this->_add_bytes(ret, c);
+    tmp_c |= this->_get_flag(CARRY_FLAG);
+    tmp_h |= this->_get_flag(HALF_CARRY_FLAG);
+
+    this->_write_flag(ZERO_FLAG, (ret == 0));
+    this->_clear_flag(SUB_FLAG);
+    this->_write_flag(CARRY_FLAG, tmp_c);
+    this->_write_flag(HALF_CARRY_FLAG, tmp_h);
+
+    return ret;
+}
+uint8_t CPU::_sbc_bytes(uint8_t a, uint8_t b) {
+    uint8_t ret;
+    uint8_t c = this->_get_flag(CARRY_FLAG);
+
+    bool tmp_c = 0;
+    bool tmp_h = 0;
+
+    ret = this->_sub_bytes(a, b);
+    tmp_c |= this->_get_flag(CARRY_FLAG);
+    tmp_h |= this->_get_flag(HALF_CARRY_FLAG);
+
+    ret = this->_sub_bytes(ret, c);
+    tmp_c |= this->_get_flag(CARRY_FLAG);
+    tmp_h |= this->_get_flag(HALF_CARRY_FLAG);
+
+    this->_write_flag(ZERO_FLAG, (ret == 0));
+    this->_set_flag(SUB_FLAG);
+    this->_write_flag(CARRY_FLAG, tmp_c);
+    this->_write_flag(HALF_CARRY_FLAG, tmp_h);
 
     return ret;
 }

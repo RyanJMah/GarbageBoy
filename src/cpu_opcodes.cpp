@@ -8,6 +8,7 @@ references:
     - https://gekkio.fi/files/gb-docs/gbctr.pdf
 */
 
+#include <iostream>
 #include <stdint.h>
 #include <stddef.h>
 #include "cpu.hpp"
@@ -973,6 +974,11 @@ void CPU::_ld_r_n() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t n = this->_read_and_increment_PC();
 
+    // std::cout << "PC = " << (int)this->_PC.raw << std::endl;
+    // std::cout << "n = " << (int)n << std::endl;
+    // std::cout << std::endl;
+
+
     uint8_t* r = this->_get_8_bit_reg( (opcode >> 3) & 0b111 );
     (*r) = n;
 
@@ -1372,8 +1378,7 @@ ADC A, r
 void CPU::_adc_A_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
-    uint8_t c = this->_get_flag(CARRY_FLAG);
-    this->_AF.bytes[1] = this->_add_bytes(this->_AF.bytes[1], *r + c);
+    this->_AF.bytes[1] = this->_adc_bytes(this->_AF.bytes[1], *r);
     this->cycles += MACHINE_CYCLE;
 }
 
@@ -1386,8 +1391,7 @@ ADC A, n
 void CPU::_adc_A_n() {
     this->_read_and_increment_PC();
     uint8_t n = this->_read_and_increment_PC();
-    uint8_t c = this->_get_flag(CARRY_FLAG);
-    this->_AF.bytes[1] = this->_add_bytes(this->_AF.bytes[1], n + c);
+    this->_AF.bytes[1] = this->_adc_bytes(this->_AF.bytes[1], n);
     this->cycles += MACHINE_CYCLE*2;
 }
 
@@ -1400,8 +1404,7 @@ ADC A, (HL)
 void CPU::_adc_A_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
-    uint8_t c = this->_get_flag(CARRY_FLAG);
-    this->_AF.bytes[1] = this->_add_bytes(this->_AF.bytes[1], data + c);
+    this->_AF.bytes[1] = this->_adc_bytes(this->_AF.bytes[1], data);
     this->cycles += MACHINE_CYCLE*2;
 }
 
@@ -1453,8 +1456,7 @@ SBC A, r
 void CPU::_sbc_A_r() {
     uint8_t opcode = this->_read_and_increment_PC();
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
-    uint8_t c = this->_get_flag(CARRY_FLAG);
-    this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], *r + c);
+    this->_AF.bytes[1] = this->_sbc_bytes(this->_AF.bytes[1], *r);
     this->cycles += MACHINE_CYCLE;
 }
 
@@ -1467,8 +1469,7 @@ SBC A, n
 void CPU::_sbc_A_n() {
     this->_read_and_increment_PC();
     uint8_t n = this->_read_and_increment_PC();
-    uint8_t c = this->_get_flag(CARRY_FLAG);
-    this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], n + c);
+    this->_AF.bytes[1] = this->_sbc_bytes(this->_AF.bytes[1] , n);
     this->cycles += MACHINE_CYCLE*2;
 }
 
@@ -1481,8 +1482,7 @@ SBC A, (HL)
 void CPU::_sbc_A_HL() {
     this->_read_and_increment_PC();
     uint8_t data = this->mem_read_byte(this->_HL.raw);
-    uint8_t c = this->_get_flag(CARRY_FLAG);
-    this->_AF.bytes[1] = this->_sub_bytes(this->_AF.bytes[1], data + c);
+    this->_AF.bytes[1] = this->_sbc_bytes(this->_AF.bytes[1], data);
     this->cycles += MACHINE_CYCLE*2;
 }
 
@@ -1752,7 +1752,7 @@ void CPU::_inc_HL() {
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     this->mem_write_byte(this->_HL.raw, data + 1);
-    if (data == 0) { this->_set_flag(ZERO_FLAG); }
+    if (this->mem_read_byte(this->_HL.raw) == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->cycles += MACHINE_CYCLE*3;
@@ -1793,11 +1793,11 @@ void CPU::_dec_HL() {
 
     this->_set_flag(SUB_FLAG);
 
-    if (CHECK_8_BIT_HALF_CARRY(data, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
+    if (CHECK_8_BIT_HALF_CARRY_SUB(data, 1)) { this->_set_flag(HALF_CARRY_FLAG); }
     else { this->_clear_flag(HALF_CARRY_FLAG); }
 
     this->mem_write_byte(this->_HL.raw, data - 1);
-    if (data == 0) { this->_set_flag(ZERO_FLAG); }
+    if ((data - 1) == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->cycles += MACHINE_CYCLE*3;
@@ -1812,32 +1812,85 @@ DAA
 void CPU::_daa() {
     this->_read_and_increment_PC();
 
-    bool s = this->_get_flag(SUB_FLAG);
+    bool n = this->_get_flag(SUB_FLAG);
     bool h = this->_get_flag(HALF_CARRY_FLAG);
     bool c = this->_get_flag(CARRY_FLAG);    
-    uint32_t A = this->_AF.bytes[1];
+    uint8_t A = this->_AF.bytes[1];
 
-    if (s) {
-        if (h || (A & 0xf) > 0x09) { A += 0x06; }
-        if (c || (A > 0x9F)) { A += 0x60; }
-    }
-    else {
-        if (h) { A = (A - 0x06) & 0xff; }
-        if (c) { A -= 0x60; }
+    if (!n) {
+        if (c || (A > 0x99)) {
+            A += 0x60;
+            c = 1;
+        }
+        if (h || ((A & 0x0F) < 0x09)) {
+            if (c) { A -= 0x60; }
+            if (h) { A -= 0x06; }
+        }
     }
 
-    // I forget what this instruction does lol, but this zero flag check is probably wrong...
     if (A == 0) { this->_set_flag(ZERO_FLAG); }
     else { this->_clear_flag(ZERO_FLAG); }
 
     this->_clear_flag(HALF_CARRY_FLAG);
 
-    if (A > 0xff) { this->_set_flag(CARRY_FLAG); }
+    if (c) { this->_set_flag(CARRY_FLAG); }
     else { this->_clear_flag(CARRY_FLAG); }
 
-    this->_AF.bytes[1] = A & 0xff;
+    // if (n) {
+    //     if (h) {
+    //         A = (A - 6) & 0xff;
+    //     }
+    //     if (c) {
+    //         A -= 0x60;
+    //     }
+    // }
+    // else {
+    //     if (h || ((A & 0xF) > 9)) {
+    //         A += 0x06;
+    //     }
+    //     if (c || (A > 0x9F)) {
+    //         A += 0x60;
+    //     }
+    // }
+
+    // this->_clear_flag(HALF_CARRY_FLAG);
+    // this->_clear_flag(ZERO_FLAG);
+
+    // if ((A & 0x100) == 0x100) {
+    //     this->_set_flag(CARRY_FLAG);
+    // }
+
+    // A &= 0xFF;
+
+    // if (A == 0) { this->_set_flag(ZERO_FLAG); }
+
+    // this->_AF.bytes[1] = A;
 
     this->cycles += MACHINE_CYCLE;
+
+    // uint32_t A = this->_AF.bytes[1];
+
+    // if (s) {
+    //     if (h || (A & 0xf) > 0x09) { A += 0x06; }
+    //     if (c || (A > 0x9F)) { A += 0x60; }
+    // }
+    // else {
+    //     if (h) { A = (A - 0x06) & 0xff; }
+    //     if (c) { A -= 0x60; }
+    // }
+
+    // // I forget what this instruction does lol, but this zero flag check is probably wrong...
+    // if (A == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_clear_flag(ZERO_FLAG); }
+
+    // this->_clear_flag(HALF_CARRY_FLAG);
+
+    // if (A > 0xff) { this->_set_flag(CARRY_FLAG); }
+    // else { this->_clear_flag(CARRY_FLAG); }
+
+    // this->_AF.bytes[1] = A & 0xff;
+
+    // this->cycles += MACHINE_CYCLE;
 }
 
 /*
@@ -2135,9 +2188,7 @@ void CPU::_rlc_r() {
 
     this->_rlc(r);
 
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*r) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2157,9 +2208,7 @@ void CPU::_rlc_HL() {
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     this->_rlc(p_addr);
 
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_set_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*p_addr) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2179,9 +2228,7 @@ void CPU::_rl_r() {
 
     this->_rl(r);
 
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*r) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2201,9 +2248,7 @@ void CPU::_rl_HL() {
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     this->_rl(p_addr);
 
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*p_addr) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2223,9 +2268,7 @@ void CPU::_rrc_r() {
 
     this->_rrc(r);
 
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(HALF_CARRY_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*r) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2245,9 +2288,7 @@ void CPU::_rrc_HL() {
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     this->_rrc(p_addr);
 
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*p_addr) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2267,9 +2308,7 @@ void CPU::_rr_r() {
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     this->_rr(r);
 
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*r) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2289,8 +2328,9 @@ void CPU::_rr_HL() {
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     this->_rr(p_addr);
 
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
+    this->_write_flag(ZERO_FLAG, (*p_addr) == 0);
+    this->_clear_flag(SUB_FLAG);
+    this->_clear_flag(HALF_CARRY_FLAG);
 
     this->cycles += MACHINE_CYCLE*4;
 }
@@ -2311,12 +2351,13 @@ void CPU::_sla_r() {
 
     *r = (tmp << 1);
 
-    if (bit7) { this->_set_flag(CARRY_FLAG); }
-    else { this->_clear_flag(CARRY_FLAG); }
+    // if (bit7) { this->_set_flag(CARRY_FLAG); }
+    // else { this->_clear_flag(CARRY_FLAG); }
+    // if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_clear_flag(ZERO_FLAG); }
 
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*r) == 0);
+    this->_write_flag(CARRY_FLAG, bit7);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2339,12 +2380,13 @@ void CPU::_sla_HL() {
 
     *p_addr = (tmp << 1);
 
-    if (bit7) { this->_set_flag(CARRY_FLAG); }
-    else { this->_clear_flag(CARRY_FLAG); }
+    // if (bit7) { this->_set_flag(CARRY_FLAG); }
+    // else { this->_clear_flag(CARRY_FLAG); }
+    // if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_clear_flag(ZERO_FLAG); }
 
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*p_addr) == 0);
+    this->_write_flag(CARRY_FLAG, bit7);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2363,15 +2405,18 @@ void CPU::_sra_r() {
 
     uint8_t* r = this->_get_8_bit_reg(opcode & 0b111);
     uint8_t bit0 = (*r) & 1;
+    uint8_t bit7 = (*r) & (1 << 7);
 
     *r = (*r) >> 1;
+    *r |= bit7;
 
-    if (bit0) { this->_set_flag(CARRY_FLAG); }
-    else { this->_clear_flag(CARRY_FLAG); }
+    // if (bit0) { this->_set_flag(CARRY_FLAG); }
+    // else { this->_clear_flag(CARRY_FLAG); }
+    // if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_set_flag(ZERO_FLAG); }
 
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_set_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*r) == 0);
+    this->_write_flag(CARRY_FLAG, bit0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2390,15 +2435,18 @@ void CPU::_sra_HL() {
 
     uint8_t* p_addr = this->mem_get(this->_HL.raw);
     uint8_t bit0 = (*p_addr) & 1;
+    uint8_t bit7 = (*p_addr) & (1 << 7);
 
     *p_addr = (*p_addr >> 1);
+    *p_addr |= bit7;
 
-    if (bit0) { this->_set_flag(CARRY_FLAG); }
-    else { this->_clear_flag(CARRY_FLAG); }
+    // if (bit0) { this->_set_flag(CARRY_FLAG); }
+    // else { this->_clear_flag(CARRY_FLAG); }
+    // if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_clear_flag(ZERO_FLAG); }
 
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*p_addr) == 0);
+    this->_write_flag(CARRY_FLAG, bit0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2420,12 +2468,13 @@ void CPU::_srl_r() {
 
     *r = (*r) >> 1;
 
-    if (bit0) { this->_set_flag(CARRY_FLAG); }
-    else { this->_clear_flag(CARRY_FLAG); }
+    // if (bit0) { this->_set_flag(CARRY_FLAG); }
+    // else { this->_clear_flag(CARRY_FLAG); }
+    // if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_clear_flag(ZERO_FLAG); }
 
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*r) == 0);
+    this->_write_flag(CARRY_FLAG, bit0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2447,12 +2496,13 @@ void CPU::_srl_HL() {
 
     *p_addr = (*p_addr) >> 1;
 
-    if (bit0) { this->_set_flag(CARRY_FLAG); }
-    else { this->_clear_flag(CARRY_FLAG); }
+    // if (bit0) { this->_set_flag(CARRY_FLAG); }
+    // else { this->_clear_flag(CARRY_FLAG); }
+    // if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_clear_flag(ZERO_FLAG); }
 
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
-
+    this->_write_flag(ZERO_FLAG, (*p_addr) == 0);
+    this->_write_flag(CARRY_FLAG, bit0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
 
@@ -2475,9 +2525,10 @@ void CPU::_swap_r() {
 
     *r = (lower << 4) | upper;
 
-    if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
+    // if ((*r) == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_clear_flag(ZERO_FLAG); }
 
+    this->_write_flag(ZERO_FLAG, (*r) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
@@ -2501,9 +2552,10 @@ void CPU::_swap_HL() {
 
     *p_addr = (lower << 4) | upper;
 
-    if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
-    else { this->_clear_flag(ZERO_FLAG); }
+    // if ((*p_addr) == 0) { this->_set_flag(ZERO_FLAG); }
+    // else { this->_clear_flag(ZERO_FLAG); }
 
+    this->_write_flag(ZERO_FLAG, (*p_addr) == 0);
     this->_clear_flag(SUB_FLAG);
     this->_clear_flag(HALF_CARRY_FLAG);
     this->_clear_flag(CARRY_FLAG);
