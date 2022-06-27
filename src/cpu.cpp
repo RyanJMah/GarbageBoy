@@ -78,7 +78,7 @@ void CPU::load_rom(std::string rom_path, size_t offset) {
 void CPU::run() {
     // idk how much this will really improve performance, but eh...
     size_t peripheral_vect_size = this->_peripherals.size();
-    // uint8_t curr_opcode;
+    uint8_t curr_opcode;
     void (CPU::*curr_instruction)();
 
     #if ENABLE_TRACE
@@ -157,7 +157,7 @@ reference:
     - using the DMG boot rom
 */
 void CPU::_init_state() {
-    this->_AF.bytes[1] = 0x11;
+    this->_AF.bytes[1] = 0x01;
 
     this->_set_flag(ZERO_FLAG);
     this->_clear_flag(SUB_FLAG);

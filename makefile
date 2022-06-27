@@ -12,6 +12,8 @@ CPP_SOURCES = $(wildcard src/*.cpp)
 CPP_INCLUDES = -I ./inc
 CPP_FLAGS = $(CPP_INCLUDES) $(OPT) -Wall -MMD -MP -MF"$(@:%.o=%.d)"
 
+LD_FLAGS = -l boost_program_options
+
 ifeq ($(DEBUG), 1)
 	CPP_FLAGS += -ggdb
 endif
@@ -27,12 +29,16 @@ run: all
 	@echo ""
 	@./build/main.elf
 
+.PHONY: test
+test:
+	@python3 ./run_tests.py
+
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR) 
 	$(CC) -c $(CPP_FLAGS) $< -o $@
 
 $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS)
 	@echo ""
-	$(CC) $(OBJECTS) $(LDFLAGS) -o $@
+	$(CC) $(OBJECTS) $(LD_FLAGS) -o $@
 	@echo ""
 	@$(SZ) $@
 	@echo ""

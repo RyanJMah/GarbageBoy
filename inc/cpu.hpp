@@ -82,9 +82,6 @@ class CPU {
         void load_rom(std::string rom_path, size_t offset);
         void run();
 
-    private:
-        uint8_t curr_opcode;
-
     public:
         bool IME;  // Interrupt Master Enable Flag
         uint32_t cycles;

@@ -15,8 +15,8 @@ InterruptController::InterruptController(CPU* cpu_ptr) {
 }
 
 void InterruptController::_call_isr(size_t addr) {
-    this->_cpu->call(addr);
     this->_cpu->IME = 0;
+    this->_cpu->call(addr);
     this->_cpu->cycles += MACHINE_CYCLE*5;
 }
 

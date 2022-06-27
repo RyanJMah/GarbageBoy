@@ -18,7 +18,7 @@ void Serial::respond() {
     // if transfer requested
     if (BIT_IS_SET(*SC(), SC_TRANSFER_START)) {
         // send the character in SB to the terminal
-        std::cout << *SB();
+        std::cout << *SB() << std::flush;
 
         // clear the TRANSFER_START bit
         *SC() &= ~(1 << SC_TRANSFER_START);
