@@ -30,7 +30,7 @@ run: all
 	@./build/main.elf
 
 .PHONY: test
-test:
+test: all
 	@python3 ./run_tests.py
 
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR) 
