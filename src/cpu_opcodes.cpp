@@ -2024,7 +2024,7 @@ void CPU::_res_n_r() {
     uint8_t arg = this->_read_and_increment_PC();
 
     uint8_t n = (arg >> 3) & 0b111;
-    uint8_t* r = this->_get_8_bit_reg(arg* 0b111);
+    uint8_t* r = this->_get_8_bit_reg(arg & 0b111);
 
     (*r) &= ~(1 << n);
 
