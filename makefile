@@ -2,7 +2,7 @@ TARGET = main
 BUILD_DIR = build
 DEBUG = 1
 
-OPT = -O2
+OPT = -O0
 
 CC = g++ -std=c++11
 CP = objcopy

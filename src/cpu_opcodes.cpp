@@ -1234,7 +1234,8 @@ void CPU::_ld_nn_SP() {
     uint8_t msb_n = this->_read_and_increment_PC();
 
     uint16_t addr = (msb_n << 8) | lsb_n;
-    this->mem_write_byte(addr, this->_SP.raw);
+    this->mem_write_byte(addr, this->_SP.bytes[0]);
+    this->mem_write_byte(addr + 1, this->_SP.bytes[1]);
 
     this->cycles += MACHINE_CYCLE*5;
 }
@@ -1915,7 +1916,7 @@ ADD SP, dd
 */
 void CPU::_add_SP_dd() {
     this->_read_and_increment_PC();
-    uint8_t dd = this->_read_and_increment_PC();
+    int8_t dd = static_cast<int8_t>(this->_read_and_increment_PC());
 
     this->_clear_flag(ZERO_FLAG);
     this->_clear_flag(SUB_FLAG);

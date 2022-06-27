@@ -124,9 +124,15 @@ void CPU::run() {
 }
 
 uint8_t CPU::mem_read_byte(size_t addr) {
+    if (addr == 0xdd01) {
+        asm("NOP");
+    }
     return this->_memory[addr];
 }
 void CPU::mem_write_byte(size_t addr, uint8_t val) {
+    if (addr == 0xdd01) {
+        asm("NOP");
+    }
     this->_memory[addr] = val;
 }
 uint8_t* CPU::mem_get(size_t addr) {
@@ -151,7 +157,7 @@ reference:
     - using the DMG boot rom
 */
 void CPU::_init_state() {
-    this->_AF.bytes[1] = 0x01;
+    this->_AF.bytes[1] = 0x11;
 
     this->_set_flag(ZERO_FLAG);
     this->_clear_flag(SUB_FLAG);
