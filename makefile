@@ -1,4 +1,4 @@
-TARGET = main
+TARGET = garbageboy
 BUILD_DIR = build
 DEBUG = 1
 
@@ -21,13 +21,13 @@ endif
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
 vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 
-all: $(BUILD_DIR)/$(TARGET).elf
+all: $(BUILD_DIR)/$(TARGET)
 
 .PHONY: run
 run: all
-	@echo "running $(BUILD_DIR)/$(TARGET).elf..."
+	@echo "running $(BUILD_DIR)/$(TARGET)..."
 	@echo ""
-	@./build/main.elf
+	@./build/$(TARGET)
 
 .PHONY: test
 test: all
@@ -36,7 +36,7 @@ test: all
 $(BUILD_DIR)/%.o: %.cpp | $(BUILD_DIR) 
 	$(CC) -c $(CPP_FLAGS) $< -o $@
 
-$(BUILD_DIR)/$(TARGET).elf: $(OBJECTS)
+$(BUILD_DIR)/$(TARGET): $(OBJECTS)
 	@echo ""
 	$(CC) $(OBJECTS) $(LD_FLAGS) -o $@
 	@echo ""

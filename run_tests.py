@@ -4,7 +4,7 @@ import signal
 import subprocess
 from termcolor import cprint
 
-EXECUTABLE_PATH = "/home/ryan/main/personal/GarbageBoy/build/main.elf"
+EXECUTABLE_PATH = "./build/garbageboy"
 
 TESTS_BASE_PATH = "./tests/gb-test-roms/cpu_instrs/individual"
 TEST_ROMS = [
@@ -22,7 +22,7 @@ TEST_ROMS = [
 ]
 
 def run_test(rom):
-    cmd = ["./build/main.elf", "--rom_path", rom]
+    cmd = [EXECUTABLE_PATH, "--rom_path", rom]
     with subprocess.Popen(cmd, stdout=subprocess.PIPE, bufsize=0) as p:
         char = p.stdout.read(1)
         output = char.decode()
