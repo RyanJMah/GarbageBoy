@@ -21,6 +21,10 @@ void InterruptController::_call_isr(size_t addr) {
 }
 
 void InterruptController::respond() {
+    if ((*IF() & 0b11111) != 0) {
+        this->_cpu->is_halted = false;
+    }
+
     if (*IME()) {
         // if a particular interrupt is enabled AND an
         // interrupt is requested, jump to the relevant ISR

@@ -79,7 +79,6 @@ void CPU::load_rom(std::string rom_path, size_t offset) {
 
 void CPU::run() {
     // idk how much this will really improve performance, but eh...
-    size_t peripheral_vect_size = this->_peripherals.size();
     uint8_t curr_opcode;
     void (CPU::*curr_instruction)();
 
@@ -106,16 +105,14 @@ void CPU::run() {
         this->_log_trace(trace_file);
         #endif
 
-        if (delete_later == 154730) {
+        if (delete_later == 155419) {
             asm("NOP");
         }
         delete_later += 1;
 
         (this->*curr_instruction)();
 
-        for (size_t i = 0; i < peripheral_vect_size; i++) {
-            this->_peripherals[i]->respond();
-        }
+        this->_update_peripherals();
     }
 }
 
@@ -123,9 +120,6 @@ uint8_t CPU::mem_read_byte(size_t addr) {
     return this->_memory[addr];
 }
 void CPU::mem_write_byte(size_t addr, uint8_t val) {
-    if (addr == 0xffff) {
-        asm("NOP");
-    }
     this->_memory[addr] = val;
 }
 uint8_t* CPU::mem_get(size_t addr) {
@@ -237,6 +231,11 @@ uint8_t CPU::_read_and_increment_PC() {
     uint8_t ret = this->_memory[this->_PC.raw];
     this->_PC.raw += 1;
     return ret;
+}
+void CPU::_update_peripherals() {
+    for (size_t i = 0; i < this->_peripherals.size(); i++) {
+        this->_peripherals[i]->respond();
+    }
 }
 
 /*

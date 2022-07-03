@@ -12,7 +12,8 @@ define hook-stop
     printf "HL = %x\n", this->_HL.raw
     printf "SP = %x\n", this->_SP.raw
     printf "PC = %x\n", this->_PC.raw
-    printf "is_halted = %x\n", this->_is_halted
+    printf "IME = %x\n", this->IME
+    printf "is_halted = %x\n", this->is_halted
     # printf "current_opcode = %x\n", curr_opcode
     printf "\n"
 end

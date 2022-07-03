@@ -24,7 +24,8 @@
     FFFF        Interrupt Enable Register
 */
 
-#define ENABLE_TRACE        true
+// #define ENABLE_TRACE        true
+#define ENABLE_TRACE        false
 #define TRACE_FPATH         "./garbage-boy-trace.log"
 
 // lowercase
@@ -85,6 +86,7 @@ class CPU {
     public:
         bool IME;  // Interrupt Master Enable Flag
         uint32_t cycles;
+        bool is_halted;
 
     private:
         // registers
@@ -96,7 +98,6 @@ class CPU {
         Reg _PC;    // Program Counter
 
         uint8_t _memory[0xFFFF + 1];
-        bool _is_halted;
 
         void (CPU::*_OP_CODE_LUT[0xFF + 1])();
         void (CPU::*_OP_CODE_LUT_CB[0xFF + 1])();
@@ -111,6 +112,7 @@ class CPU {
         std::vector<uint8_t> _read_rom_file(std::string rom_path);
 
         uint8_t _read_and_increment_PC();
+        void _update_peripherals();
 
         uint8_t* _get_8_bit_reg(uint8_t bitcode);
         Reg* _get_16_bit_reg(uint8_t bitcode);

@@ -31,13 +31,21 @@ NOTE:
 */
 
 void TimerController::respond() {
-    // increment DIV register
-    uint32_t elapsed_cycles = this->_cpu->cycles - this->_prev_cycles;
-    uint32_t div_inc = elapsed_cycles/256;
-    (*this->DIV()) += div_inc;
+    uint32_t curr_cycles = this->_cpu->cycles;
+    uint32_t elapsed_cycles = curr_cycles - this->_prev_cycles;
 
-    // get TIMA increment
+    // increment DIV register
+    this->_div_elapsed_cycles += elapsed_cycles;
+    uint32_t div_inc = elapsed_cycles/256;
+    if (div_inc > 0) {
+        *this->DIV() += div_inc;
+        this->_div_elapsed_cycles = 0;
+    }
+
     if (BIT_IS_SET(*this->TAC(), 2)) {
+        this->_tima_elapsed_cycles += elapsed_cycles;
+
+        // get TIMA increment
         uint32_t clk_div;
         switch (*this->TAC() & 0b11) {
             case 0b00:
@@ -55,20 +63,25 @@ void TimerController::respond() {
             default:
                 throw std::logic_error("this should not happen ever, please report a bug...");
         }
-        uint32_t tima_inc = elapsed_cycles/clk_div;
 
-        if ((*this->TIMA() + tima_inc) > 0xff) {
-            // if overflow will happen...
-            uint8_t wrap_around = (*this->TIMA() + tima_inc) % 0xff;
-            *this->TIMA() = *this->TMA();
-            *this->TIMA() += wrap_around;
+        uint32_t tima_inc = this->_tima_elapsed_cycles/clk_div;
+        if (tima_inc > 0) {
+            if ((*this->TIMA() + tima_inc) > 0xff) {
+                // if overflow will happen...
+                uint8_t wrap_around = (*this->TIMA() + tima_inc) % 0xff;
+                *this->TIMA() = *this->TMA();
+                *this->TIMA() += wrap_around;
 
-            // generate an interrupt on overflow
-            this->generate_interrupt(TIMER_IRQ);
-        }
-        else {
-            // if no overflow, increment as usual
-            (*this->TIMA()) += elapsed_cycles/clk_div;
+                // generate an interrupt on overflow
+                this->generate_interrupt(TIMER_IRQ);
+            }
+            else {
+                // if no overflow, increment as usual
+                (*this->TIMA()) += tima_inc;
+            }
+            this->_tima_elapsed_cycles = 0;
         }
     }
+
+    this->_prev_cycles = curr_cycles;
 }

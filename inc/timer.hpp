@@ -10,6 +10,9 @@ class TimerController: public AbstractPeripheral {
         virtual void respond();
 
     private:
+        uint32_t _div_elapsed_cycles;
+        uint32_t _tima_elapsed_cycles;
+
         uint32_t _prev_cycles;
 };
 

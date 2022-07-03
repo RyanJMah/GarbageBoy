@@ -708,9 +708,12 @@ HALT
 */
 void CPU::_halt() {
     this->_read_and_increment_PC();
-    this->_is_halted = true;
+    this->is_halted = true;
 
-    while (this->_is_halted) { this->cycles += MACHINE_CYCLE; }
+    while (this->is_halted) {
+        this->_update_peripherals();
+        this->cycles += MACHINE_CYCLE;
+    }
 }
 
 /*
