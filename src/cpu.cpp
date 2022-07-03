@@ -86,11 +86,10 @@ void CPU::run() {
     trace_file.open(TRACE_FPATH);
     #endif
 
-    size_t delete_later = 1;
-
     // test rom polls the status of 0xff44 (one of the status registers for the LCD)
     // in a busy-while until it equals 144 (144 means that it's done...)
     // bypass this for now by just writing 144 to the address LOL
+
     this->mem_write_byte(0xff44, 144);
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
@@ -100,22 +99,11 @@ void CPU::run() {
             curr_instruction = this->_OP_CODE_LUT_CB[curr_opcode];
         }
 
-
-        if (delete_later == 2357735) {
-            asm("NOP");
-        }
-        delete_later += 1;
-
         #if ENABLE_TRACE
         this->_log_trace(trace_file);
         #endif
 
         (this->*curr_instruction)();
-
-        // if ((this->cycles % 450) == 0) {
-        //     this->_memory[0xff44] += 1;
-        //     this->_memory[0xff44] = this->_memory[0xff44] % 
-        // }
 
         for (size_t i = 0; i < peripheral_vect_size; i++) {
             this->_peripherals[i]->respond();
