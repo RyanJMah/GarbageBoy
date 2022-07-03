@@ -91,8 +91,9 @@ void CPU::run() {
     // test rom polls the status of 0xff44 (one of the status registers for the LCD)
     // in a busy-while until it equals 144 (144 means that it's done...)
     // bypass this for now by just writing 144 to the address LOL
-
     this->mem_write_byte(0xff44, 144);
+
+    uint32_t delete_later = 0;
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
@@ -105,6 +106,11 @@ void CPU::run() {
         this->_log_trace(trace_file);
         #endif
 
+        if (delete_later == 154730) {
+            asm("NOP");
+        }
+        delete_later += 1;
+
         (this->*curr_instruction)();
 
         for (size_t i = 0; i < peripheral_vect_size; i++) {
@@ -114,13 +120,10 @@ void CPU::run() {
 }
 
 uint8_t CPU::mem_read_byte(size_t addr) {
-    if (addr == 0xdd01) {
-        asm("NOP");
-    }
     return this->_memory[addr];
 }
 void CPU::mem_write_byte(size_t addr, uint8_t val) {
-    if (addr == 0xdd01) {
+    if (addr == 0xffff) {
         asm("NOP");
     }
     this->_memory[addr] = val;
@@ -147,7 +150,7 @@ reference:
     - using the DMG boot rom
 */
 void CPU::_init_state() {
-    this->_AF.bytes[1] = 0x01;
+    this->_AF.bytes[1] = 0x11;
 
     this->_set_flag(ZERO_FLAG);
     this->_clear_flag(SUB_FLAG);

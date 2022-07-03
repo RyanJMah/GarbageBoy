@@ -24,7 +24,7 @@
     FFFF        Interrupt Enable Register
 */
 
-#define ENABLE_TRACE        false
+#define ENABLE_TRACE        true
 #define TRACE_FPATH         "./garbage-boy-trace.log"
 
 // lowercase

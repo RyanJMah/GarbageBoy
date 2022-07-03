@@ -26,18 +26,23 @@ void InterruptController::respond() {
         // interrupt is requested, jump to the relevant ISR
         if (BIT_IS_SET(*IF(), IF_VBLANK) && BIT_IS_SET(*IE(), IE_VBLANK)) {
             this->_call_isr(VBLANK_ISR_ADDR);
+            *IF() &= ~(1 << VBLANK_IRQ);
         }
         else if (BIT_IS_SET(*IF(), IF_LCD_STAT) && BIT_IS_SET(*IE(), IE_LCD_STAT)) {
             this->_call_isr(LCD_STAT_ISR_ADDR);
+            *IF() &= ~(1 << LCD_STAT_IRQ);
         }
         else if (BIT_IS_SET(*IF(), IF_TIMER) && BIT_IS_SET(*IE(), IE_TIMER)) {
             this->_call_isr(TIMER_ISR_ADDR);
+            *IF() &= ~(1 << TIMER_IRQ);
         }
         else if (BIT_IS_SET(*IF(), IF_SERIAL) && BIT_IS_SET(*IE(), IE_SERIAL)) {
             this->_call_isr(SERIAL_ISR_ADDR);
+            *IF() &= ~(1 << SERIAL_IRQ);
         }
         else if (BIT_IS_SET(*IF(), IF_JOYPAD) && BIT_IS_SET(*IE(), IE_JOYPAD)) {
             this->_call_isr(JOYPAD_ISR_ADDR);
+            *IF() &= ~(1 << JOYPAD_IRQ);
         }
     }
 }
