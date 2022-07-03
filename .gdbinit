@@ -1,6 +1,7 @@
 source ~/.gdbinit
 
-file build/main.elf
+file build/garbageboy
+set args --rom_path ./tests/gb-test-roms/cpu_instrs/individual/02-interrupts.gb
 b main
 
 define hook-stop

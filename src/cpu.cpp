@@ -14,6 +14,7 @@ reference:
 #include <stddef.h>
 
 #include "serial.hpp"
+#include "timer.hpp"
 #include "interrupt_controller.hpp"
 #include "cpu.hpp"
 
@@ -57,6 +58,7 @@ CPU::CPU() {
     this->_OP_CODE_LUT_init_CB();
 
     this->_peripherals.push_back( new Serial(this) );
+    this->_peripherals.push_back( new TimerController(this) );
     this->_peripherals.push_back( new InterruptController(this) );
 }
 CPU::~CPU() {

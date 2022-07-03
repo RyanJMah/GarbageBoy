@@ -10,9 +10,9 @@ void AbstractPeripheral::init(CPU* cpu_ptr) {
 
 AbstractPeripheral::~AbstractPeripheral() {}
 
-/*
-gosh I really hate C++ sometimes
-*/
+void AbstractPeripheral::generate_interrupt(IRQ irq) {
+    *this->IF() |= (1 << irq);
+}
 
 ///////////////////////////////////////////////////////////////////////////////////
 /* INTERRUPT REGISTERS AND FLAGS */

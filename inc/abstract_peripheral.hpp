@@ -24,6 +24,14 @@
 #define SC_CLOCK_SPEED          1
 #define SC_TRANSFER_START       7
 
+typedef enum {
+    VBLANK_IRQ = 0,
+    LCD_STAT_IRQ = 1,
+    TIMER_IRQ = 2,
+    SERIAL_IRQ = 3,
+    JOYPAD_IRQ = 4
+} IRQ;
+
 class CPU;
 
 class AbstractPeripheral {
@@ -35,6 +43,9 @@ class AbstractPeripheral {
 
     protected:
         CPU* _cpu;
+
+    protected:
+        void generate_interrupt(IRQ irq);
 
     protected:
         /*
