@@ -22,7 +22,7 @@ TEST_ROMS = [
 ]
 
 def run_test(rom):
-    cmd = [EXECUTABLE_PATH, "--rom_path", rom]
+    cmd = [EXECUTABLE_PATH, "--headless", "--rom_path", rom]
     with subprocess.Popen(cmd, stdout=subprocess.PIPE, bufsize=0) as p:
         char = p.stdout.read(1)
         output = char.decode()
