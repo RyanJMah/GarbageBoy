@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <thread>
 #include <boost/format.hpp>
 
 #include <stdint.h>
@@ -82,6 +83,7 @@ class CPU {
 
         void load_rom(std::string rom_path, size_t offset);
         void run();
+        std::thread spawn();
 
     public:
         bool IME;  // Interrupt Master Enable Flag

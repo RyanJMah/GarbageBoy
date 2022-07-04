@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include <string>
 #include <boost/program_options.hpp>
 #include "cpu.hpp"
@@ -36,10 +37,14 @@ int main(int argc, char* argv[]) {
 
     if (!headless) {
         Screen screen = Screen();
-        screen.mainloop();
-    }
+        std::thread t = cpu.spawn();
 
-    cpu.run();
+        screen.mainloop();
+        t.join();
+    }
+    else {
+        cpu.run();
+    }
     ///////////////////////////////////////////////////////////////////////////////////////
 
     return 0;

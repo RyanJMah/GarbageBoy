@@ -9,6 +9,7 @@ reference:
 #include <stdexcept>
 #include <vector>
 #include <fstream>
+#include <thread>
 
 #include <stdint.h>
 #include <stddef.h>
@@ -92,7 +93,6 @@ void CPU::run() {
     // bypass this for now by just writing 144 to the address LOL
     this->mem_write_byte(0xff44, 144);
 
-    uint32_t delete_later = 0;
     while (1) {
         curr_opcode = this->mem_read_byte(this->_PC.raw);
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
@@ -105,15 +105,14 @@ void CPU::run() {
         this->_log_trace(trace_file);
         #endif
 
-        if (delete_later == 155419) {
-            asm("NOP");
-        }
-        delete_later += 1;
-
         (this->*curr_instruction)();
 
         this->_update_peripherals();
     }
+}
+std::thread CPU::spawn() {
+    std::thread t(&CPU::run, this);
+    return t;
 }
 
 uint8_t CPU::mem_read_byte(size_t addr) {
