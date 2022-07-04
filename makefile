@@ -12,7 +12,7 @@ CPP_SOURCES = $(wildcard src/*.cpp)
 CPP_INCLUDES = -I ./inc
 CPP_FLAGS = $(CPP_INCLUDES) $(OPT) -Wall -MMD -MP -MF"$(@:%.o=%.d)"
 
-LD_FLAGS = -l boost_program_options
+LD_FLAGS = -l boost_program_options -l SDL2
 
 ifeq ($(DEBUG), 1)
 	CPP_FLAGS += -ggdb

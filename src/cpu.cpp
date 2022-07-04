@@ -216,6 +216,9 @@ void CPU::_init_state() {
 
 std::vector<uint8_t> CPU::_read_rom_file(std::string rom_path) {
     std::ifstream f(rom_path, std::ios::binary);
+    if (!f.good()) {
+        throw std::runtime_error(rom_path + std::string("does not exist..."));
+    }
 
     f.seekg(0, std::ios::end);
     std::streampos f_size = f.tellg();
