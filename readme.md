@@ -8,12 +8,12 @@ A garbage (haha) Gameboy emulator written in C++.
 #### Install Dependencies
 ##### Debian Linux
 ```bash
-sudo apt install libboost-all-dev
+sudo apt install libboost-all-dev libsdl2-dev
 ```
 
 ##### OSX
 ```bash
-brew install boost
+brew install boost sdl2
 ```
 
 #### Compile
