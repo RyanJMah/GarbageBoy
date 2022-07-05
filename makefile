@@ -2,7 +2,7 @@ TARGET = garbageboy
 BUILD_DIR = build
 DEBUG = 1
 
-OPT = -O0
+OPT = -O2
 
 CC = g++ -std=c++11
 CP = objcopy

@@ -5,7 +5,9 @@
 #include <string.h>
 #include "screen.hpp"
 
-Screen::Screen() {
+Screen::Screen() {}
+
+void Screen::init() {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         throw std::runtime_error(SDL_GetError());
     }
@@ -32,6 +34,9 @@ Screen::Screen() {
         *(int*)(&white),
         GAMEBOY_SCREEN_WIDTH*GAMEBOY_SCREEN_HEIGHT*sizeof(RGB)
     );
+
+    this->_prev_ticks = 0;
+    this->_curr_ticks = 0;
 }
 Screen::~Screen() { this->cleanup(); }
 
@@ -48,17 +53,23 @@ void Screen::draw_pixels() {
         }
     }
 
-    for (uint32_t y = 0; y < GAMEBOY_SCREEN_HEIGHT; y++) {
-        for (uint32_t x = 0; x < GAMEBOY_SCREEN_WIDTH; x++) {
-            uint8_t r = this->pixels[x][y].R;
-            uint8_t g = this->pixels[x][y].G;
-            uint8_t b = this->pixels[x][y].B;
+    this->_curr_ticks = SDL_GetTicks();
+    if ((this->_curr_ticks - this->_prev_ticks) > (1E3/FRAME_RATE)) {
+        for (uint32_t y = 0; y < GAMEBOY_SCREEN_HEIGHT; y++) {
+            for (uint32_t x = 0; x < GAMEBOY_SCREEN_WIDTH; x++) {
+                uint8_t r = this->pixels[x][y].R;
+                uint8_t g = this->pixels[x][y].G;
+                uint8_t b = this->pixels[x][y].B;
 
-            SDL_SetRenderDrawColor(this->_renderer, r, g, b, 0xFF);
-            SDL_RenderDrawPoint(this->_renderer, x, y);
+                SDL_SetRenderDrawColor(this->_renderer, r, g, b, 0xFF);
+                SDL_RenderDrawPoint(this->_renderer, x, y);
+            }
         }
+        SDL_RenderPresent(this->_renderer);
+
+        this->_prev_ticks = this->_curr_ticks;
     }
-    SDL_RenderPresent(this->_renderer);
+
 }
 
 

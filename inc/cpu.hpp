@@ -71,7 +71,7 @@ class CPU {
         void _log_trace(std::ofstream &tf);
 
     public:
-        CPU();
+        CPU(bool headless);
         ~CPU();
 
         uint8_t mem_read_byte(size_t addr);

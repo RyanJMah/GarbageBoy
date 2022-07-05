@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 
+#define FRAME_RATE              60
+
 #define GAMEBOY_SCREEN_WIDTH    160
 #define GAMEBOY_SCREEN_HEIGHT   144
 
@@ -20,6 +22,7 @@ class Screen {
     public:
         Screen();
         ~Screen();
+        void init();
 
         void draw_pixels();
         void cleanup();
@@ -31,5 +34,8 @@ class Screen {
         SDL_Event _event;
         SDL_Window* _window;
         SDL_Renderer* _renderer;
+
+        uint32_t _prev_ticks;
+        uint32_t _curr_ticks;
 };
 

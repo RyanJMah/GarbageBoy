@@ -16,6 +16,7 @@ reference:
 
 #include "serial.hpp"
 #include "timer.hpp"
+#include "gpu.hpp"
 #include "interrupt_controller.hpp"
 #include "cpu.hpp"
 
@@ -44,7 +45,7 @@ void CPU::_log_trace(std::ofstream &tf) {
     tf << "PC:" << PRINT_UINT16_LC(this->_PC.raw) << std::endl;
 }
 
-CPU::CPU() {
+CPU::CPU(bool headless) {
     this->_AF.raw = 0x0000;
     this->_BC.raw = 0x0000;
     this->_DE.raw = 0x0000;
@@ -60,6 +61,10 @@ CPU::CPU() {
 
     this->_peripherals.push_back( new Serial(this) );
     this->_peripherals.push_back( new TimerController(this) );
+    if (!headless) {
+        this->_peripherals.push_back( new GPU(this) );
+    }
+
     this->_peripherals.push_back( new InterruptController(this) );
 }
 CPU::~CPU() {
@@ -94,6 +99,7 @@ void CPU::run() {
     this->mem_write_byte(0xff44, 144);
 
     while (1) {
+        // std::cout << "SDFSDFDSF" << std::endl;
         curr_opcode = this->mem_read_byte(this->_PC.raw);
         curr_instruction = this->_OP_CODE_LUT[curr_opcode];
         if (curr_opcode == 0xCB) {
