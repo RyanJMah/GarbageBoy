@@ -32,18 +32,17 @@ int main(int argc, char* argv[]) {
     ///////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////////////////////////////////
-    CPU cpu = CPU();
-    cpu.load_rom(rom_path, 0);
+    // CPU cpu = CPU();
+    // cpu.load_rom(rom_path, 0);
 
     if (!headless) {
         Screen screen = Screen();
-        std::thread t = cpu.spawn();
-
-        screen.mainloop();
-        t.join();
+        while (1) {
+            screen.draw_pixels();
+        }
     }
     else {
-        cpu.run();
+        // cpu.run();
     }
     ///////////////////////////////////////////////////////////////////////////////////////
 
