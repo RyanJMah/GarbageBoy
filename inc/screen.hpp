@@ -4,13 +4,15 @@
 
 #define FRAME_RATE              60
 
-#define GAMEBOY_SCREEN_WIDTH    160
-#define GAMEBOY_SCREEN_HEIGHT   144
+#define GAMEBOY_BG_WIDTH        256
+#define GAMEBOY_BG_HEIGHT       256
+#define GAMEBOY_WINDOW_WIDTH    160
+#define GAMEBOY_WINDOW_HEIGHT   144
 
 #define SCALING_FACTOR          4
 
-#define SCREEN_WIDTH            GAMEBOY_SCREEN_WIDTH*SCALING_FACTOR
-#define SCREEN_HEIGHT           GAMEBOY_SCREEN_HEIGHT*SCALING_FACTOR
+#define SCREEN_WIDTH            GAMEBOY_WINDOW_WIDTH*SCALING_FACTOR
+#define SCREEN_HEIGHT           GAMEBOY_WINDOW_HEIGHT*SCALING_FACTOR
 
 struct RGB {
     uint8_t R;
@@ -24,11 +26,19 @@ class Screen {
         ~Screen();
         void init();
 
-        void draw_pixels();
+        void render_frame();
+        void draw_tile(uint32_t x, uint32_t y, uint8_t tile[32]);
+
         void cleanup();
 
     public:
-        RGB pixels[GAMEBOY_SCREEN_WIDTH][GAMEBOY_SCREEN_HEIGHT];
+        uint8_t window_x;
+        uint8_t window_y;
+
+        RGB pixels[GAMEBOY_BG_WIDTH][GAMEBOY_BG_HEIGHT];
+
+    private:
+        RGB _palatte_to_rgb_lut[4];
 
     private:
         SDL_Event _event;
